@@ -11,13 +11,13 @@ export interface ManufacturerInfo {
 }
 
 export const MANUFACTURERS: ManufacturerInfo[] = [
-  { id: 'all', label: 'ALL', enLabel: 'All', color: 'text-neutral-200', badgeBg: 'bg-[#333333] text-white', icon: '/assets/icn_corp_all.png' },
-  { id: 'elysion', label: '엘리시온', enLabel: 'Elysion', color: 'text-blue-400', badgeBg: 'bg-blue-950/80 text-blue-300 border-blue-600/50', icon: '/assets/ELYSION.webp' },
-  { id: 'missilis', label: '미실리스', enLabel: 'Missilis', color: 'text-emerald-400', badgeBg: 'bg-emerald-950/80 text-emerald-300 border-emerald-600/50', icon: '/assets/MISSILIS.webp' },
-  { id: 'tetra', label: '테트라', enLabel: 'Tetra', color: 'text-amber-400', badgeBg: 'bg-amber-950/80 text-amber-300 border-amber-600/50', icon: '/assets/TETRA.webp' },
-  { id: 'pilgrim', label: '필그림', enLabel: 'Pilgrim', color: 'text-purple-400', badgeBg: 'bg-purple-950/80 text-purple-300 border-purple-600/50', icon: '/assets/PILGRIM.webp' },
-  { id: 'abnormal', label: '어브노멀', enLabel: 'Abnormal', color: 'text-rose-400', badgeBg: 'bg-rose-950/80 text-rose-300 border-rose-600/50', icon: '/assets/ABNORMAL.webp' },
-  { id: 'other', label: '기타', enLabel: 'Other', color: 'text-neutral-400', badgeBg: 'bg-neutral-800 text-neutral-300 border-neutral-600/60', icon: '/assets/icn_corp_unknown.png' }
+  { id: 'all', label: 'ALL', enLabel: 'All', color: 'text-neutral-200', badgeBg: 'bg-[#333333] text-white', icon: `${import.meta.env.BASE_URL}assets/icn_corp_all.png` },
+  { id: 'elysion', label: '엘리시온', enLabel: 'Elysion', color: 'text-blue-400', badgeBg: 'bg-blue-950/80 text-blue-300 border-blue-600/50', icon: `${import.meta.env.BASE_URL}assets/ELYSION.webp` },
+  { id: 'missilis', label: '미실리스', enLabel: 'Missilis', color: 'text-emerald-400', badgeBg: 'bg-emerald-950/80 text-emerald-300 border-emerald-600/50', icon: `${import.meta.env.BASE_URL}assets/MISSILIS.webp` },
+  { id: 'tetra', label: '테트라', enLabel: 'Tetra', color: 'text-amber-400', badgeBg: 'bg-amber-950/80 text-amber-300 border-amber-600/50', icon: `${import.meta.env.BASE_URL}assets/TETRA.webp` },
+  { id: 'pilgrim', label: '필그림', enLabel: 'Pilgrim', color: 'text-purple-400', badgeBg: 'bg-purple-950/80 text-purple-300 border-purple-600/50', icon: `${import.meta.env.BASE_URL}assets/PILGRIM.webp` },
+  { id: 'abnormal', label: '어브노멀', enLabel: 'Abnormal', color: 'text-rose-400', badgeBg: 'bg-rose-950/80 text-rose-300 border-rose-600/50', icon: `${import.meta.env.BASE_URL}assets/ABNORMAL.webp` },
+  { id: 'other', label: '기타', enLabel: 'Other', color: 'text-neutral-400', badgeBg: 'bg-neutral-800 text-neutral-300 border-neutral-600/60', icon: `${import.meta.env.BASE_URL}assets/icn_corp_unknown.png` }
 ];
 
 export const ID_TO_MANUFACTURER: Record<string, ManufacturerType> = {

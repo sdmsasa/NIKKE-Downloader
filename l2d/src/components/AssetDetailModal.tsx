@@ -312,7 +312,7 @@ export const AssetDetailModal: React.FC<AssetDetailModalProps> = ({
                   alt={item.name}
                   className="max-w-full max-h-full object-contain drop-shadow-2xl"
                   onError={(e) => {
-                    (e.target as HTMLImageElement).src = '/assets/icn_corp_unknown.png';
+                    (e.target as HTMLImageElement).src = `${import.meta.env.BASE_URL}assets/icn_corp_unknown.png`;
                   }}
                 />
               ) : item.type === 'burst' ? (
@@ -321,34 +321,34 @@ export const AssetDetailModal: React.FC<AssetDetailModalProps> = ({
                   alt={item.name}
                   className="max-w-full max-h-full object-contain"
                   onError={(e) => {
-                    (e.target as HTMLImageElement).src = '/assets/icn_corp_unknown.png';
+                    (e.target as HTMLImageElement).src = `${import.meta.env.BASE_URL}assets/icn_corp_unknown.png`;
                   }}
                 />
               ) : item.type === 'favorite' ? (
                 <img
-                  src={item.sceneMi || item.icon || '/assets/icn_corp_unknown.png'}
+                  src={item.sceneMi || item.icon || `${import.meta.env.BASE_URL}assets/icn_corp_unknown.png`}
                   alt={item.name}
                   className="max-w-full max-h-full object-contain"
                   onError={(e) => {
-                    (e.target as HTMLImageElement).src = '/assets/icn_corp_unknown.png';
+                    (e.target as HTMLImageElement).src = `${import.meta.env.BASE_URL}assets/icn_corp_unknown.png`;
                   }}
                 />
               ) : item.type === 'eventscene' ? (
                 <img
-                  src={item.sceneMi || item.sceneSi || '/assets/icn_corp_unknown.png'}
+                  src={item.sceneMi || item.sceneSi || `${import.meta.env.BASE_URL}assets/icn_corp_unknown.png`}
                   alt={item.name}
                   className="max-w-full max-h-full object-contain"
                   onError={(e) => {
-                    (e.target as HTMLImageElement).src = '/assets/icn_corp_unknown.png';
+                    (e.target as HTMLImageElement).src = `${import.meta.env.BASE_URL}assets/icn_corp_unknown.png`;
                   }}
                 />
               ) : (
                 <img
-                  src={(item as any).thumbnail || '/assets/icn_corp_unknown.png'}
+                  src={(item as any).thumbnail || `${import.meta.env.BASE_URL}assets/icn_corp_unknown.png`}
                   alt={item.name}
                   className="max-w-full max-h-full object-contain"
                   onError={(e) => {
-                    (e.target as HTMLImageElement).src = '/assets/icn_corp_unknown.png';
+                    (e.target as HTMLImageElement).src = `${import.meta.env.BASE_URL}assets/icn_corp_unknown.png`;
                   }}
                 />
               )}

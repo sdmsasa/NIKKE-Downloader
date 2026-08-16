@@ -134,7 +134,7 @@ export const AssetCard: React.FC<AssetCardProps> = ({
         ) : (
           <div className="relative z-[1] flex items-center justify-center p-4">
             <img
-              src="/assets/icn_corp_unknown.png"
+              src={`${import.meta.env.BASE_URL}assets/icn_corp_unknown.png`}
               alt="Fallback"
               className="w-16 h-16 object-contain invert opacity-75 drop-shadow-sm"
             />

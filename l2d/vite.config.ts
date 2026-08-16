@@ -10,7 +10,7 @@ const cacheDir = path.join(os.tmpdir(), 'vite-nikke-l2d-cache')
 // https://vite.dev/config/
 export default defineConfig({
   root: __dirname,
-  base: './',
+  base: '/NIKKE-Downloader/',
   cacheDir,
   plugins: [react()],
   server: {
