@@ -4,34 +4,14 @@
   "homepage": "https://sdmsasa.github.io/NIKKE-Downloader",
   "private": true,
   "version": "1.0.0",
-  "main": "electron/main.cjs",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist",
-    "dist": "tsc -b && vite build && electron-packager . NIKKE-Live2D-Downloader --platform=win32 --arch=x64 --out=release --overwrite --ignore=\"^/(src|\\.git)\"",
     "lint": "oxlint",
     "preview": "vite preview"
-  },
-  "build": {
-    "appId": "com.nikke.l2ddownloader",
-    "productName": "NIKKE Live2D Downloader",
-    "directories": {
-      "output": "release"
-    },
-    "files": [
-      "dist/**/*",
-      "electron/**/*",
-      "public/**/*"
-    ],
-    "win": {
-      "target": [
-        "dir",
-        "portable"
-      ]
-    }
   },
   "dependencies": {
     "clsx": "^2.1.1",
@@ -51,9 +31,6 @@
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.4",
     "autoprefixer": "^10.5.4",
-    "electron": "^41.7.1",
-    "electron-builder": "^26.15.3",
-    "electron-packager": "^17.1.2",
     "gh-pages": "^6.3.0",
     "oxlint": "^1.75.0",
     "postcss": "^8.5.26",
