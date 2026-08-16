@@ -1,0 +1,2415 @@
+{
+  "c013_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c011_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c017_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c018_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c011_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c015_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c017_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c010_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c023_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c017_02": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c033_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c040_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c043_02": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c016_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c012_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c016_03": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c032_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c016_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c010_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c020_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c030_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c030_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c010_02": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c022_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c030_02": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c032_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c016_02": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c073_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c041_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c022_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c080_02": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c043_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c060_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c043_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c041_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c070_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c014_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c070_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c061_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c090_02": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c062_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c093_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c093_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c072_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c070_02": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c080_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c072_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c072_04": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c075_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c074_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c080_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c071_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c103_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c105_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c104_00": [
+    "idle"
+  ],
+  "c072_02": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c103_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c105_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c082_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c091_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c090_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c094_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c092_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c082_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c091_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c095_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c094_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c095_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c082_02": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c101_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c100_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c101_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c102_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c101_02": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c142_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c142_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c143_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c110_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c150_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c102_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c112_02": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c111_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c111_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c112_03": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c112_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c112_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c113_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c150_02": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c121_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c161_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c162_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c150_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c113_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c120_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c130_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c170_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c130_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c170_02": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c131_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c131_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c140_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c140_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c140_02": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c170_04": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c132_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c141_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c183_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c191_02": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c141_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c090_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c162_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c160_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c160_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c170_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c201_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c172_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c181_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c181_02": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c170_03": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c181_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c171_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c192_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c180_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c180_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c191_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c192_02": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c182_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c190_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c192_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c193_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c220_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c200_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c223_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c195_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c194_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c191_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c227_00": [
+    "idle"
+  ],
+  "c225_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c230_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c200_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c201_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c202_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c202_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c210_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c234_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c203_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c210_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c210_02": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c210_03": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c222_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c223_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c212_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c212_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c250_00": [
+    "idle"
+  ],
+  "c220_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c212_02": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c221_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c222_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c253_00": [
+    "idle"
+  ],
+  "c251_00": [
+    "idle"
+  ],
+  "c252_00": [
+    "idle"
+  ],
+  "c225_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c254_00": [
+    "idle"
+  ],
+  "c255_00": [
+    "idle"
+  ],
+  "c263_00": [
+    "idle"
+  ],
+  "c262_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c261_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c224_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c226_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c233_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c231_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c232_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c272_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c233_02": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c233_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c231_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c281_02": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c241_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c242_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c242_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c260_02": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c240_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c270_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c260_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c262_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c260_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c270_02": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c270_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c270_03": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c271_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c271_02": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c272_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c271_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c280_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c280_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c281_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c281_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c282_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c283_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c284_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c321_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c321_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c282_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c330_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c322_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c290_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c291_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c300_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c302_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c301_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c303_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c305_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c304_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c306_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c307_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c308_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c310_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c313_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c230_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c310_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c354_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c314_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c315_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c312_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c355_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c311_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c361_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c316_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c316_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c371_00": [
+    "idle"
+  ],
+  "c370_00": [
+    "idle"
+  ],
+  "c330_02": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c330_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c331_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c350_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c350_02": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c350_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c351_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c411_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c351_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c411_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c352_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c354_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c352_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c352_02": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c412_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c431_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c390_02": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c382_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c381_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c382_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c390_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c392_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c380_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c391_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c390_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c353_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c391_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c440_00": [
+    "idle"
+  ],
+  "c400_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c381_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c470_02": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c400_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c471_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c472_00": [
+    "idle"
+  ],
+  "c401_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c473_00": [
+    "idle"
+  ],
+  "c401_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c480_00": [
+    "idle"
+  ],
+  "c481_00": [
+    "idle"
+  ],
+  "c482_00": [
+    "idle"
+  ],
+  "c490_00": [
+    "idle"
+  ],
+  "c491_00": [
+    "idle"
+  ],
+  "c500_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c403_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c402_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c403_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c511_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c510_00": [
+    "idle"
+  ],
+  "c412_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c430_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c430_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c431_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c432_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c430_02": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c451_03": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c441_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c451_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c450_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c450_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c450_02": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c450_03": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c515_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c470_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c531_00": [
+    "idle"
+  ],
+  "c532_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c470_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c530_00": [
+    "idle"
+  ],
+  "c551_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c451_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c451_02": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c563_00": [
+    "idle"
+  ],
+  "c561_00": [
+    "idle"
+  ],
+  "c562_00": [
+    "idle"
+  ],
+  "c560_00": [
+    "idle"
+  ],
+  "c570_99": [
+    "idle"
+  ],
+  "c571_00": [
+    "idle"
+  ],
+  "c572_00": [
+    "idle"
+  ],
+  "c580_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c580_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c501_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c511_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c502_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c511_02": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c501_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c513_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c600_02": [
+    "idle"
+  ],
+  "c513_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c601_02": [
+    "idle"
+  ],
+  "c513_02": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c610_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c620_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c513_03": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c804_00": [
+    "idle"
+  ],
+  "c803_00": [
+    "idle"
+  ],
+  "c514_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c514_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c520_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c520_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c521_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c551_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c550_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c532_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c550_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c813_00": [
+    "idle"
+  ],
+  "c570_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c581_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c583_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c582_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c601_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c601_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c600_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c600_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c800_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c590_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c801_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c802_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c800_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c810_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c810_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c810_02": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c810_03": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c811_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c812_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c811_02": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c811_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c811_03": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c820_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c821_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c820_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c821_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c820_02": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c822_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c821_02": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c830_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c830_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c830_03": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c830_02": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c831_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c831_02": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c832_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c832_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c832_02": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c832_04": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c832_03": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c831_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c834_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c853_00": [
+    "idle"
+  ],
+  "c833_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c835_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c834_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c834_02": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c835_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c835_02": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c870_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c870_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c870_02": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c840_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c871_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c840_02": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c871_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c841_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c841_02": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c840_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c841_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c871_02": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c850_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c890_00": [
+    "idle"
+  ],
+  "c836_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c872_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c842_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c850_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c9000_00": [
+    "idle"
+  ],
+  "c850_02": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c9000_01": [
+    "idle"
+  ],
+  "c850_03": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c9000_02": [
+    "idle"
+  ],
+  "c9000_05": [
+    "idle"
+  ],
+  "c9000_06": [
+    "idle"
+  ],
+  "c851_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c9001_00": [
+    "idle"
+  ],
+  "c9002_00": [
+    "idle"
+  ],
+  "c9003_00": [
+    "idle"
+  ],
+  "c9005_00": [
+    "idle"
+  ],
+  "c9006_00": [
+    "idle"
+  ],
+  "c9000_07": [
+    "idle"
+  ],
+  "c851_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c9000_03": [
+    "idle"
+  ],
+  "c9008_00": [
+    "idle"
+  ],
+  "c900_00": [
+    "idle"
+  ],
+  "c9005_01": [
+    "idle"
+  ],
+  "c9009_00": [
+    "idle"
+  ],
+  "c9010_00": [
+    "idle"
+  ],
+  "c9004_00": [
+    "idle"
+  ],
+  "c9011_00": [
+    "idle"
+  ],
+  "c9013_00": [
+    "idle"
+  ],
+  "c851_02": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c9014_00": [
+    "idle"
+  ],
+  "c852_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c9016_00": [
+    "idle"
+  ],
+  "c9017_00": [
+    "idle"
+  ],
+  "c9015_00": [
+    "idle"
+  ],
+  "c860_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c9020_00": [
+    "idle"
+  ],
+  "c860_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c9019_00": [
+    "idle"
+  ],
+  "c860_02": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c9018_00": [
+    "idle"
+  ],
+  "c9020_01": [
+    "idle"
+  ],
+  "c9021_00": [
+    "idle"
+  ],
+  "c9024_00": [
+    "idle"
+  ],
+  "c901_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c9023_00": [
+    "idle"
+  ],
+  "c9021_01": [
+    "idle"
+  ],
+  "c9025_00": [
+    "idle"
+  ],
+  "c862_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c9022_00": [
+    "idle"
+  ],
+  "c861_01": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c9028_00": [
+    "idle"
+  ],
+  "c861_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c861_02": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c9026_00": [
+    "idle"
+  ],
+  "c9029_00": [
+    "idle"
+  ],
+  "c9031_00": [
+    "idle"
+  ],
+  "c9030_00": [
+    "idle"
+  ],
+  "c9032_00": [
+    "idle"
+  ],
+  "c902_00": [
+    "idle"
+  ],
+  "c9035_00": [
+    "idle"
+  ],
+  "c9034_00": [
+    "idle"
+  ],
+  "c9036_00": [
+    "idle"
+  ],
+  "c9038_00": [
+    "idle"
+  ],
+  "c9039_00": [
+    "idle"
+  ],
+  "c903_00": [
+    "idle"
+  ],
+  "c9037_00": [
+    "idle"
+  ],
+  "c9040_00": [
+    "idle"
+  ],
+  "c903_01": [
+    "idle"
+  ],
+  "c904_00": [
+    "idle"
+  ],
+  "c905_00": [
+    "idle"
+  ],
+  "c909_00": [
+    "idle"
+  ],
+  "c910_00": [
+    "idle"
+  ],
+  "c911_00": [
+    "idle"
+  ],
+  "c910_01": [
+    "idle"
+  ],
+  "c912_00": [
+    "idle"
+  ],
+  "c913_00": [
+    "idle"
+  ],
+  "c914_00": [
+    "idle"
+  ],
+  "c915_00": [
+    "idle"
+  ],
+  "c916_00": [
+    "idle"
+  ],
+  "c917_00": [
+    "idle"
+  ],
+  "c918_00": [
+    "idle"
+  ],
+  "c920_00": [
+    "idle"
+  ],
+  "c919_00": [
+    "idle"
+  ],
+  "c921_00": [
+    "idle"
+  ],
+  "c922_00": [
+    "idle"
+  ],
+  "c924_00": [
+    "idle"
+  ],
+  "c925_00": [
+    "idle"
+  ],
+  "c928_00": [
+    "idle"
+  ],
+  "c923_00": [
+    "idle"
+  ],
+  "c931_00": [
+    "idle"
+  ],
+  "c930_00": [
+    "idle"
+  ],
+  "c933_00": [
+    "idle"
+  ],
+  "c929_00": [
+    "idle"
+  ],
+  "c932_00": [
+    "idle"
+  ],
+  "c931_01": [
+    "idle"
+  ],
+  "c937_00": [
+    "idle"
+  ],
+  "c935_00": [
+    "idle"
+  ],
+  "c934_00": [
+    "idle"
+  ],
+  "c943_00": [
+    "idle"
+  ],
+  "c945_00": [
+    "idle"
+  ],
+  "c941_00": [
+    "idle"
+  ],
+  "c939_00": [
+    "idle"
+  ],
+  "c936_00": [
+    "idle"
+  ],
+  "c946_00": [
+    "idle"
+  ],
+  "c940_00": [
+    "idle"
+  ],
+  "c942_00": [
+    "idle"
+  ],
+  "c944_00": [
+    "idle"
+  ],
+  "c948_00": [
+    "idle"
+  ],
+  "c947_00": [
+    "idle"
+  ],
+  "c951_00": [
+    "idle"
+  ],
+  "c952_00": [
+    "idle"
+  ],
+  "c960_00": [
+    "idle"
+  ],
+  "c961_00": [
+    "idle"
+  ],
+  "c961_01": [
+    "idle"
+  ],
+  "c962_00": [
+    "idle"
+  ],
+  "c963_00": [
+    "idle"
+  ],
+  "c964_00": [
+    "idle"
+  ],
+  "c966_00": [
+    "idle"
+  ],
+  "c967_00": [
+    "idle"
+  ],
+  "c968_00": [
+    "idle"
+  ],
+  "c965_00": [
+    "idle"
+  ],
+  "c976_00": [
+    "idle"
+  ],
+  "c970_00": [
+    "idle"
+  ],
+  "c974_00": [
+    "idle"
+  ],
+  "c971_00": [
+    "idle"
+  ],
+  "c973_00": [
+    "idle"
+  ],
+  "c979_00": [
+    "idle"
+  ],
+  "c977_00": [
+    "idle"
+  ],
+  "c975_00": [
+    "idle"
+  ],
+  "c981_00": [
+    "idle"
+  ],
+  "c980_00": [
+    "idle"
+  ],
+  "c969_00": [
+    "idle"
+  ],
+  "c907_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "c984_00": [
+    "idle"
+  ],
+  "c982_00": [
+    "idle"
+  ],
+  "c971_01": [
+    "idle"
+  ],
+  "c985_00": [
+    "idle"
+  ],
+  "c984_01": [
+    "idle"
+  ],
+  "c983_00": [
+    "idle"
+  ],
+  "c986_00": [
+    "idle"
+  ],
+  "c988_00": [
+    "idle"
+  ],
+  "c989_00": [
+    "idle"
+  ],
+  "c996_00": [
+    "idle"
+  ],
+  "c990_00": [
+    "idle"
+  ],
+  "c998_00": [
+    "idle"
+  ],
+  "c992_00": [
+    "idle"
+  ],
+  "c991_00": [
+    "idle"
+  ],
+  "c997_00": [
+    "idle"
+  ],
+  "c994_00": [
+    "idle"
+  ],
+  "c993_00": [
+    "idle",
+    "aim",
+    "cover"
+  ],
+  "dummy_00": [
+    "idle",
+    "aim",
+    "cover"
+  ]
+}
