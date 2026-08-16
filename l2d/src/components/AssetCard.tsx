@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import type { AnyAssetItem } from '../types';
 import { Check, Download, ExternalLink, Sparkles, CheckCircle2 } from 'lucide-react';
+import iconUnknown from '../assets/corp/icn_corp_unknown.png';
 
 interface AssetCardProps {
   item: AnyAssetItem;
@@ -134,7 +135,7 @@ export const AssetCard: React.FC<AssetCardProps> = ({
         ) : (
           <div className="relative z-[1] flex items-center justify-center p-4">
             <img
-              src={`${import.meta.env.BASE_URL}assets/icn_corp_unknown.png`}
+              src={iconUnknown}
               alt="Fallback"
               className="w-16 h-16 object-contain invert opacity-75 drop-shadow-sm"
             />

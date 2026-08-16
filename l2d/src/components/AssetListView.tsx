@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import type { AnyAssetItem } from '../types';
 import { Check, Download, ExternalLink, Sparkles, CheckCircle2 } from 'lucide-react';
+import iconUnknown from '../assets/corp/icn_corp_unknown.png';
 
 interface AssetListViewProps {
   items: AnyAssetItem[];
@@ -102,12 +103,12 @@ export const AssetListView: React.FC<AssetListViewProps> = ({
                           if (item.type === 'character' && item.thumbnails.iconFallback && target.src !== item.thumbnails.iconFallback) {
                             target.src = item.thumbnails.iconFallback;
                           } else {
-                            target.src = `${import.meta.env.BASE_URL}assets/icn_corp_unknown.png`;
+                            target.src = iconUnknown;
                           }
                         }}
                       />
                     ) : (
-                      <img src={`${import.meta.env.BASE_URL}assets/icn_corp_unknown.png`} alt="N/A" className="w-8 h-8 object-contain opacity-50" />
+                      <img src={iconUnknown} alt="N/A" className="w-8 h-8 object-contain opacity-50" />
                     )}
                   </div>
                 </td>

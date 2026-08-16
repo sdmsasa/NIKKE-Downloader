@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import type { AnyAssetItem, CharacterPose } from '../types';
 import { X, Download, Copy, Check, ExternalLink, Image as ImageIcon, Sparkles, Loader2 } from 'lucide-react';
 import { AssetUrls, getCharacterPoseFileName } from '../services/nkasApi';
+import iconUnknown from '../assets/corp/icn_corp_unknown.png';
 
 interface AssetDetailModalProps {
   item: AnyAssetItem | null;
@@ -312,7 +313,7 @@ export const AssetDetailModal: React.FC<AssetDetailModalProps> = ({
                   alt={item.name}
                   className="max-w-full max-h-full object-contain drop-shadow-2xl"
                   onError={(e) => {
-                    (e.target as HTMLImageElement).src = `${import.meta.env.BASE_URL}assets/icn_corp_unknown.png`;
+                    (e.target as HTMLImageElement).src = iconUnknown;
                   }}
                 />
               ) : item.type === 'burst' ? (
@@ -321,34 +322,34 @@ export const AssetDetailModal: React.FC<AssetDetailModalProps> = ({
                   alt={item.name}
                   className="max-w-full max-h-full object-contain"
                   onError={(e) => {
-                    (e.target as HTMLImageElement).src = `${import.meta.env.BASE_URL}assets/icn_corp_unknown.png`;
+                    (e.target as HTMLImageElement).src = iconUnknown;
                   }}
                 />
               ) : item.type === 'favorite' ? (
                 <img
-                  src={item.sceneMi || item.icon || `${import.meta.env.BASE_URL}assets/icn_corp_unknown.png`}
+                  src={item.sceneMi || item.icon || iconUnknown}
                   alt={item.name}
                   className="max-w-full max-h-full object-contain"
                   onError={(e) => {
-                    (e.target as HTMLImageElement).src = `${import.meta.env.BASE_URL}assets/icn_corp_unknown.png`;
+                    (e.target as HTMLImageElement).src = iconUnknown;
                   }}
                 />
               ) : item.type === 'eventscene' ? (
                 <img
-                  src={item.sceneMi || item.sceneSi || `${import.meta.env.BASE_URL}assets/icn_corp_unknown.png`}
+                  src={item.sceneMi || item.sceneSi || iconUnknown}
                   alt={item.name}
                   className="max-w-full max-h-full object-contain"
                   onError={(e) => {
-                    (e.target as HTMLImageElement).src = `${import.meta.env.BASE_URL}assets/icn_corp_unknown.png`;
+                    (e.target as HTMLImageElement).src = iconUnknown;
                   }}
                 />
               ) : (
                 <img
-                  src={(item as any).thumbnail || `${import.meta.env.BASE_URL}assets/icn_corp_unknown.png`}
+                  src={(item as any).thumbnail || iconUnknown}
                   alt={item.name}
                   className="max-w-full max-h-full object-contain"
                   onError={(e) => {
-                    (e.target as HTMLImageElement).src = `${import.meta.env.BASE_URL}assets/icn_corp_unknown.png`;
+                    (e.target as HTMLImageElement).src = iconUnknown;
                   }}
                 />
               )}
