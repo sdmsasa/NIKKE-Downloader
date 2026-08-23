@@ -29,7 +29,7 @@ import { AssetDetailModal } from './components/AssetDetailModal';
 import { DownloadManagerModal } from './components/DownloadManagerModal';
 import { SettingsModal } from './components/SettingsModal';
 import { FloatingCardSizeSlider } from './components/FloatingCardSizeSlider';
-import { Loader2, AlertCircle, RefreshCw, Sparkles } from 'lucide-react';
+import { Loader2, AlertCircle, RefreshCw, Sparkles, CheckCircle2, X } from 'lucide-react';
 import { getCharacterManufacturer } from './data/manufacturers';
 import { getSearchVariants, matchSearchQuery } from './utils/searchHelper';
 
@@ -194,6 +194,19 @@ export function App() {
     } catch {}
   }, [options]);
 
+  // Toast notification state
+  const [toast, setToast] = useState<{ id: number; type: 'success' | 'error' | 'info'; title: string; message?: string } | null>(null);
+  const toastTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const showToast = (type: 'success' | 'error' | 'info', title: string, message?: string) => {
+    if (toastTimerRef.current) clearTimeout(toastTimerRef.current);
+    const id = Date.now();
+    setToast({ id, type, title, message });
+    toastTimerRef.current = setTimeout(() => {
+      setToast(null);
+    }, 3500);
+  };
+
   // Load / refresh data & restore saved directory handle
   const loadData = async (forceRefresh: boolean = false) => {
     if (forceRefresh) {
@@ -202,6 +215,7 @@ export function App() {
       setIsLoading(true);
     }
     setLoadError(null);
+    const start = Date.now();
     try {
       const [fetched, savedHandle] = await Promise.all([
         fetchAllNKASData(forceRefresh),
@@ -216,8 +230,27 @@ export function App() {
       // Refresh download history
       const history = HistoryStorage.getHistory();
       setDownloadedIds(new Set(Object.keys(history)));
+
+      if (forceRefresh) {
+        // Guarantee smooth visual feedback duration (minimum 600ms)
+        const elapsed = Date.now() - start;
+        if (elapsed < 600) {
+          await new Promise(r => setTimeout(r, 600 - elapsed));
+        }
+        const totalCount =
+          fetched.characters.length +
+          fetched.bursts.length +
+          fetched.monsters.length +
+          fetched.favorites.length +
+          fetched.eventScenes.length;
+        showToast('success', '데이터 새로고침 완료', `총 ${totalCount}개의 최신 모델 정보가 동기화되었습니다.`);
+      }
     } catch (err: any) {
-      setLoadError(err.message || '데이터를 불러오는 중 오류가 발생했습니다.');
+      const msg = err.message || '데이터를 불러오는 중 오류가 발생했습니다.';
+      setLoadError(msg);
+      if (forceRefresh) {
+        showToast('error', '새로고침 실패', msg);
+      }
     } finally {
       setIsLoading(false);
       setIsRefreshing(false);
@@ -808,6 +841,39 @@ export function App() {
         onClearHistory={handleClearHistory}
         downloadedCount={downloadedIds.size}
       />
+
+      {/* Top-Right Floating Toast Notification */}
+      {toast && (
+        <div className="fixed top-5 right-5 z-50 flex items-start gap-3 p-4 bg-[#1a1a1a]/95 border border-neutral-700/80 rounded-2xl shadow-2xl backdrop-blur-md max-w-sm w-full animate-in fade-in slide-in-from-top-4 duration-300">
+          <div className={`p-2 rounded-xl flex-shrink-0 ${
+            toast.type === 'success'
+              ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30'
+              : toast.type === 'error'
+              ? 'bg-rose-500/20 text-rose-400 border border-rose-500/30'
+              : 'bg-cyan-500/20 text-cyan-400 border border-cyan-500/30'
+          }`}>
+            {toast.type === 'success' ? (
+              <CheckCircle2 className="w-5 h-5" />
+            ) : toast.type === 'error' ? (
+              <AlertCircle className="w-5 h-5" />
+            ) : (
+              <Sparkles className="w-5 h-5" />
+            )}
+          </div>
+          <div className="flex-1 min-w-0">
+            <h4 className="text-sm font-bold text-white tracking-tight">{toast.title}</h4>
+            {toast.message && (
+              <p className="text-xs text-neutral-400 mt-0.5 leading-relaxed">{toast.message}</p>
+            )}
+          </div>
+          <button
+            onClick={() => setToast(null)}
+            className="p-1 text-neutral-500 hover:text-white rounded-lg transition-colors flex-shrink-0"
+          >
+            <X className="w-4 h-4" />
+          </button>
+        </div>
+      )}
 
       {/* Footer */}
       <footer className="mt-auto border-t border-[#282828] py-4 text-center text-xs text-neutral-500">

@@ -59,7 +59,11 @@ export const Header: React.FC<HeaderProps> = ({
             onClick={onRefreshData}
             disabled={isRefreshing}
             title={isRefreshing ? "데이터 동기화 중..." : "데이터 새로고침"}
-            className="p-2 text-neutral-400 hover:text-white hover:bg-[#262626] rounded-lg transition-colors md:hidden disabled:opacity-50"
+            className={`p-2 rounded-lg transition-all md:hidden disabled:cursor-not-allowed ${
+              isRefreshing
+                ? 'bg-orange-500/20 text-orange-400 border border-orange-500/50 animate-pulse ring-2 ring-orange-500/30 shadow-md shadow-orange-500/20'
+                : 'text-neutral-400 hover:text-white hover:bg-[#262626]'
+            }`}
           >
             <RefreshCw className={`w-4 h-4 ${isRefreshing ? 'animate-spin text-orange-400' : ''}`} />
           </button>
@@ -117,7 +121,11 @@ export const Header: React.FC<HeaderProps> = ({
           <button
             onClick={onRefreshData}
             disabled={isRefreshing}
-            className="hidden md:flex items-center justify-center p-2 rounded-xl bg-[#1c1c1c] hover:bg-[#262626] border border-[#2e2e2e] text-neutral-300 hover:text-white transition-colors disabled:opacity-50"
+            className={`hidden md:flex items-center justify-center p-2 rounded-xl border transition-all disabled:cursor-not-allowed ${
+              isRefreshing
+                ? 'bg-orange-500/20 border-orange-500/60 text-orange-400 shadow-lg shadow-orange-500/30 animate-pulse ring-2 ring-orange-500/40'
+                : 'bg-[#1c1c1c] hover:bg-[#262626] border-[#2e2e2e] text-neutral-300 hover:text-white'
+            }`}
             title={isRefreshing ? "데이터 동기화 중..." : "데이터 동기화 / 새로고침"}
           >
             <RefreshCw className={`w-4 h-4 ${isRefreshing ? 'animate-spin text-orange-400' : ''}`} />
