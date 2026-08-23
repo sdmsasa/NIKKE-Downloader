@@ -16,6 +16,7 @@ interface HeaderProps {
   onRefreshData: () => void;
   isDownloading: boolean;
   downloadProgressPercent: number;
+  isRefreshing?: boolean;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -30,7 +31,8 @@ export const Header: React.FC<HeaderProps> = ({
   onStartDownload,
   onRefreshData,
   isDownloading,
-  downloadProgressPercent
+  downloadProgressPercent,
+  isRefreshing = false
 }) => {
   return (
     <header className="sticky top-0 z-40 border-b border-[#282828] bg-[#161616]/95 backdrop-blur-md px-4 lg:px-8 py-3.5 shadow-xl">
@@ -55,10 +57,11 @@ export const Header: React.FC<HeaderProps> = ({
 
           <button
             onClick={onRefreshData}
-            title="데이터 새로고침"
-            className="p-2 text-neutral-400 hover:text-white hover:bg-[#262626] rounded-lg transition-colors md:hidden"
+            disabled={isRefreshing}
+            title={isRefreshing ? "데이터 동기화 중..." : "데이터 새로고침"}
+            className="p-2 text-neutral-400 hover:text-white hover:bg-[#262626] rounded-lg transition-colors md:hidden disabled:opacity-50"
           >
-            <RefreshCw className="w-4 h-4" />
+            <RefreshCw className={`w-4 h-4 ${isRefreshing ? 'animate-spin text-orange-400' : ''}`} />
           </button>
         </div>
 
@@ -113,10 +116,11 @@ export const Header: React.FC<HeaderProps> = ({
           {/* Refresh Button */}
           <button
             onClick={onRefreshData}
-            className="hidden md:flex items-center justify-center p-2 rounded-xl bg-[#1c1c1c] hover:bg-[#262626] border border-[#2e2e2e] text-neutral-300 hover:text-white transition-colors"
-            title="데이터 동기화 / 새로고침"
+            disabled={isRefreshing}
+            className="hidden md:flex items-center justify-center p-2 rounded-xl bg-[#1c1c1c] hover:bg-[#262626] border border-[#2e2e2e] text-neutral-300 hover:text-white transition-colors disabled:opacity-50"
+            title={isRefreshing ? "데이터 동기화 중..." : "데이터 동기화 / 새로고침"}
           >
-            <RefreshCw className="w-4 h-4" />
+            <RefreshCw className={`w-4 h-4 ${isRefreshing ? 'animate-spin text-orange-400' : ''}`} />
           </button>
 
           {/* Download Queue / Status Manager Trigger */}

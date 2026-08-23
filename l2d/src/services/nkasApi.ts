@@ -75,19 +75,22 @@ export async function fetchAllNKASData(forceRefresh: boolean = false): Promise<F
   if (cached && !forceRefresh) {
     // Silently refresh in background
     setTimeout(() => {
-      fetchFreshNKASData().then(fresh => {
+      fetchFreshNKASData(false).then(fresh => {
         saveNKASDataToCache(fresh);
       }).catch(() => {});
     }, 1000);
     return cached;
   }
 
-  const fresh = await fetchFreshNKASData();
+  const fresh = await fetchFreshNKASData(forceRefresh);
   saveNKASDataToCache(fresh);
   return fresh;
 }
 
-async function fetchFreshNKASData(): Promise<FetchedData> {
+async function fetchFreshNKASData(forceRefresh: boolean = false): Promise<FetchedData> {
+  const cacheBust = forceRefresh ? `?t=${Date.now()}` : '';
+  const fetchOptions: RequestInit = forceRefresh ? { cache: 'no-cache' } : {};
+
   const [
     charsRes,
     burstsRes,
@@ -98,14 +101,14 @@ async function fetchFreshNKASData(): Promise<FetchedData> {
     aliasesRes,
     colorsRes
   ] = await Promise.all([
-    fetch(`${L2D_BASE}/characters.json`).then(r => r.json()).catch(() => ({})),
-    fetch(`${L2D_BASE}/bursts.json`).then(r => r.json()).catch(() => ({})),
-    fetch(`${L2D_BASE}/monsters.json`).then(r => r.json()).catch(() => ({})),
-    fetch(`${L2D_BASE}/favorites.json`).then(r => r.json()).catch(() => ({})),
-    fetch(`${L2D_BASE}/eventscenes.json`).then(r => r.json()).catch(() => ({})),
-    fetch(`${L2D_BASE}/new.json`).then(r => r.json()).catch(() => ([])),
-    fetch(`${MAIN_BASE}/nk_data/aliases.json`).then(r => r.json()).catch(() => ({})),
-    fetch(`${MAIN_BASE}/nk_data/colors.json`).then(r => r.json()).catch(() => ({}))
+    fetch(`${L2D_BASE}/characters.json${cacheBust}`, fetchOptions).then(r => r.json()).catch(() => ({})),
+    fetch(`${L2D_BASE}/bursts.json${cacheBust}`, fetchOptions).then(r => r.json()).catch(() => ({})),
+    fetch(`${L2D_BASE}/monsters.json${cacheBust}`, fetchOptions).then(r => r.json()).catch(() => ({})),
+    fetch(`${L2D_BASE}/favorites.json${cacheBust}`, fetchOptions).then(r => r.json()).catch(() => ({})),
+    fetch(`${L2D_BASE}/eventscenes.json${cacheBust}`, fetchOptions).then(r => r.json()).catch(() => ({})),
+    fetch(`${L2D_BASE}/new.json${cacheBust}`, fetchOptions).then(r => r.json()).catch(() => ([])),
+    fetch(`${MAIN_BASE}/nk_data/aliases.json${cacheBust}`, fetchOptions).then(r => r.json()).catch(() => ({})),
+    fetch(`${MAIN_BASE}/nk_data/colors.json${cacheBust}`, fetchOptions).then(r => r.json()).catch(() => ({}))
   ]);
 
   const newIds = new Set<string>(Array.isArray(newRes) ? newRes : []);

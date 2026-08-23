@@ -45,6 +45,7 @@ export function App() {
   // Data loading state (Initialize immediately with cached data if available)
   const [data, setData] = useState<FetchedData | null>(() => getCachedNKASData());
   const [isLoading, setIsLoading] = useState<boolean>(() => !getCachedNKASData());
+  const [isRefreshing, setIsRefreshing] = useState<boolean>(false);
   const [loadError, setLoadError] = useState<string | null>(null);
 
   // Active Category (Persistent)
@@ -195,7 +196,9 @@ export function App() {
 
   // Load / refresh data & restore saved directory handle
   const loadData = async (forceRefresh: boolean = false) => {
-    if (forceRefresh || !data) {
+    if (forceRefresh) {
+      setIsRefreshing(true);
+    } else if (!data) {
       setIsLoading(true);
     }
     setLoadError(null);
@@ -217,6 +220,7 @@ export function App() {
       setLoadError(err.message || '데이터를 불러오는 중 오류가 발생했습니다.');
     } finally {
       setIsLoading(false);
+      setIsRefreshing(false);
     }
   };
 
@@ -633,6 +637,7 @@ export function App() {
         onStartDownload={() => handleStartDownload()}
         onRefreshData={() => loadData(true)}
         isDownloading={progress.isRunning}
+        isRefreshing={isRefreshing}
         downloadProgressPercent={
           progress.totalFiles > 0
             ? Math.round((progress.completedFiles / progress.totalFiles) * 100)

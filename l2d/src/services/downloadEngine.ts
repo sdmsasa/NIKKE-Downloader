@@ -62,13 +62,13 @@ export async function buildAssetDownloadPlan(
   const plans: DownloadFilePlan[] = [];
   const folderName = formatItemFolderName(item, options.folderNaming);
 
-  // Category prefix
+  // Category prefix matching D:\l2d folder structure
   const categoryDir = options.categorySubfolders
-    ? item.type === 'character' ? 'Characters'
-      : item.type === 'burst' ? 'Bursts'
-      : item.type === 'monster' ? 'Raptures'
-      : item.type === 'favorite' ? 'Favorites'
-      : 'EventScenes'
+    ? item.type === 'character' ? 'L2D'
+      : item.type === 'burst' ? 'SKILLCUT'
+      : item.type === 'monster' ? 'RAPTURE'
+      : item.type === 'favorite' ? 'FAVORITE ITEM'
+      : 'EVENT SCENE'
     : '';
 
   const basePath = categoryDir ? `${categoryDir}/${folderName}` : folderName;
