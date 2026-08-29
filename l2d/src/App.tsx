@@ -438,36 +438,50 @@ export function App() {
   // Start Download Execution
   const handleStartDownload = async (targetItems?: AnyAssetItem[]) => {
     const itemsToDownload = targetItems || allAssetItems.filter(item => selectedIds.has(item.id));
-    if (itemsToDownload.length === 0) return;
+    if (itemsToDownload.length === 0) {
+      alert('다운로드할 모델을 1개 이상 선택해 주세요.');
+      return;
+    }
 
+    if (detailItem) {
+      setDetailItem(null);
+    }
+
+    let effectiveMode: 'directory' | 'zip' = options.mode;
     let activeDirHandle = dirHandle;
 
     // Check directory mode requirement and restore/request permission
-    if (options.mode === 'directory') {
+    if (effectiveMode === 'directory') {
       if (!isFileSystemAccessSupported()) {
-        alert('현재 브라우저가 File System Access API를 지원하지 않습니다. ZIP 모드로 전환합니다.');
-        setOptions(prev => ({ ...prev, mode: 'zip' }));
+        effectiveMode = 'zip';
       } else if (!activeDirHandle) {
         try {
           const picked = await pickTargetDirectory();
-          if (!picked) return; // cancelled
-          activeDirHandle = picked;
-          setDirHandle(picked);
+          if (picked) {
+            activeDirHandle = picked;
+            setDirHandle(picked);
+          } else {
+            // User cancelled folder picker -> fallback to ZIP mode so download still works!
+            effectiveMode = 'zip';
+          }
         } catch {
-          return;
+          effectiveMode = 'zip';
         }
       } else {
         // Verify / request permission on existing saved handle
-        const hasPermission = await verifyDirectoryPermission(activeDirHandle, true);
-        if (!hasPermission) {
-          try {
+        try {
+          const hasPermission = await verifyDirectoryPermission(activeDirHandle, true);
+          if (!hasPermission) {
             const picked = await pickTargetDirectory();
-            if (!picked) return;
-            activeDirHandle = picked;
-            setDirHandle(picked);
-          } catch {
-            return;
+            if (picked) {
+              activeDirHandle = picked;
+              setDirHandle(picked);
+            } else {
+              effectiveMode = 'zip';
+            }
           }
+        } catch {
+          effectiveMode = 'zip';
         }
       }
     }
@@ -476,6 +490,11 @@ export function App() {
     abortControllerRef.current = new AbortController();
 
     const failedTaskList: FailedTaskInfo[] = [];
+    const initialLog = {
+      time: new Date().toLocaleTimeString(),
+      type: 'info' as const,
+      message: `총 ${itemsToDownload.length}개 모델 다운로드 시작 (모드: ${effectiveMode === 'directory' ? `로컬 폴더: ${activeDirHandle?.name || '기본'}` : 'ZIP 압축 다운로드'})`
+    };
 
     setProgress({
       isRunning: true,
@@ -487,11 +506,10 @@ export function App() {
       completedFiles: 0,
       bytesDownloaded: 0,
       speedBytesPerSec: 0,
-      logs: [],
+      currentTaskName: `[1/${itemsToDownload.length}] ${itemsToDownload[0]?.name || ''} 에셋 준비 중...`,
+      logs: [initialLog],
       failedTasks: []
     });
-
-    addLog(`총 ${itemsToDownload.length}개 모델 다운로드 작업을 시작합니다. (모드: ${options.mode === 'directory' ? `로컬 폴더: ${activeDirHandle?.name}` : 'ZIP 압축'})`, 'info');
 
     const startTime = Date.now();
     let totalBytes = 0;
@@ -501,10 +519,10 @@ export function App() {
     let completedFileCount = 0;
 
     const newlyDownloaded: AnyAssetItem[] = [];
-    const zipBuilder = options.mode === 'zip' ? new ZipArchiveBuilder(`nikke_assets_${Date.now()}.zip`) : null;
+    const zipBuilder = effectiveMode === 'zip' ? new ZipArchiveBuilder(`nikke_assets_${Date.now()}.zip`) : null;
 
     try {
-      const concurrency = options.concurrency;
+      const concurrency = Math.max(1, options.concurrency || 4);
       let currentIndex = 0;
 
       const worker = async () => {
@@ -524,11 +542,16 @@ export function App() {
             ...prev,
             currentTaskName: `[${index + 1}/${itemsToDownload.length}] ${item.name} (${item.id})`
           }));
+          addLog(`[에셋 검색] ${item.name} (${item.id}) Live2D 파일 검색 중...`, 'info');
 
           try {
             const plans = await buildAssetDownloadPlan(item, options);
             totalFileCount += plans.length;
             setProgress(prev => ({ ...prev, totalFiles: totalFileCount }));
+
+            if (plans.length > 0) {
+              addLog(`[다운로드 시작] ${item.name} (${item.id}): 총 ${plans.length}개 파일`, 'info');
+            }
 
             let itemFilesSuccess = 0;
 

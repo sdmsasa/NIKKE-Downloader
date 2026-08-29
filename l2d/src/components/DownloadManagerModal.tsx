@@ -24,38 +24,15 @@ export const DownloadManagerModal: React.FC<DownloadManagerModalProps> = ({
   onRetryFailed,
   onRetrySingleItem
 }) => {
-  const logEndRef = useRef<HTMLDivElement>(null);
+  const logContainerRef = useRef<HTMLDivElement>(null);
   const [logFilter, setLogFilter] = useState<'all' | 'errors' | 'success'>('all');
   const [copiedLogs, setCopiedLogs] = useState(false);
 
   useEffect(() => {
-    if (logEndRef.current && !progress.isPaused) {
-      logEndRef.current.scrollIntoView({ behavior: 'smooth' });
+    if (logContainerRef.current && !progress.isPaused) {
+      logContainerRef.current.scrollTop = logContainerRef.current.scrollHeight;
     }
-  }, [progress.logs.length, progress.isPaused]);
-
-  if (!isOpen) return null;
-
-  const filePercent = progress.totalFiles > 0
-    ? Math.round((progress.completedFiles / progress.totalFiles) * 100)
-    : 0;
-
-  const speedFormatted = (progress.speedBytesPerSec / (1024 * 1024)).toFixed(2);
-  const totalMB = (progress.bytesDownloaded / (1024 * 1024)).toFixed(1);
-
-  // Filter logs
-  const filteredLogs = progress.logs.filter((l) => {
-    if (logFilter === 'errors') return l.type === 'error' || l.type === 'warning';
-    if (logFilter === 'success') return l.type === 'success';
-    return true;
-  });
-
-  const handleCopyLogs = () => {
-    const text = progress.logs.map(l => `[${l.time}] [${l.type.toUpperCase()}] ${l.message}`).join('\n');
-    navigator.clipboard.writeText(text);
-    setCopiedLogs(true);
-    setTimeout(() => setCopiedLogs(false), 2000);
-  };
+  }, [progress.logs?.length, progress.isPaused]);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -68,13 +45,43 @@ export const DownloadManagerModal: React.FC<DownloadManagerModalProps> = ({
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isOpen, onClose]);
 
+  if (!isOpen) return null;
+
+  const totalFiles = progress.totalFiles || 0;
+  const completedFiles = progress.completedFiles || 0;
+  const filePercent = totalFiles > 0
+    ? Math.round((completedFiles / totalFiles) * 100)
+    : 0;
+
+  const speedFormatted = ((progress.speedBytesPerSec || 0) / (1024 * 1024)).toFixed(2);
+  const totalMB = ((progress.bytesDownloaded || 0) / (1024 * 1024)).toFixed(1);
+
+  // Filter logs safely
+  const logsList = progress.logs || [];
+  const filteredLogs = logsList.filter((l) => {
+    if (logFilter === 'errors') return l.type === 'error' || l.type === 'warning';
+    if (logFilter === 'success') return l.type === 'success';
+    return true;
+  });
+
+  const handleCopyLogs = () => {
+    const text = logsList.map(l => `[${l.time}] [${l.type.toUpperCase()}] ${l.message}`).join('\n');
+    navigator.clipboard.writeText(text);
+    setCopiedLogs(true);
+    setTimeout(() => setCopiedLogs(false), 2000);
+  };
+
   return (
     <div
-      onClick={onClose}
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-150 cursor-pointer"
+      onClick={(e) => {
+        if (e.target === e.currentTarget) {
+          onClose();
+        }
+      }}
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm animate-in fade-in duration-150 cursor-pointer"
     >
       <div
-        className="relative w-full max-w-3xl flex flex-col bg-[#1c1c1c] border border-[#333333] rounded-2xl shadow-2xl overflow-hidden max-h-[90vh] cursor-default"
+        className="relative w-full max-w-3xl flex flex-col bg-[#1c1c1c] border border-[#383838] rounded-2xl shadow-2xl overflow-hidden max-h-[90vh] cursor-default"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
@@ -249,11 +256,11 @@ export const DownloadManagerModal: React.FC<DownloadManagerModalProps> = ({
                   >
                     <div className="flex flex-col min-w-0 pr-2">
                       <span className="font-semibold text-neutral-200 truncate">
-                        {ft.item.name} <span className="text-neutral-500 font-mono text-[10px]">({ft.item.id})</span>
+                        {ft.item?.name || '항목'} <span className="text-neutral-500 font-mono text-[10px]">({ft.item?.id})</span>
                       </span>
                       <span className="text-[10px] text-rose-400 truncate">{ft.error}</span>
                     </div>
-                    {onRetrySingleItem && !progress.isRunning && (
+                    {onRetrySingleItem && !progress.isRunning && ft.item && (
                       <button
                         onClick={() => onRetrySingleItem(ft.item)}
                         className="px-2 py-1 rounded bg-[#2a2a2a] hover:bg-[#383838] text-neutral-300 text-[10px] font-medium flex-shrink-0"
@@ -309,7 +316,10 @@ export const DownloadManagerModal: React.FC<DownloadManagerModalProps> = ({
               </div>
             </div>
 
-            <div className="h-52 overflow-y-auto bg-[#141414] border border-[#2a2a2a] rounded-xl p-3 font-mono text-[11px] flex flex-col gap-1">
+            <div
+              ref={logContainerRef}
+              className="h-52 overflow-y-auto bg-[#141414] border border-[#2a2a2a] rounded-xl p-3 font-mono text-[11px] flex flex-col gap-1"
+            >
               {filteredLogs.length === 0 ? (
                 <span className="text-neutral-600">로그가 비어 있습니다.</span>
               ) : (
@@ -331,7 +341,6 @@ export const DownloadManagerModal: React.FC<DownloadManagerModalProps> = ({
                   </div>
                 ))
               )}
-              <div ref={logEndRef} />
             </div>
           </div>
 
