@@ -47,19 +47,26 @@ export function matchSearchQuery(
 ): boolean {
   if (queryVariants.length === 0) return true;
 
+  const sanitize = (s: string) => s.toLowerCase().replace(/[:()_\-\s]/g, '');
+
   const idLower = item.id.toLowerCase();
   const nameLower = item.name.toLowerCase();
   const nameNoSpace = nameLower.replace(/\s+/g, '');
+  const nameSanitized = sanitize(item.name);
   const krLower = (item.krName || '').toLowerCase();
   const krNoSpace = krLower.replace(/\s+/g, '');
+  const krSanitized = sanitize(item.krName || '');
 
   return queryVariants.some((q) => {
+    const qSanitized = sanitize(q);
     return (
       idLower.includes(q) ||
       nameLower.includes(q) ||
       nameNoSpace.includes(q) ||
+      (nameSanitized && qSanitized && nameSanitized.includes(qSanitized)) ||
       krLower.includes(q) ||
-      krNoSpace.includes(q)
+      krNoSpace.includes(q) ||
+      (krSanitized && qSanitized && krSanitized.includes(qSanitized))
     );
   });
 }

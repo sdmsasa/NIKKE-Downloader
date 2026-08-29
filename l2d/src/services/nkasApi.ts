@@ -152,7 +152,7 @@ async function fetchFreshNKASData(forceRefresh: boolean = false): Promise<Fetche
       return {
         id,
         name,
-        krName: krName ? `${krName} (버스트)` : undefined,
+        krName: krName ? `${krName}: 버스트` : undefined,
         characterId: baseCharId,
         isNew,
         thumbnail: `${MAIN_BASE}/characters/si_${baseCharId}_s.png`
