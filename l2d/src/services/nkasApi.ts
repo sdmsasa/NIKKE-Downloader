@@ -1,10 +1,10 @@
 import type { CharacterItem, BurstItem, MonsterItem, FavoriteItem, EventSceneItem, CharacterPose } from '../types';
-import { getKoreanName } from '../data/translations';
+import { getKoreanName, getCharacterSubInfo } from '../data/translations';
 import characterPosesData from '../data/characterPoses.json';
 
 const L2D_BASE = 'https://nkas-l2d.pages.dev';
 const MAIN_BASE = 'https://nkas.pages.dev';
-const CACHE_KEY = 'nikke_cached_nkas_data_v3';
+const CACHE_KEY = 'nikke_cached_nkas_data_v4';
 
 export interface FetchedData {
   characters: CharacterItem[];
@@ -124,11 +124,15 @@ async function fetchFreshNKASData(forceRefresh: boolean = false): Promise<Fetche
     .map(([id, name]) => {
       const isNew = newIds.has(id);
       const krName = getKoreanName(name, id);
+      const subInfo = getCharacterSubInfo(id, name);
+      const displayName = krName || name;
       const poses = posesMap[id] || (id.startsWith('c9') ? ['idle'] : ['idle', 'aim', 'cover']);
       return {
         id,
         name,
+        displayName,
         krName,
+        subInfo,
         isNew,
         poses: poses as CharacterPose[],
         color: colorsRes[name] || colorsRes[id],
@@ -149,10 +153,15 @@ async function fetchFreshNKASData(forceRefresh: boolean = false): Promise<Fetche
       const isNew = newIds.has(id);
       const baseCharId = extractBaseCharacterId(id);
       const krName = getKoreanName(name, baseCharId);
+      const baseSubInfo = getCharacterSubInfo(baseCharId, name);
+      const subInfo = baseSubInfo ? `${baseSubInfo} · 버스트` : '버스트 스킬컷';
+      const displayName = krName ? `${krName}: 버스트` : `${name} (Burst)`;
       return {
         id,
         name,
-        krName: krName ? `${krName}: 버스트` : undefined,
+        displayName,
+        krName: displayName,
+        subInfo,
         characterId: baseCharId,
         isNew,
         thumbnail: `${MAIN_BASE}/characters/si_${baseCharId}_s.png`
@@ -166,6 +175,8 @@ async function fetchFreshNKASData(forceRefresh: boolean = false): Promise<Fetche
       return {
         id,
         name,
+        displayName: name,
+        subInfo: '랩쳐 / 보스',
         isNew: newIds.has(id),
         thumbnail: `${L2D_BASE}/monsters/${id}/default/${id}.png`
       };
@@ -177,9 +188,17 @@ async function fetchFreshNKASData(forceRefresh: boolean = false): Promise<Fetche
     .map(([id, val]) => {
       const charMatch = id.match(/FavoriteItemScene_(c\d+_\d+)/);
       const charId = charMatch ? charMatch[1] : undefined;
+      const krName = charId ? getKoreanName('', charId) : undefined;
+      const baseSubInfo = charId ? getCharacterSubInfo(charId) : undefined;
+      const subInfo = baseSubInfo ? `${baseSubInfo} · 애장품` : '애장품 스토리';
+      const rawName = typeof val === 'object' && val?.name ? val.name : String(val || id);
+      const displayName = krName ? `${krName}: 애장품` : rawName;
       return {
         id,
-        name: typeof val === 'object' && val?.name ? val.name : String(val || id),
+        name: rawName,
+        displayName,
+        krName: displayName,
+        subInfo,
         characterId: charId,
         isNew: newIds.has(id),
         icon: charId ? `${MAIN_BASE}/favorite_items/si_favoriteitem_${charId}.png` : undefined,
@@ -193,9 +212,12 @@ async function fetchFreshNKASData(forceRefresh: boolean = false): Promise<Fetche
   const eventScenes: EventSceneItem[] = Object.entries(eventsRes as Record<string, { name: string; mi?: string }>)
     .filter(([id]) => !id.toLowerCase().includes('dummy'))
     .map(([id, val]) => {
+      const rawName = typeof val === 'object' && val?.name ? val.name : String(val || id);
       return {
         id,
-        name: typeof val === 'object' && val?.name ? val.name : String(val || id),
+        name: rawName,
+        displayName: rawName,
+        subInfo: '이벤트 컷신',
         isNew: newIds.has(id),
         sceneSi: `${MAIN_BASE}/eventscenes/${id}_si.png`,
         sceneMi: `${MAIN_BASE}/eventscenes/${id}_mi.png`

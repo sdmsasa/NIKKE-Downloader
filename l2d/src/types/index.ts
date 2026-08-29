@@ -5,7 +5,9 @@ export type CharacterPose = 'idle' | 'aim' | 'cover';
 export interface CharacterItem {
   id: string; // e.g. "c010_00"
   name: string; // e.g. "Rapi"
+  displayName?: string; // Formatted display name (e.g. "라푼젤: 퓨어 그레이스")
   krName?: string; // Translated / search friendly name
+  subInfo?: string; // e.g. "필그림 · 갓데스"
   aliases?: string[];
   color?: string;
   isNew?: boolean;
@@ -22,7 +24,9 @@ export interface CharacterItem {
 export interface BurstItem {
   id: string; // e.g. "c010_00_skillcut"
   name: string;
+  displayName?: string;
   krName?: string;
+  subInfo?: string;
   characterId: string;
   isNew?: boolean;
   thumbnail: string;
@@ -31,6 +35,9 @@ export interface BurstItem {
 export interface MonsterItem {
   id: string; // e.g. "eba003_psid"
   name: string;
+  displayName?: string;
+  krName?: string;
+  subInfo?: string;
   isNew?: boolean;
   thumbnail?: string;
 }
@@ -38,6 +45,9 @@ export interface MonsterItem {
 export interface FavoriteItem {
   id: string; // e.g. "FavoriteItemScene_c030_00"
   name: string;
+  displayName?: string;
+  krName?: string;
+  subInfo?: string;
   characterId?: string;
   isNew?: boolean;
   icon?: string;
@@ -49,6 +59,9 @@ export interface FavoriteItem {
 export interface EventSceneItem {
   id: string; // e.g. "EventScene_staranis_03"
   name: string;
+  displayName?: string;
+  krName?: string;
+  subInfo?: string;
   isNew?: boolean;
   sceneSi?: string;
   sceneMi?: string;

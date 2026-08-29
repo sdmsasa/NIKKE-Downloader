@@ -172,19 +172,23 @@ export const AssetCard: React.FC<AssetCardProps> = ({
       {/* Info Content Area */}
       <div className="p-3 flex-1 flex flex-col justify-between gap-2 bg-[#1c1c1c]">
         <div>
-          {/* Main Title (Enlarged) */}
+          {/* Main Title (Korean display name first) */}
           <h3
             onClick={onOpenDetail}
             className="text-[13.5px] sm:text-sm font-extrabold text-neutral-100 hover:text-orange-400 transition-colors line-clamp-1 cursor-pointer tracking-tight"
-            title={item.name}
+            title={item.displayName || item.krName || item.name}
           >
-            {item.name}
+            {item.displayName || item.krName || item.name}
           </h3>
 
-          {/* Sub Title / Korean Name */}
-          {(item as any).krName && (
+          {/* Sub Row: Company · Squad · Org · Other metadata */}
+          {item.subInfo ? (
             <p className="text-xs text-neutral-400 line-clamp-1 mt-0.5 font-medium">
-              {(item as any).krName}
+              {item.subInfo}
+            </p>
+          ) : (
+            <p className="text-xs text-neutral-500 line-clamp-1 mt-0.5 font-medium">
+              {item.name}
             </p>
           )}
 

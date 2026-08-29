@@ -42,7 +42,7 @@ export function getSearchVariants(rawQuery: string): string[] {
 }
 
 export function matchSearchQuery(
-  item: { id: string; name: string; krName?: string },
+  item: { id: string; name: string; displayName?: string; krName?: string; subInfo?: string },
   queryVariants: string[]
 ): boolean {
   if (queryVariants.length === 0) return true;
@@ -53,9 +53,14 @@ export function matchSearchQuery(
   const nameLower = item.name.toLowerCase();
   const nameNoSpace = nameLower.replace(/\s+/g, '');
   const nameSanitized = sanitize(item.name);
-  const krLower = (item.krName || '').toLowerCase();
-  const krNoSpace = krLower.replace(/\s+/g, '');
-  const krSanitized = sanitize(item.krName || '');
+  
+  const displayLower = (item.displayName || item.krName || '').toLowerCase();
+  const displayNoSpace = displayLower.replace(/\s+/g, '');
+  const displaySanitized = sanitize(displayLower);
+
+  const subInfoLower = (item.subInfo || '').toLowerCase();
+  const subInfoNoSpace = subInfoLower.replace(/\s+/g, '');
+  const subInfoSanitized = sanitize(subInfoLower);
 
   return queryVariants.some((q) => {
     const qSanitized = sanitize(q);
@@ -64,9 +69,12 @@ export function matchSearchQuery(
       nameLower.includes(q) ||
       nameNoSpace.includes(q) ||
       (nameSanitized && qSanitized && nameSanitized.includes(qSanitized)) ||
-      krLower.includes(q) ||
-      krNoSpace.includes(q) ||
-      (krSanitized && qSanitized && krSanitized.includes(qSanitized))
+      displayLower.includes(q) ||
+      displayNoSpace.includes(q) ||
+      (displaySanitized && qSanitized && displaySanitized.includes(qSanitized)) ||
+      subInfoLower.includes(q) ||
+      subInfoNoSpace.includes(q) ||
+      (subInfoSanitized && qSanitized && subInfoSanitized.includes(qSanitized))
     );
   });
 }

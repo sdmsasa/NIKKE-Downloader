@@ -97,39 +97,45 @@ export function formatCharacterDisplayName(char, fallbackName = '') {
   return cleanName;
 }
 
-function run() {
-  const content = fs.readFileSync(metaPath, 'utf8');
-  const lines = content.split('\n');
+function formatSubInfo(info) {
+  const processInfo = (str, isSquad = false) => {
+    if (!str || str === '-') return [];
+    const list = str
+      .replace(/엑스트라/g, '기타')
+      .split(/[,/·|]/)
+      .map((s) => s.trim())
+      .filter(Boolean);
+    return isSquad
+      ? list.filter((s) => !['기타', 'NPC', '엑스트라', '???', '-'].includes(s))
+      : list;
+  };
 
-  const idToKorean = {};
-  const nameToKorean = {};
-
-  for (const line of lines) {
-    const trimmed = line.trim();
-    if (!trimmed.startsWith('|') || trimmed.includes('공식 ID') || trimmed.includes('---')) continue;
-    const cols = trimmed.split('|').map(s => s.trim()).filter((_, i, arr) => i > 0 && i < arr.length - 1);
-    if (cols.length >= 8) {
-      const [id, engSlug, charName, skinName, altName, role, krSearchKey, krDisplayName] = cols;
-      if (!id || id === '-') continue;
-
-      const finalDisplayName = krDisplayName && krDisplayName !== '-' ? krDisplayName : formatCharacterDisplayName(null, krSearchKey);
-      
-      idToKorean[id] = finalDisplayName;
-
-      if (engSlug && engSlug !== '-') {
-        nameToKorean[engSlug.toLowerCase()] = finalDisplayName;
-        const noUnderscore = engSlug.replace(/_/g, ' ').toLowerCase();
-        nameToKorean[noUnderscore] = finalDisplayName;
-      }
-      if (charName && charName !== '-') {
-        if (!nameToKorean[charName.toLowerCase()]) {
-          nameToKorean[charName.toLowerCase()] = finalDisplayName;
-        }
-      }
+  const totalItems = [];
+  const seen = new Set();
+  const addItem = (text) => {
+    if (text && text !== '-' && !seen.has(text)) {
+      totalItems.push(text);
+      seen.add(text);
     }
-  }
+  };
 
-  // Also read company markdown files
+  processInfo(info.company).forEach((c) => addItem(c));
+  processInfo(info.company2).forEach((c) => addItem(c));
+  processInfo(info.squad, true).forEach((s) => addItem(s));
+  processInfo(info.squad2, true).forEach((s) => addItem(s));
+  processInfo(info.org).forEach((o) => addItem(o));
+  processInfo(info.other).forEach((o) => addItem(o));
+
+  return totalItems.join(' · ');
+}
+
+function run() {
+  const idToKorean = {};
+  const idToSubInfo = {};
+  const nameToKorean = {};
+  const nameToSubInfo = {};
+
+  // 1. Read company markdown files for company/squad/other subInfo metadata
   const companyFiles = ['ELYSION.md', 'MISSILIS.md', 'TETRA.md', 'PILGRIM.md', 'ABNORMAL.md', 'HERETIC.md', 'NPC.md', 'EXTRA.md'];
   for (const compFile of companyFiles) {
     const filePath = path.join(settingsDir, compFile);
@@ -140,9 +146,9 @@ function run() {
       const trimmed = cLine.trim();
       if (!trimmed.startsWith('|') || trimmed.includes('공식 ID') || trimmed.includes('---')) continue;
       const cols = trimmed.split('|').map(s => s.trim()).filter((_, i, arr) => i > 0 && i < arr.length - 1);
-      if (cols.length >= 4) {
-        const [id, charName, altName, skinName] = cols;
-        if (!id || id === '-' || idToKorean[id]) continue;
+      if (cols.length >= 10) {
+        const [id, charName, altName, skinName, squad, squad2, org, color, other, company, company2] = cols;
+        if (!id || id === '-') continue;
         const cleanAlt = altName && altName !== '-' ? altName : '';
         const cleanSkin = skinName && skinName !== '-' ? skinName : '';
         const displayName = formatCharacterDisplayName({
@@ -151,11 +157,56 @@ function run() {
           variant: cleanSkin
         }, charName);
         idToKorean[id] = displayName;
+
+        const subInfo = formatSubInfo({ company, company2, squad, squad2, org, other });
+        if (subInfo) {
+          idToSubInfo[id] = subInfo;
+        }
       }
     }
   }
 
-  // Read existing translations.ts to preserve any custom NAME_TO_KOREAN keys while converting values
+  // 2. Read CHARACTERS_META.md for comprehensive ID and English mappings
+  if (fs.existsSync(metaPath)) {
+    const content = fs.readFileSync(metaPath, 'utf8');
+    const lines = content.split('\n');
+
+    for (const line of lines) {
+      const trimmed = line.trim();
+      if (!trimmed.startsWith('|') || trimmed.includes('공식 ID') || trimmed.includes('---')) continue;
+      const cols = trimmed.split('|').map(s => s.trim()).filter((_, i, arr) => i > 0 && i < arr.length - 1);
+      if (cols.length >= 8) {
+        const [id, engSlug, charName, skinName, altName, role, krSearchKey, krDisplayName] = cols;
+        if (!id || id === '-') continue;
+
+        const finalDisplayName = krDisplayName && krDisplayName !== '-' ? krDisplayName : formatCharacterDisplayName(null, krSearchKey);
+        
+        idToKorean[id] = finalDisplayName;
+
+        const subInfo = idToSubInfo[id] || (role && role !== '-' && role !== 'Base' ? role : undefined);
+
+        if (engSlug && engSlug !== '-') {
+          nameToKorean[engSlug.toLowerCase()] = finalDisplayName;
+          const noUnderscore = engSlug.replace(/_/g, ' ').toLowerCase();
+          nameToKorean[noUnderscore] = finalDisplayName;
+          if (subInfo) {
+            nameToSubInfo[engSlug.toLowerCase()] = subInfo;
+            nameToSubInfo[noUnderscore] = subInfo;
+          }
+        }
+        if (charName && charName !== '-') {
+          if (!nameToKorean[charName.toLowerCase()]) {
+            nameToKorean[charName.toLowerCase()] = finalDisplayName;
+            if (subInfo && !nameToSubInfo[charName.toLowerCase()]) {
+              nameToSubInfo[charName.toLowerCase()] = subInfo;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // 3. Preserve any additional keys from existing translations.ts
   const existingContent = fs.readFileSync(targetFile, 'utf8');
   const nameToKoreanRegex = /"([^"]+)":\s*"([^"]+)"/g;
   let match;
@@ -165,6 +216,9 @@ function run() {
     if (line.includes('export const NAME_TO_KOREAN')) {
       inNameToKorean = true;
       continue;
+    }
+    if (line.includes('export const ID_TO_SUBINFO') || line.includes('export function getKoreanName')) {
+      inNameToKorean = false;
     }
     if (inNameToKorean) {
       while ((match = nameToKoreanRegex.exec(line)) !== null) {
@@ -181,17 +235,33 @@ function run() {
     .map(([k, v]) => `  "${k}": "${v}"`)
     .join(',\n');
 
+  const subInfoEntries = Object.entries(idToSubInfo)
+    .map(([k, v]) => `  "${k}": "${v}"`)
+    .join(',\n');
+
   const nameEntries = Object.entries(nameToKorean)
     .map(([k, v]) => `  "${k}": "${v}"`)
     .join(',\n');
 
-  const output = `// Auto-generated Korean name mappings from Obsidian NIKKE Settings
+  const nameSubInfoEntries = Object.entries(nameToSubInfo)
+    .map(([k, v]) => `  "${k}": "${v}"`)
+    .join(',\n');
+
+  const output = `// Auto-generated Korean name & metadata mappings from Obsidian NIKKE Settings
 export const ID_TO_KOREAN: Record<string, string> = {
 ${idEntries}
 };
 
+export const ID_TO_SUBINFO: Record<string, string> = {
+${subInfoEntries}
+};
+
 export const NAME_TO_KOREAN: Record<string, string> = {
 ${nameEntries}
+};
+
+export const NAME_TO_SUBINFO: Record<string, string> = {
+${nameSubInfoEntries}
 };
 
 export function getKoreanName(name: string, id?: string): string | undefined {
@@ -211,10 +281,28 @@ export function getKoreanName(name: string, id?: string): string | undefined {
 
   return undefined;
 }
+
+export function getCharacterSubInfo(id?: string, name?: string): string | undefined {
+  if (id) {
+    const cleanId = id.toLowerCase().trim();
+    const baseId = cleanId.split('_')[0];
+    if (ID_TO_SUBINFO[cleanId]) return ID_TO_SUBINFO[cleanId];
+    if (ID_TO_SUBINFO[baseId]) return ID_TO_SUBINFO[baseId];
+  }
+
+  if (name) {
+    const lower = name.toLowerCase().trim();
+    if (NAME_TO_SUBINFO[lower]) return NAME_TO_SUBINFO[lower];
+    const prefix = lower.split(/[:\\-]/)[0].trim();
+    if (NAME_TO_SUBINFO[prefix]) return NAME_TO_SUBINFO[prefix];
+  }
+
+  return undefined;
+}
 `;
 
   fs.writeFileSync(targetFile, output, 'utf8');
-  console.log(`Successfully generated translations.ts with ${Object.keys(idToKorean).length} IDs and ${Object.keys(nameToKorean).length} name keys.`);
+  console.log(`Successfully generated translations.ts with ${Object.keys(idToKorean).length} IDs, ${Object.keys(idToSubInfo).length} subInfo entries, and ${Object.keys(nameToKorean).length} name keys.`);
 }
 
 run();

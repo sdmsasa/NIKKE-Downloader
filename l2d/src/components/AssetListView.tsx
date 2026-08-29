@@ -119,7 +119,7 @@ export const AssetListView: React.FC<AssetListViewProps> = ({
                     onClick={() => onOpenDetail(item)}
                     className="font-bold text-sm text-neutral-100 hover:text-orange-400 transition-colors flex items-center gap-2 cursor-pointer"
                   >
-                    <span>{item.name}</span>
+                    <span>{item.displayName || item.krName || item.name}</span>
                     {item.isNew && (
                       <span className="flex items-center gap-0.5 px-1.5 py-0.5 text-[9px] font-bold bg-amber-500 text-neutral-950 rounded shadow-sm">
                         <Sparkles className="w-2.5 h-2.5" />
@@ -127,11 +127,15 @@ export const AssetListView: React.FC<AssetListViewProps> = ({
                       </span>
                     )}
                   </div>
-                  {(item as any).krName && (
+                  {item.subInfo ? (
                     <div className="text-xs text-neutral-400 font-medium mt-0.5">
-                      {(item as any).krName}
+                      {item.subInfo}
                     </div>
-                  )}
+                  ) : item.name && (item.displayName || item.krName) !== item.name ? (
+                    <div className="text-xs text-neutral-500 font-medium mt-0.5">
+                      {item.name}
+                    </div>
+                  ) : null}
                 </td>
 
                 {/* Category Type */}

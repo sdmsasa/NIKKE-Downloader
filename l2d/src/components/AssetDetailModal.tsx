@@ -224,7 +224,9 @@ export const AssetDetailModal: React.FC<AssetDetailModalProps> = ({
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h2 className="text-base font-bold text-white">{item.name}</h2>
+                <h2 className="text-base font-bold text-white">
+                  {item.displayName || item.krName || item.name}
+                </h2>
                 
                 {/* Clickable ID button that copies ID to clipboard */}
                 <button
@@ -249,9 +251,16 @@ export const AssetDetailModal: React.FC<AssetDetailModalProps> = ({
                   </span>
                 )}
               </div>
-              {(item as any).krName && (
-                <p className="text-xs text-neutral-400 mt-0.5">{(item as any).krName}</p>
-              )}
+              {item.subInfo ? (
+                <p className="text-xs text-neutral-400 mt-0.5">
+                  {item.subInfo}
+                  {item.name && item.name !== (item.displayName || item.krName) && (
+                    <span className="text-neutral-500 ml-2 font-normal">({item.name})</span>
+                  )}
+                </p>
+              ) : item.name ? (
+                <p className="text-xs text-neutral-400 mt-0.5">{item.name}</p>
+              ) : null}
             </div>
           </div>
 
