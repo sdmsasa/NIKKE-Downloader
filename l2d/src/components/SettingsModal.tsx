@@ -19,12 +19,26 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
   onClearHistory,
   downloadedCount
 }) => {
+  React.useEffect(() => {
+    if (!isOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        onClose();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, onClose]);
+
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-150">
+    <div
+      onClick={onClose}
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-150 cursor-pointer"
+    >
       <div
-        className="relative w-full max-w-xl flex flex-col bg-[#1c1c1c] border border-[#333333] rounded-2xl shadow-2xl overflow-hidden max-h-[90vh]"
+        className="relative w-full max-w-xl flex flex-col bg-[#1c1c1c] border border-[#333333] rounded-2xl shadow-2xl overflow-hidden max-h-[90vh] cursor-default"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}

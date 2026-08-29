@@ -20,14 +20,23 @@ export const AssetDetailModal: React.FC<AssetDetailModalProps> = ({
   const [copiedId, setCopiedId] = useState<boolean>(false);
   const [downloadingUrl, setDownloadingUrl] = useState<string | null>(null);
 
-  // Prevent background body scrolling when modal is open
+  // Prevent background body scrolling when modal is open & support Escape key
   React.useEffect(() => {
     const originalOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        onClose();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+
     return () => {
       document.body.style.overflow = originalOverflow;
+      window.removeEventListener('keydown', handleKeyDown);
     };
-  }, []);
+  }, [onClose]);
 
   if (!item) return null;
 
@@ -211,9 +220,12 @@ export const AssetDetailModal: React.FC<AssetDetailModalProps> = ({
   const files = getFileList();
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-200 overscroll-contain">
+    <div
+      onClick={onClose}
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-200 overscroll-contain cursor-pointer"
+    >
       <div
-        className="relative w-full max-w-4xl max-h-[90vh] flex flex-col bg-[#1c1c1c] border border-[#333333] rounded-2xl shadow-2xl overflow-hidden overscroll-contain"
+        className="relative w-full max-w-4xl max-h-[90vh] flex flex-col bg-[#1c1c1c] border border-[#333333] rounded-2xl shadow-2xl overflow-hidden overscroll-contain cursor-default"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
