@@ -1,0 +1,81 @@
+name: Sync Character Data and Deploy
+
+on:
+  schedule:
+    # 하루 2번 실행 (KST 기준 오전 9시, 오후 9시 / UTC 기준 00:00, 12:00)
+    - cron: '0 0,12 * * *'
+  workflow_dispatch:
+    # GitHub Actions 탭에서 "Run workflow" 버튼 클릭 시 수동 즉시 실행
+
+permissions:
+  contents: write
+
+jobs:
+  sync-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout NIKKE-Downloader repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Checkout Obsidian Settings (Private Repo)
+        uses: actions/checkout@v4
+        with:
+          repository: 'sdmsasa/Obsidian'
+          token: ${{ secrets.OBSIDIAN_PAT }}
+          path: 'obsidian-repo'
+          sparse-checkout: |
+            NIKKE/Settings
+          sparse-checkout-cone-mode: false
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'npm'
+          cache-dependency-path: 'l2d/package-lock.json'
+
+      - name: Install dependencies
+        working-directory: ./l2d
+        run: npm ci
+
+      - name: Sync character translations
+        working-directory: ./l2d
+        env:
+          OBSIDIAN_SETTINGS_DIR: ${{ github.workspace }}/obsidian-repo/NIKKE/Settings
+        run: npm run sync-translations
+
+      - name: Check for changes
+        id: check_changes
+        run: |
+          if [ -n "$(git status --porcelain l2d/src/data/translations.ts)" ]; then
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+            echo "Changes detected in translations.ts"
+          else
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+            echo "No changes in translations.ts"
+          fi
+
+      - name: Build project
+        if: steps.check_changes.outputs.has_changes == 'true' || github.event_name == 'workflow_dispatch'
+        working-directory: ./l2d
+        run: npm run build
+
+      - name: Commit and push updated translations to main
+        if: steps.check_changes.outputs.has_changes == 'true'
+        run: |
+          git config --local user.name "github-actions[bot]"
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git add l2d/src/data/translations.ts
+          git commit -m "feat(data): auto-sync character metadata [skip ci]"
+          git push origin main
+
+      - name: Deploy to GitHub Pages
+        if: steps.check_changes.outputs.has_changes == 'true' || github.event_name == 'workflow_dispatch'
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: l2d/dist
+          branch: gh-pages
+          clean: true

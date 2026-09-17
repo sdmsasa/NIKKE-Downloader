@@ -5,9 +5,19 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const metaPath = 'C:/Users/sdmsa/내 드라이브/Obsidian/Obsidian/NIKKE/Settings/CHARACTERS_META.md';
-const settingsDir = 'C:/Users/sdmsa/내 드라이브/Obsidian/Obsidian/NIKKE/Settings';
+const defaultSettingsDir = 'C:/Users/sdmsa/내 드라이브/Obsidian/Obsidian/NIKKE/Settings';
+const settingsDir = process.env.OBSIDIAN_SETTINGS_DIR || defaultSettingsDir;
 const targetFile = path.resolve(__dirname, '../src/data/translations.ts');
+
+function findFile(dir, fileName) {
+  if (!fs.existsSync(dir)) return null;
+  const directPath = path.join(dir, fileName);
+  if (fs.existsSync(directPath)) return directPath;
+  const target = fileName.toLowerCase();
+  const files = fs.readdirSync(dir);
+  const found = files.find(f => f.toLowerCase() === target);
+  return found ? path.join(dir, found) : null;
+}
 
 function autoBalanceParentheses(str) {
   if (!str) return str;
@@ -138,8 +148,8 @@ function run() {
   // 1. Read company markdown files for company/squad/other subInfo metadata
   const companyFiles = ['ELYSION.md', 'MISSILIS.md', 'TETRA.md', 'PILGRIM.md', 'ABNORMAL.md', 'HERETIC.md', 'NPC.md', 'EXTRA.md'];
   for (const compFile of companyFiles) {
-    const filePath = path.join(settingsDir, compFile);
-    if (!fs.existsSync(filePath)) continue;
+    const filePath = findFile(settingsDir, compFile);
+    if (!filePath || !fs.existsSync(filePath)) continue;
     const compContent = fs.readFileSync(filePath, 'utf8');
     const compLines = compContent.split('\n');
     for (const cLine of compLines) {
@@ -167,7 +177,8 @@ function run() {
   }
 
   // 2. Read CHARACTERS_META.md for comprehensive ID and English mappings
-  if (fs.existsSync(metaPath)) {
+  const metaPath = findFile(settingsDir, 'CHARACTERS_META.md');
+  if (metaPath && fs.existsSync(metaPath)) {
     const content = fs.readFileSync(metaPath, 'utf8');
     const lines = content.split('\n');
 
