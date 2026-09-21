@@ -7,7 +7,8 @@ const __dirname = path.dirname(__filename);
 
 const defaultSettingsDir = 'C:/Users/sdmsa/내 드라이브/Obsidian/Obsidian/NIKKE/Settings';
 const settingsDir = process.env.OBSIDIAN_SETTINGS_DIR || defaultSettingsDir;
-const targetFile = path.resolve(__dirname, '../src/data/translations.ts');
+const targetTranslationsFile = path.resolve(__dirname, '../src/data/translations.ts');
+const targetManufacturersFile = path.resolve(__dirname, '../src/data/manufacturers.ts');
 
 function findFile(dir, fileName) {
   if (!fs.existsSync(dir)) return null;
@@ -134,10 +135,36 @@ function formatSubInfo(info) {
   processInfo(info.squad, true).forEach((s) => addItem(s));
   processInfo(info.squad2, true).forEach((s) => addItem(s));
   processInfo(info.org).forEach((o) => addItem(o));
+  processInfo(info.role).forEach((r) => addItem(r));
   processInfo(info.other).forEach((o) => addItem(o));
 
   return totalItems.join(' · ');
 }
+
+const COMP_FILE_TO_MANUFACTURER = {
+  'ELYSION.md': 'elysion',
+  'MISSILIS.md': 'missilis',
+  'TETRA.md': 'tetra',
+  'PILGRIM.md': 'pilgrim',
+  'HERETIC.md': 'heretic',
+  'ABNORMAL.md': 'abnormal',
+  'NPC.md': 'other',
+  'EXTRA.md': 'other'
+};
+
+const SECTION_TO_MANUFACTURER = {
+  '엘리시온': 'elysion',
+  '미실리스': 'missilis',
+  '테트라': 'tetra',
+  '필그림': 'pilgrim',
+  '에덴': 'pilgrim',
+  '헬레틱': 'heretic',
+  '어브노멀': 'abnormal',
+  'NPC': 'other',
+  '기타': 'other',
+  '엑스트라': 'other',
+  'V.T.C.': 'other'
+};
 
 function run() {
   const idToKorean = {};
@@ -145,11 +172,16 @@ function run() {
   const nameToKorean = {};
   const nameToSubInfo = {};
 
-  // 1. Read company markdown files for company/squad/other subInfo metadata
-  const companyFiles = ['ELYSION.md', 'MISSILIS.md', 'TETRA.md', 'PILGRIM.md', 'ABNORMAL.md', 'HERETIC.md', 'NPC.md', 'EXTRA.md'];
+  const idToManufacturer = {};
+  const nameToManufacturer = {};
+
+  // 1. Read company markdown files for company/squad/role subInfo and manufacturer
+  const companyFiles = ['ELYSION.md', 'MISSILIS.md', 'TETRA.md', 'PILGRIM.md', 'HERETIC.md', 'ABNORMAL.md', 'NPC.md', 'EXTRA.md'];
   for (const compFile of companyFiles) {
     const filePath = findFile(settingsDir, compFile);
     if (!filePath || !fs.existsSync(filePath)) continue;
+    const compKey = COMP_FILE_TO_MANUFACTURER[compFile] || 'other';
+
     const compContent = fs.readFileSync(filePath, 'utf8');
     const compLines = compContent.split('\n');
     for (const cLine of compLines) {
@@ -157,7 +189,7 @@ function run() {
       if (!trimmed.startsWith('|') || trimmed.includes('공식 ID') || trimmed.includes('---')) continue;
       const cols = trimmed.split('|').map(s => s.trim()).filter((_, i, arr) => i > 0 && i < arr.length - 1);
       if (cols.length >= 10) {
-        const [id, charName, altName, skinName, squad, squad2, org, color, other, company, company2] = cols;
+        const [id, charName, altName, skinName, squad, squad2, org, _color, roleOrOther, company, company2] = cols;
         if (!id || id === '-') continue;
         const cleanAlt = altName && altName !== '-' ? altName : '';
         const cleanSkin = skinName && skinName !== '-' ? skinName : '';
@@ -168,9 +200,15 @@ function run() {
         }, charName);
         idToKorean[id] = displayName;
 
-        const subInfo = formatSubInfo({ company, company2, squad, squad2, org, other });
+        const subInfo = formatSubInfo({ company, company2, squad, squad2, org, role: roleOrOther });
         if (subInfo) {
           idToSubInfo[id] = subInfo;
+        }
+
+        // Manufacturer mapping
+        idToManufacturer[id] = compKey;
+        if (charName && charName !== '-') {
+          nameToManufacturer[charName.toLowerCase()] = compKey;
         }
       }
     }
@@ -181,13 +219,19 @@ function run() {
   if (metaPath && fs.existsSync(metaPath)) {
     const content = fs.readFileSync(metaPath, 'utf8');
     const lines = content.split('\n');
+    let currentManufacturer = 'other';
 
     for (const line of lines) {
       const trimmed = line.trim();
+      if (trimmed.startsWith('## ')) {
+        const secName = trimmed.replace(/^##\s+/, '').trim();
+        currentManufacturer = SECTION_TO_MANUFACTURER[secName] || 'other';
+        continue;
+      }
       if (!trimmed.startsWith('|') || trimmed.includes('공식 ID') || trimmed.includes('---')) continue;
       const cols = trimmed.split('|').map(s => s.trim()).filter((_, i, arr) => i > 0 && i < arr.length - 1);
       if (cols.length >= 8) {
-        const [id, engSlug, charName, skinName, altName, role, krSearchKey, krDisplayName] = cols;
+        const [id, engSlug, charName, _skinName, _altName, role, krSearchKey, krDisplayName] = cols;
         if (!id || id === '-') continue;
 
         const finalDisplayName = krDisplayName && krDisplayName !== '-' ? krDisplayName : formatCharacterDisplayName(null, krSearchKey);
@@ -196,10 +240,17 @@ function run() {
 
         const subInfo = idToSubInfo[id] || (role && role !== '-' && role !== 'Base' ? role : undefined);
 
+        if (!idToManufacturer[id] || idToManufacturer[id] === 'other') {
+          idToManufacturer[id] = currentManufacturer;
+        }
+
         if (engSlug && engSlug !== '-') {
           nameToKorean[engSlug.toLowerCase()] = finalDisplayName;
           const noUnderscore = engSlug.replace(/_/g, ' ').toLowerCase();
           nameToKorean[noUnderscore] = finalDisplayName;
+          nameToManufacturer[engSlug.toLowerCase()] = currentManufacturer;
+          nameToManufacturer[noUnderscore] = currentManufacturer;
+
           if (subInfo) {
             nameToSubInfo[engSlug.toLowerCase()] = subInfo;
             nameToSubInfo[noUnderscore] = subInfo;
@@ -212,36 +263,86 @@ function run() {
               nameToSubInfo[charName.toLowerCase()] = subInfo;
             }
           }
+          if (!nameToManufacturer[charName.toLowerCase()] || nameToManufacturer[charName.toLowerCase()] === 'other') {
+            nameToManufacturer[charName.toLowerCase()] = currentManufacturer;
+          }
         }
       }
     }
   }
 
   // 3. Preserve any additional keys from existing translations.ts
-  const existingContent = fs.readFileSync(targetFile, 'utf8');
-  const nameToKoreanRegex = /"([^"]+)":\s*"([^"]+)"/g;
-  let match;
-  let inNameToKorean = false;
+  if (fs.existsSync(targetTranslationsFile)) {
+    const existingContent = fs.readFileSync(targetTranslationsFile, 'utf8');
+    const nameToKoreanRegex = /"([^"]+)":\s*"([^"]+)"/g;
+    let match;
+    let inNameToKorean = false;
 
-  for (const line of existingContent.split('\n')) {
-    if (line.includes('export const NAME_TO_KOREAN')) {
-      inNameToKorean = true;
-      continue;
-    }
-    if (line.includes('export const ID_TO_SUBINFO') || line.includes('export function getKoreanName')) {
-      inNameToKorean = false;
-    }
-    if (inNameToKorean) {
-      while ((match = nameToKoreanRegex.exec(line)) !== null) {
-        const [_, key, oldVal] = match;
-        const newVal = formatCharacterDisplayName(null, oldVal);
-        if (!nameToKorean[key.toLowerCase()]) {
-          nameToKorean[key.toLowerCase()] = newVal;
+    for (const line of existingContent.split('\n')) {
+      if (line.includes('export const NAME_TO_KOREAN')) {
+        inNameToKorean = true;
+        continue;
+      }
+      if (line.includes('export const ID_TO_SUBINFO') || line.includes('export function getKoreanName')) {
+        inNameToKorean = false;
+      }
+      if (inNameToKorean) {
+        while ((match = nameToKoreanRegex.exec(line)) !== null) {
+          const [_, key, oldVal] = match;
+          const newVal = formatCharacterDisplayName(null, oldVal);
+          if (!nameToKorean[key.toLowerCase()]) {
+            nameToKorean[key.toLowerCase()] = newVal;
+          }
         }
       }
     }
   }
 
+  // 4. Preserve existing manufacturers.ts keys
+  if (fs.existsSync(targetManufacturersFile)) {
+    const existingMfg = fs.readFileSync(targetManufacturersFile, 'utf8');
+    let inIdMfg = false;
+    let inNameMfg = false;
+    const kvRegex = /"([^"]+)":\s*"([^"]+)"/g;
+    let match;
+
+    for (const line of existingMfg.split('\n')) {
+      if (line.includes('export const ID_TO_MANUFACTURER')) {
+        inIdMfg = true;
+        inNameMfg = false;
+        continue;
+      }
+      if (line.includes('export const NAME_TO_MANUFACTURER')) {
+        inIdMfg = false;
+        inNameMfg = true;
+        continue;
+      }
+      if (line.includes('export function getCharacterManufacturer')) {
+        inIdMfg = false;
+        inNameMfg = false;
+        continue;
+      }
+
+      if (inIdMfg) {
+        while ((match = kvRegex.exec(line)) !== null) {
+          const [_, key, val] = match;
+          if (!idToManufacturer[key]) {
+            idToManufacturer[key] = val;
+          }
+        }
+      }
+      if (inNameMfg) {
+        while ((match = kvRegex.exec(line)) !== null) {
+          const [_, key, val] = match;
+          if (!nameToManufacturer[key.toLowerCase()]) {
+            nameToManufacturer[key.toLowerCase()] = val;
+          }
+        }
+      }
+    }
+  }
+
+  // Write translations.ts
   const idEntries = Object.entries(idToKorean)
     .map(([k, v]) => `  "${k}": "${v}"`)
     .join(',\n');
@@ -258,7 +359,7 @@ function run() {
     .map(([k, v]) => `  "${k}": "${v}"`)
     .join(',\n');
 
-  const output = `// Auto-generated Korean name & metadata mappings from Obsidian NIKKE Settings
+  const translationsOutput = `// Auto-generated Korean name & metadata mappings from Obsidian NIKKE Settings
 export const ID_TO_KOREAN: Record<string, string> = {
 ${idEntries}
 };
@@ -286,7 +387,7 @@ export function getKoreanName(name: string, id?: string): string | undefined {
   if (name) {
     const lower = name.toLowerCase().trim();
     if (NAME_TO_KOREAN[lower]) return NAME_TO_KOREAN[lower];
-    const prefix = lower.split(/[:\\-]/)[0].trim();
+    const prefix = lower.split(/[:-]/)[0].trim();
     if (NAME_TO_KOREAN[prefix]) return NAME_TO_KOREAN[prefix];
   }
 
@@ -304,7 +405,7 @@ export function getCharacterSubInfo(id?: string, name?: string): string | undefi
   if (name) {
     const lower = name.toLowerCase().trim();
     if (NAME_TO_SUBINFO[lower]) return NAME_TO_SUBINFO[lower];
-    const prefix = lower.split(/[:\\-]/)[0].trim();
+    const prefix = lower.split(/[:-]/)[0].trim();
     if (NAME_TO_SUBINFO[prefix]) return NAME_TO_SUBINFO[prefix];
   }
 
@@ -312,8 +413,84 @@ export function getCharacterSubInfo(id?: string, name?: string): string | undefi
 }
 `;
 
-  fs.writeFileSync(targetFile, output, 'utf8');
+  fs.writeFileSync(targetTranslationsFile, translationsOutput, 'utf8');
   console.log(`Successfully generated translations.ts with ${Object.keys(idToKorean).length} IDs, ${Object.keys(idToSubInfo).length} subInfo entries, and ${Object.keys(nameToKorean).length} name keys.`);
+
+  // Write manufacturers.ts
+  const idMfgEntries = Object.entries(idToManufacturer)
+    .map(([k, v]) => `  "${k}": "${v}"`)
+    .join(',\n');
+
+  const nameMfgEntries = Object.entries(nameToManufacturer)
+    .map(([k, v]) => `  "${k}": "${v}"`)
+    .join(',\n');
+
+  const manufacturersOutput = `import iconCorpAll from '../assets/corp/icn_corp_all.png';
+import iconElysion from '../assets/corp/ELYSION.webp';
+import iconMissilis from '../assets/corp/MISSILIS.webp';
+import iconTetra from '../assets/corp/TETRA.webp';
+import iconPilgrim from '../assets/corp/PILGRIM.webp';
+import iconHeretic from '../assets/corp/HERETIC.webp';
+import iconAbnormal from '../assets/corp/ABNORMAL.webp';
+import iconUnknown from '../assets/corp/icn_corp_unknown.png';
+
+// Auto-generated from Obsidian NIKKE Settings
+export type ManufacturerType = 'all' | 'elysion' | 'missilis' | 'tetra' | 'pilgrim' | 'heretic' | 'abnormal' | 'other';
+
+export interface ManufacturerInfo {
+  id: ManufacturerType;
+  label: string;
+  enLabel: string;
+  color: string;
+  badgeBg: string;
+  icon: string;
+}
+
+export const MANUFACTURERS: ManufacturerInfo[] = [
+  { id: 'all', label: 'ALL', enLabel: 'All', color: 'text-neutral-200', badgeBg: 'bg-[#333333] text-white', icon: iconCorpAll },
+  { id: 'elysion', label: '엘리시온', enLabel: 'Elysion', color: 'text-blue-400', badgeBg: 'bg-blue-950/80 text-blue-300 border-blue-600/50', icon: iconElysion },
+  { id: 'missilis', label: '미실리스', enLabel: 'Missilis', color: 'text-emerald-400', badgeBg: 'bg-emerald-950/80 text-emerald-300 border-emerald-600/50', icon: iconMissilis },
+  { id: 'tetra', label: '테트라', enLabel: 'Tetra', color: 'text-amber-400', badgeBg: 'bg-amber-950/80 text-amber-300 border-amber-600/50', icon: iconTetra },
+  { id: 'pilgrim', label: '필그림', enLabel: 'Pilgrim', color: 'text-purple-400', badgeBg: 'bg-purple-950/80 text-purple-300 border-purple-600/50', icon: iconPilgrim },
+  { id: 'heretic', label: '헬레틱', enLabel: 'Heretic', color: 'text-red-400', badgeBg: 'bg-red-950/80 text-red-300 border-red-600/50', icon: iconHeretic },
+  { id: 'abnormal', label: '어브노멀', enLabel: 'Abnormal', color: 'text-rose-400', badgeBg: 'bg-rose-950/80 text-rose-300 border-rose-600/50', icon: iconAbnormal },
+  { id: 'other', label: '기타', enLabel: 'Other', color: 'text-neutral-400', badgeBg: 'bg-neutral-800 text-neutral-300 border-neutral-600/60', icon: iconUnknown }
+];
+
+export const ID_TO_MANUFACTURER: Record<string, ManufacturerType> = {
+${idMfgEntries}
+};
+
+export const NAME_TO_MANUFACTURER: Record<string, ManufacturerType> = {
+${nameMfgEntries}
+};
+
+export function getCharacterManufacturer(id: string, name?: string): ManufacturerType {
+  if (!id && !name) return 'all';
+  const cleanId = (id || '').toLowerCase().trim();
+  const baseId = cleanId.split('_')[0];
+
+  // 1. Check exact ID or base ID
+  if (ID_TO_MANUFACTURER[cleanId]) return ID_TO_MANUFACTURER[cleanId];
+  if (ID_TO_MANUFACTURER[baseId]) return ID_TO_MANUFACTURER[baseId];
+
+  // 2. Check Collab pattern c8xx
+  if (/^c8\\d{2}/.test(cleanId)) return 'abnormal';
+
+  // 3. Check exact or prefix name
+  if (name) {
+    const lowerName = name.toLowerCase().trim();
+    if (NAME_TO_MANUFACTURER[lowerName]) return NAME_TO_MANUFACTURER[lowerName];
+    const prefix = lowerName.split(/[:-]/)[0].trim();
+    if (NAME_TO_MANUFACTURER[prefix]) return NAME_TO_MANUFACTURER[prefix];
+  }
+
+  return 'other';
+}
+`;
+
+  fs.writeFileSync(targetManufacturersFile, manufacturersOutput, 'utf8');
+  console.log(`Successfully generated manufacturers.ts with ${Object.keys(idToManufacturer).length} IDs and ${Object.keys(nameToManufacturer).length} name keys.`);
 }
 
 run();

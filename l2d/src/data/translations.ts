@@ -361,6 +361,18 @@ export const ID_TO_KOREAN: Record<string, string> = {
   "c262": "리버렐리오",
   "c262_01": "리버렐리오: 드리밍 레이크",
   "c9009": "니힐리스타: EDEN",
+  "bbg002": "토커티브",
+  "c263": "인디빌리아",
+  "c944": "아나키오르",
+  "c971_01": "장화: Unknown",
+  "c9017": "앨트루이아",
+  "c9025": "에고비스타",
+  "c560": "베히모스",
+  "c561": "지즈",
+  "c562": "레비아탄",
+  "c563": "바하무트",
+  "c996": "레비",
+  "c997": "온리 원: 다크 매터",
   "c852": "릴리",
   "c850": "이브",
   "c850_01": "이브: 키홀 드레스",
@@ -434,18 +446,6 @@ export const ID_TO_KOREAN: Record<string, string> = {
   "c870": "퀸 (마코토)",
   "c870_01": "퀸 (마코토): 슈진고교 학생회장",
   "c870_02": "퀸 (마코토): 퀸즈 파자마 (Ver. NIKKE Collabo)",
-  "bbg002": "토커티브",
-  "c263": "인디빌리아",
-  "c944": "아나키오르",
-  "c971_01": "장화: Unknown",
-  "c9017": "앨트루이아",
-  "c9025": "에고비스타",
-  "c560": "베히모스",
-  "c561": "지즈",
-  "c562": "레비아탄",
-  "c563": "바하무트",
-  "c996": "레비",
-  "c997": "온리 원: 퀸",
   "c370": "이터니티",
   "c371": "엔드리스",
   "c610": "메카미 시프티",
@@ -929,6 +929,18 @@ export const ID_TO_SUBINFO: Record<string, string> = {
   "c262": "헬레틱 · 필그림",
   "c262_01": "헬레틱 · 필그림",
   "c9009": "헬레틱 · 필그림 · NPC",
+  "bbg002": "헬레틱 · NPC",
+  "c263": "헬레틱 · NPC",
+  "c944": "헬레틱 · NPC",
+  "c971_01": "헬레틱 · NPC",
+  "c9017": "헬레틱 · NPC",
+  "c9025": "헬레틱 · NPC",
+  "c560": "헬레틱 · 포비스트 · NPC",
+  "c561": "헬레틱 · 포비스트 · NPC",
+  "c562": "헬레틱 · 포비스트 · NPC",
+  "c563": "헬레틱 · 포비스트 · NPC",
+  "c996": "NPC",
+  "c997": "헬레틱 · NPC",
   "c852": "어브노멀 · 5차 강하 부대",
   "c850": "어브노멀 · 7차 강하 부대",
   "c850_01": "어브노멀 · 7차 강하 부대",
@@ -1002,18 +1014,6 @@ export const ID_TO_SUBINFO: Record<string, string> = {
   "c870": "NPC",
   "c870_01": "어브노멀 · 마음의 괴도단",
   "c870_02": "어브노멀 · 마음의 괴도단",
-  "bbg002": "헬레틱 · NPC",
-  "c263": "헬레틱 · NPC",
-  "c944": "헬레틱 · NPC",
-  "c971_01": "헬레틱 · NPC",
-  "c9017": "헬레틱 · NPC",
-  "c9025": "헬레틱 · NPC",
-  "c560": "헬레틱 · 포비스트 · NPC",
-  "c561": "헬레틱 · 포비스트 · NPC",
-  "c562": "헬레틱 · 포비스트 · NPC",
-  "c563": "헬레틱 · 포비스트 · NPC",
-  "c996": "NPC",
-  "c997": "헬레틱 · NPC",
   "c370": "중앙 정부 · AI · NPC",
   "c371": "중앙 정부 · AI · NPC",
   "c610": "중앙 정부 · NPC",
@@ -1743,8 +1743,8 @@ export const NAME_TO_KOREAN: Record<string, string> = {
   "only_one": "온리 원",
   "only one": "온리 원",
   "levi": "레비",
-  "only_one_queen": "온리 원: 퀸",
-  "only one queen": "온리 원: 퀸",
+  "only_one_dark_matter": "온리 원: 다크 매터",
+  "only one dark matter": "온리 원: 다크 매터",
   "nihilister_eden": "니힐리스타: EDEN",
   "nihilister eden": "니힐리스타: EDEN",
   "mass_produced_heretic": "검은 헬레틱",
@@ -2074,6 +2074,8 @@ export const NAME_TO_KOREAN: Record<string, string> = {
   "v t c priestess": "V.T.C. 여사제",
   "v.t.c. priestess": "V.T.C. 여사제",
   "princess": "프린세스",
+  "only_one_queen": "온리 원: 퀸",
+  "only one queen": "온리 원: 퀸",
   "marian_modernia": "마리안: 모더니아",
   "marian modernia": "마리안: 모더니아",
   "marian_first_affection": "마리안: 퍼스트 어펙션",
@@ -3095,8 +3097,8 @@ export const NAME_TO_SUBINFO: Record<string, string> = {
   "only_one": "헬레틱 · 포비스트 · NPC",
   "only one": "헬레틱 · 포비스트 · NPC",
   "levi": "NPC",
-  "only_one_queen": "헬레틱 · NPC",
-  "only one queen": "헬레틱 · NPC",
+  "only_one_dark_matter": "헬레틱 · NPC",
+  "only one dark matter": "헬레틱 · NPC",
   "nihilister_eden": "헬레틱 · 필그림 · NPC",
   "nihilister eden": "헬레틱 · 필그림 · NPC",
   "mass_produced_heretic": "NPC",
@@ -3439,7 +3441,7 @@ export function getKoreanName(name: string, id?: string): string | undefined {
   if (name) {
     const lower = name.toLowerCase().trim();
     if (NAME_TO_KOREAN[lower]) return NAME_TO_KOREAN[lower];
-    const prefix = lower.split(/[:\-]/)[0].trim();
+    const prefix = lower.split(/[:-]/)[0].trim();
     if (NAME_TO_KOREAN[prefix]) return NAME_TO_KOREAN[prefix];
   }
 
@@ -3457,7 +3459,7 @@ export function getCharacterSubInfo(id?: string, name?: string): string | undefi
   if (name) {
     const lower = name.toLowerCase().trim();
     if (NAME_TO_SUBINFO[lower]) return NAME_TO_SUBINFO[lower];
-    const prefix = lower.split(/[:\-]/)[0].trim();
+    const prefix = lower.split(/[:-]/)[0].trim();
     if (NAME_TO_SUBINFO[prefix]) return NAME_TO_SUBINFO[prefix];
   }
 

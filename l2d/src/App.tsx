@@ -259,6 +259,7 @@ export function App() {
 
   useEffect(() => {
     loadData(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Pick target folder via File System Access API

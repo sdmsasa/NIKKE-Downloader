@@ -50,12 +50,12 @@ jobs:
       - name: Check for changes
         id: check_changes
         run: |
-          if [ -n "$(git status --porcelain l2d/src/data/translations.ts)" ]; then
+          if [ -n "$(git status --porcelain l2d/src/data/)" ]; then
             echo "has_changes=true" >> $GITHUB_OUTPUT
-            echo "Changes detected in translations.ts"
+            echo "Changes detected in l2d/src/data/"
           else
             echo "has_changes=false" >> $GITHUB_OUTPUT
-            echo "No changes in translations.ts"
+            echo "No changes in l2d/src/data/"
           fi
 
       - name: Build project
@@ -68,8 +68,8 @@ jobs:
         run: |
           git config --local user.name "github-actions[bot]"
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git add l2d/src/data/translations.ts
-          git commit -m "feat(data): auto-sync character metadata [skip ci]"
+          git add l2d/src/data/
+          git commit -m "feat(data): auto-sync character metadata and manufacturers [skip ci]"
           git push origin main
 
       - name: Deploy to GitHub Pages

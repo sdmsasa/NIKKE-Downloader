@@ -118,7 +118,7 @@ export interface DownloadOptions {
 export interface FilterState {
   category: AssetCategory;
   search: string;
-  manufacturer: 'all' | 'elysion' | 'missilis' | 'tetra' | 'pilgrim' | 'abnormal' | 'other';
+  manufacturer: 'all' | 'elysion' | 'missilis' | 'tetra' | 'pilgrim' | 'heretic' | 'abnormal' | 'other';
   onlyNew: boolean;
   onlySelected: boolean;
   onlyDownloaded: 'all' | 'downloaded' | 'not_downloaded';
