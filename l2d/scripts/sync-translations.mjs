@@ -188,8 +188,14 @@ function run() {
       const trimmed = cLine.trim();
       if (!trimmed.startsWith('|') || trimmed.includes('공식 ID') || trimmed.includes('---')) continue;
       const cols = trimmed.split('|').map(s => s.trim()).filter((_, i, arr) => i > 0 && i < arr.length - 1);
-      if (cols.length >= 10) {
-        const [id, charName, altName, skinName, squad, squad2, org, _color, roleOrOther, company, company2] = cols;
+      if (cols.length >= 7) {
+        let id, charName, altName, skinName, squad, squad2, org, _color, roleOrOther, company, company2;
+        if (cols.length >= 10) {
+          [id, charName, altName, skinName, squad, squad2, org, _color, roleOrOther, company, company2] = cols;
+        } else {
+          [id, charName, altName, skinName, squad, _color, roleOrOther] = cols;
+          company = compFile.replace('.md', '');
+        }
         if (!id || id === '-') continue;
         const cleanAlt = altName && altName !== '-' ? altName : '';
         const cleanSkin = skinName && skinName !== '-' ? skinName : '';
@@ -230,11 +236,17 @@ function run() {
       }
       if (!trimmed.startsWith('|') || trimmed.includes('공식 ID') || trimmed.includes('---')) continue;
       const cols = trimmed.split('|').map(s => s.trim()).filter((_, i, arr) => i > 0 && i < arr.length - 1);
-      if (cols.length >= 8) {
-        const [id, engSlug, charName, _skinName, _altName, role, krSearchKey, krDisplayName] = cols;
+      if (cols.length >= 7) {
+        let id, engSlug, charName, _skinName, _altName, role, krSearchKey, krDisplayName;
+        if (cols.length >= 8) {
+          [id, engSlug, charName, _skinName, _altName, role, krSearchKey, krDisplayName] = cols;
+        } else {
+          [id, engSlug, charName, _skinName, _altName, role, krDisplayName] = cols;
+          krSearchKey = engSlug;
+        }
         if (!id || id === '-') continue;
 
-        const finalDisplayName = krDisplayName && krDisplayName !== '-' ? krDisplayName : formatCharacterDisplayName(null, krSearchKey);
+        const finalDisplayName = krDisplayName && krDisplayName !== '-' ? krDisplayName : formatCharacterDisplayName(null, krSearchKey || charName);
         
         idToKorean[id] = finalDisplayName;
 
@@ -274,25 +286,51 @@ function run() {
   // 3. Preserve any additional keys from existing translations.ts
   if (fs.existsSync(targetTranslationsFile)) {
     const existingContent = fs.readFileSync(targetTranslationsFile, 'utf8');
-    const nameToKoreanRegex = /"([^"]+)":\s*"([^"]+)"/g;
+    const kvRegex = /"([^"]+)":\s*"([^"]+)"/g;
     let match;
-    let inNameToKorean = false;
+    let section = '';
 
     for (const line of existingContent.split('\n')) {
-      if (line.includes('export const NAME_TO_KOREAN')) {
-        inNameToKorean = true;
+      if (line.includes('export const ID_TO_KOREAN')) {
+        section = 'id_korean';
         continue;
       }
-      if (line.includes('export const ID_TO_SUBINFO') || line.includes('export function getKoreanName')) {
-        inNameToKorean = false;
+      if (line.includes('export const NAME_TO_KOREAN')) {
+        section = 'name_korean';
+        continue;
       }
-      if (inNameToKorean) {
-        while ((match = nameToKoreanRegex.exec(line)) !== null) {
-          const [_, key, oldVal] = match;
-          const newVal = formatCharacterDisplayName(null, oldVal);
-          if (!nameToKorean[key.toLowerCase()]) {
-            nameToKorean[key.toLowerCase()] = newVal;
-          }
+      if (line.includes('export const ID_TO_SUBINFO')) {
+        section = 'id_subinfo';
+        continue;
+      }
+      if (line.includes('export const NAME_TO_SUBINFO')) {
+        section = 'name_subinfo';
+        continue;
+      }
+      if (line.includes('export function getKoreanName') || line.includes('export function getCharacterSubInfo')) {
+        section = '';
+        continue;
+      }
+
+      if (section === 'id_korean') {
+        while ((match = kvRegex.exec(line)) !== null) {
+          const [_, key, val] = match;
+          if (!idToKorean[key]) idToKorean[key] = val;
+        }
+      } else if (section === 'name_korean') {
+        while ((match = kvRegex.exec(line)) !== null) {
+          const [_, key, val] = match;
+          if (!nameToKorean[key.toLowerCase()]) nameToKorean[key.toLowerCase()] = val;
+        }
+      } else if (section === 'id_subinfo') {
+        while ((match = kvRegex.exec(line)) !== null) {
+          const [_, key, val] = match;
+          if (!idToSubInfo[key]) idToSubInfo[key] = val;
+        }
+      } else if (section === 'name_subinfo') {
+        while ((match = kvRegex.exec(line)) !== null) {
+          const [_, key, val] = match;
+          if (!nameToSubInfo[key.toLowerCase()]) nameToSubInfo[key.toLowerCase()] = val;
         }
       }
     }

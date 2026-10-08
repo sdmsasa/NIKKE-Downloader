@@ -2,8 +2,11 @@ name: Sync Character Data and Deploy
 
 on:
   schedule:
-    # 하루 2번 실행 (KST 기준 오전 9시, 오후 9시 / UTC 기준 00:00, 12:00)
-    - cron: '0 0,12 * * *'
+    # 매시간 실행 (매 1시간마다)
+    - cron: '0 * * * *'
+  push:
+    branches:
+      - main
   workflow_dispatch:
     # GitHub Actions 탭에서 "Run workflow" 버튼 클릭 시 수동 즉시 실행
 
@@ -59,7 +62,7 @@ jobs:
           fi
 
       - name: Build project
-        if: steps.check_changes.outputs.has_changes == 'true' || github.event_name == 'workflow_dispatch'
+        if: steps.check_changes.outputs.has_changes == 'true' || github.event_name == 'workflow_dispatch' || github.event_name == 'push'
         working-directory: ./l2d
         run: npm run build
 
@@ -73,7 +76,7 @@ jobs:
           git push origin main
 
       - name: Deploy to GitHub Pages
-        if: steps.check_changes.outputs.has_changes == 'true' || github.event_name == 'workflow_dispatch'
+        if: steps.check_changes.outputs.has_changes == 'true' || github.event_name == 'workflow_dispatch' || github.event_name == 'push'
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           folder: l2d/dist
