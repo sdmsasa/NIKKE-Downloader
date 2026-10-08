@@ -6,6 +6,23 @@
     overflow-x: hidden;
     background-color: #101010;
     color: #e5e5e5;
+    user-select: text;
+    -webkit-user-select: text;
+  }
+  
+  *, *::before, *::after {
+    user-select: text;
+    -webkit-user-select: text;
+  }
+
+  ::selection {
+    background-color: #ea580c;
+    color: #ffffff;
+  }
+
+  ::-moz-selection {
+    background-color: #ea580c;
+    color: #ffffff;
   }
   
   code, pre, .font-mono {

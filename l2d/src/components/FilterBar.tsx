@@ -261,7 +261,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
                     {(['idle', 'aim', 'cover'] as const).map((pose) => (
                       <label
                         key={pose}
-                        className={`flex items-center justify-center gap-1.5 p-1.5 rounded-lg border cursor-pointer select-none transition-all ${
+                        className={`flex items-center justify-center gap-1.5 p-1.5 rounded-lg border cursor-pointer transition-all ${
                           options.poses[pose]
                             ? 'bg-[#383838] text-white border-neutral-300 font-semibold'
                             : 'bg-[#262626] text-white border-[#333333] hover:bg-[#303030]'
@@ -296,7 +296,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
                     ].map(({ key, label }) => (
                       <label
                         key={key}
-                        className={`flex items-center gap-1.5 p-1.5 rounded-lg border cursor-pointer select-none transition-all ${
+                        className={`flex items-center gap-1.5 p-1.5 rounded-lg border cursor-pointer transition-all ${
                           (options.includeImages as any)[key]
                             ? 'bg-[#383838] text-white border-neutral-300 font-semibold'
                             : 'bg-[#262626] text-white border-[#333333] hover:bg-[#303030]'

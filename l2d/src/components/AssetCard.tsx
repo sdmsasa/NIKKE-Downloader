@@ -119,8 +119,11 @@ export const AssetCard: React.FC<AssetCardProps> = ({
     >
       {/* Top Banner / Image Area (High-Res Container) */}
       <div
-        onClick={onToggleSelect}
-        className={`relative w-full aspect-[4/5] ${config.imgBg} flex items-center justify-center cursor-pointer overflow-hidden select-none p-1.5`}
+        onClick={() => {
+          if (window.getSelection()?.toString()) return;
+          onToggleSelect();
+        }}
+        className={`relative w-full aspect-[4/5] ${config.imgBg} flex items-center justify-center cursor-pointer overflow-hidden p-1.5`}
       >
         {/* Character / Asset Foreground Image */}
         {currentThumbUrl ? (
@@ -174,8 +177,11 @@ export const AssetCard: React.FC<AssetCardProps> = ({
         <div>
           {/* Main Title (Korean display name first) */}
           <h3
-            onClick={onOpenDetail}
-            className="text-[13.5px] sm:text-sm font-extrabold text-neutral-100 hover:text-orange-400 transition-colors line-clamp-1 cursor-pointer tracking-tight"
+            onClick={() => {
+              if (window.getSelection()?.toString()) return;
+              onOpenDetail();
+            }}
+            className="text-[13.5px] sm:text-sm font-extrabold text-neutral-100 hover:text-orange-400 transition-colors line-clamp-1 cursor-pointer tracking-tight select-text"
             title={item.displayName || item.krName || item.name}
           >
             {item.displayName || item.krName || item.name}
@@ -183,11 +189,11 @@ export const AssetCard: React.FC<AssetCardProps> = ({
 
           {/* Sub Row: Company · Squad · Org · Other metadata */}
           {item.subInfo ? (
-            <p className="text-xs text-neutral-400 line-clamp-1 mt-0.5 font-medium">
+            <p className="text-xs text-neutral-400 line-clamp-1 mt-0.5 font-medium select-text">
               {item.subInfo}
             </p>
           ) : (
-            <p className="text-xs text-neutral-500 line-clamp-1 mt-0.5 font-medium">
+            <p className="text-xs text-neutral-500 line-clamp-1 mt-0.5 font-medium select-text">
               {item.name}
             </p>
           )}
@@ -199,11 +205,12 @@ export const AssetCard: React.FC<AssetCardProps> = ({
               type="button"
               onClick={(e) => {
                 e.stopPropagation();
+                if (window.getSelection()?.toString()) return;
                 navigator.clipboard.writeText(item.id);
                 setCopiedId(true);
                 setTimeout(() => setCopiedId(false), 1500);
               }}
-              className="px-1.5 py-0.5 rounded text-[9px] font-mono font-medium bg-[#262626] hover:bg-[#333333] text-white border border-[#383838] transition-colors cursor-pointer"
+              className="px-1.5 py-0.5 rounded text-[9px] font-mono font-medium bg-[#262626] hover:bg-[#333333] text-white border border-[#383838] transition-colors cursor-pointer select-text"
               title="클릭하여 ID 복사"
             >
               {copiedId ? '복사됨' : item.id}

@@ -72,10 +72,10 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
             </label>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
               {[
-                { id: 'id_name', label: 'ID 이름 (대괄호 없음, 추천)', example: 'c010 Rapi' },
+                { id: 'id_only', label: 'ID만 사용 (기본값, 추천)', example: 'c010' },
+                { id: 'id_name', label: 'ID 이름 (대괄호 없음)', example: 'c010 Rapi' },
                 { id: 'bracket_id_name', label: '[ID] 이름 (대괄호 포함)', example: '[c010] Rapi' },
                 { id: 'name_id', label: '이름 ID', example: 'Rapi c010' },
-                { id: 'id_only', label: 'ID만 사용', example: 'c010' },
                 { id: 'name_only', label: '이름만 사용', example: 'Rapi' }
               ].map((opt) => (
                 <label

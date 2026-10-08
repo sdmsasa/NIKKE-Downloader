@@ -58,7 +58,10 @@ export const AssetListView: React.FC<AssetListViewProps> = ({
             return (
               <tr
                 key={item.id}
-                onClick={() => onToggleSelect(item.id)}
+                onClick={() => {
+                  if (window.getSelection()?.toString()) return;
+                  onToggleSelect(item.id);
+                }}
                 className={`hover:bg-[#242424] cursor-pointer transition-colors ${
                   isSelected ? 'bg-orange-500/5' : ''
                 }`}
@@ -81,8 +84,11 @@ export const AssetListView: React.FC<AssetListViewProps> = ({
                 <td className="py-2 px-2 w-24" onClick={(e) => e.stopPropagation()}>
                   <button
                     type="button"
-                    onClick={() => handleCopyId(item.id)}
-                    className="inline-flex items-center px-2 py-0.5 rounded bg-[#222222] hover:bg-[#2c2c2c] border border-[#333333] hover:border-neutral-400 font-mono text-[11px] text-white transition-colors cursor-pointer"
+                    onClick={() => {
+                      if (window.getSelection()?.toString()) return;
+                      handleCopyId(item.id);
+                    }}
+                    className="inline-flex items-center px-2 py-0.5 rounded bg-[#222222] hover:bg-[#2c2c2c] border border-[#333333] hover:border-neutral-400 font-mono text-[11px] text-white transition-colors cursor-pointer select-text"
                     title="클릭하여 ID 복사"
                   >
                     <span>{copiedId === item.id ? '복사됨' : item.id}</span>
@@ -116,8 +122,11 @@ export const AssetListView: React.FC<AssetListViewProps> = ({
                 {/* Name */}
                 <td className="py-2 px-3">
                   <div
-                    onClick={() => onOpenDetail(item)}
-                    className="font-bold text-sm text-neutral-100 hover:text-orange-400 transition-colors flex items-center gap-2 cursor-pointer"
+                    onClick={() => {
+                      if (window.getSelection()?.toString()) return;
+                      onOpenDetail(item);
+                    }}
+                    className="font-bold text-sm text-neutral-100 hover:text-orange-400 transition-colors flex items-center gap-2 cursor-pointer select-text"
                   >
                     <span>{item.displayName || item.krName || item.name}</span>
                     {item.isNew && (
@@ -128,11 +137,11 @@ export const AssetListView: React.FC<AssetListViewProps> = ({
                     )}
                   </div>
                   {item.subInfo ? (
-                    <div className="text-xs text-neutral-400 font-medium mt-0.5">
+                    <div className="text-xs text-neutral-400 font-medium mt-0.5 select-text">
                       {item.subInfo}
                     </div>
                   ) : item.name && (item.displayName || item.krName) !== item.name ? (
-                    <div className="text-xs text-neutral-500 font-medium mt-0.5">
+                    <div className="text-xs text-neutral-500 font-medium mt-0.5 select-text">
                       {item.name}
                     </div>
                   ) : null}

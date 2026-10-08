@@ -108,15 +108,15 @@ export function App() {
       const saved = localStorage.getItem(STORAGE_KEYS.OPTIONS);
       if (saved) {
         const parsed = JSON.parse(saved);
-        if (parsed.folderNaming === 'bracket_id_name' || !parsed.folderNaming) {
-          parsed.folderNaming = 'id_name';
+        if (parsed.folderNaming === 'bracket_id_name' || parsed.folderNaming === 'id_name' || !parsed.folderNaming) {
+          parsed.folderNaming = 'id_only';
         }
         return parsed;
       }
     } catch {}
     return {
       mode: 'directory',
-      folderNaming: 'id_name',
+      folderNaming: 'id_only',
       categorySubfolders: true,
       characterSubfolders: true,
       poses: {

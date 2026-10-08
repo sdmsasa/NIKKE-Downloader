@@ -36,7 +36,7 @@ export const FloatingCardSizeSlider: React.FC<FloatingCardSizeSliderProps> = ({
   };
 
   return (
-    <div className="fixed right-4 bottom-8 z-40 flex flex-col items-end gap-2 select-none animate-in fade-in slide-in-from-right-4 duration-200">
+    <div className="fixed right-4 bottom-8 z-40 flex flex-col items-end gap-2 animate-in fade-in slide-in-from-right-4 duration-200">
       
       {/* Expanded Control Box */}
       {isOpen && (

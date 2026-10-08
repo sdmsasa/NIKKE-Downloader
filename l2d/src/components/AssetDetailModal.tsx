@@ -236,18 +236,21 @@ export const AssetDetailModal: React.FC<AssetDetailModalProps> = ({
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h2 className="text-base font-bold text-white">
+                <h2 className="text-base font-bold text-white select-text">
                   {item.displayName || item.krName || item.name}
                 </h2>
                 
                 {/* Clickable ID button that copies ID to clipboard */}
                 <button
                   type="button"
-                  onClick={() => copyToClipboard(item.id, true)}
-                  className="flex items-center gap-1 px-2 py-0.5 text-xs font-mono bg-[#282828] hover:bg-[#333333] text-neutral-300 hover:text-white border border-[#383838] rounded-md transition-colors group cursor-pointer"
+                  onClick={() => {
+                    if (window.getSelection()?.toString()) return;
+                    copyToClipboard(item.id, true);
+                  }}
+                  className="flex items-center gap-1 px-2 py-0.5 text-xs font-mono bg-[#282828] hover:bg-[#333333] text-neutral-300 hover:text-white border border-[#383838] rounded-md transition-colors group cursor-pointer select-text"
                   title="클릭하여 ID 복사"
                 >
-                  <span>{item.id}</span>
+                  <span className="select-text">{item.id}</span>
                   {copiedId ? (
                     <Check className="w-3 h-3 text-emerald-400" />
                   ) : (
@@ -264,14 +267,14 @@ export const AssetDetailModal: React.FC<AssetDetailModalProps> = ({
                 )}
               </div>
               {item.subInfo ? (
-                <p className="text-xs text-neutral-400 mt-0.5">
+                <p className="text-xs text-neutral-400 mt-0.5 select-text">
                   {item.subInfo}
                   {item.name && item.name !== (item.displayName || item.krName) && (
                     <span className="text-neutral-500 ml-2 font-normal">({item.name})</span>
                   )}
                 </p>
               ) : item.name ? (
-                <p className="text-xs text-neutral-400 mt-0.5">{item.name}</p>
+                <p className="text-xs text-neutral-400 mt-0.5 select-text">{item.name}</p>
               ) : null}
             </div>
           </div>
@@ -394,11 +397,14 @@ export const AssetDetailModal: React.FC<AssetDetailModalProps> = ({
                 return (
                   <div
                     key={idx}
-                    onClick={() => handleDownloadSingleFile(file.url, file.name)}
-                    className="flex items-center justify-between p-2.5 rounded-xl bg-[#242424] hover:bg-[#2c2c2c] border border-[#303030] hover:border-orange-500/50 transition-all cursor-pointer group shadow-sm"
+                    onClick={() => {
+                      if (window.getSelection()?.toString()) return;
+                      handleDownloadSingleFile(file.url, file.name);
+                    }}
+                    className="flex items-center justify-between p-2.5 rounded-xl bg-[#242424] hover:bg-[#2c2c2c] border border-[#303030] hover:border-orange-500/50 transition-all cursor-pointer group shadow-sm select-text"
                     title={`클릭하여 ${file.name} 개별 다운로드`}
                   >
-                    <div className="flex items-center gap-2.5 min-w-0 pr-2">
+                    <div className="flex items-center gap-2.5 min-w-0 pr-2 select-text">
                       <div className="p-1.5 rounded-lg bg-[#1a1a1a] text-neutral-400 group-hover:text-orange-400 group-hover:bg-orange-500/10 transition-colors flex-shrink-0">
                         {isDownloadingThis ? (
                           <Loader2 className="w-3.5 h-3.5 animate-spin text-orange-400" />
@@ -406,11 +412,11 @@ export const AssetDetailModal: React.FC<AssetDetailModalProps> = ({
                           <Download className="w-3.5 h-3.5" />
                         )}
                       </div>
-                      <div className="flex flex-col min-w-0">
-                        <span className="text-xs font-mono font-medium text-neutral-200 group-hover:text-white truncate">
+                      <div className="flex flex-col min-w-0 select-text">
+                        <span className="text-xs font-mono font-medium text-neutral-200 group-hover:text-white truncate select-text">
                           {file.name}
                         </span>
-                        <span className="text-[10px] text-neutral-500 group-hover:text-neutral-400">
+                        <span className="text-[10px] text-neutral-500 group-hover:text-neutral-400 select-text">
                           {file.type}
                         </span>
                       </div>
