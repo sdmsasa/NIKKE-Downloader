@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import type { AnyAssetItem } from '../types';
-import { Check, Download, ExternalLink, Sparkles, CheckCircle2 } from 'lucide-react';
+import { Check, Download, ExternalLink, Sparkles, CheckCircle2, RefreshCw } from 'lucide-react';
 import iconUnknown from '../assets/corp/icn_corp_unknown.png';
+import { useLongPressCopy } from '../utils/useLongPressCopy';
 
 interface AssetListViewProps {
   items: AnyAssetItem[];
   selectedIds: Set<string>;
   downloadedIds: Set<string>;
+  updatedIds?: Set<string>;
   onToggleSelect: (id: string) => void;
   onDownloadSingle: (item: AnyAssetItem) => void;
   onOpenDetail: (item: AnyAssetItem) => void;
@@ -16,11 +18,21 @@ export const AssetListView: React.FC<AssetListViewProps> = ({
   items,
   selectedIds,
   downloadedIds,
+  updatedIds,
   onToggleSelect,
   onDownloadSingle,
   onOpenDetail
 }) => {
   const [copiedId, setCopiedId] = useState<string | null>(null);
+  const [copiedName, setCopiedName] = useState<string | null>(null);
+
+  const { getLongPressProps, consumeLongPress } = useLongPressCopy({
+    delayMs: 500,
+    onCopied: (text) => {
+      setCopiedName(text);
+      setTimeout(() => setCopiedName(null), 1500);
+    }
+  });
 
   const handleCopyId = (id: string) => {
     navigator.clipboard.writeText(id);
@@ -46,6 +58,7 @@ export const AssetListView: React.FC<AssetListViewProps> = ({
           {items.map((item) => {
             const isSelected = selectedIds.has(item.id);
             const isDownloaded = downloadedIds.has(item.id);
+            const hasUpdate = updatedIds ? updatedIds.has(item.id) : false;
 
             // 1:1 Square Icon
             let iconUrl: string | undefined;
@@ -122,19 +135,32 @@ export const AssetListView: React.FC<AssetListViewProps> = ({
                 {/* Name */}
                 <td className="py-2 px-3">
                   <div
+                    {...getLongPressProps(item.displayName || item.krName || item.name)}
                     onClick={() => {
+                      if (consumeLongPress()) return;
                       if (window.getSelection()?.toString()) return;
                       onOpenDetail(item);
                     }}
                     className="font-bold text-sm text-neutral-100 hover:text-orange-400 transition-colors flex items-center gap-2 cursor-pointer select-text"
+                    title={`${item.displayName || item.krName || item.name} (0.5초 길게 눌러 이름 복사)`}
                   >
                     <span>{item.displayName || item.krName || item.name}</span>
-                    {item.isNew && (
+                    {copiedName === (item.displayName || item.krName || item.name) && (
+                      <span className="text-[10px] text-emerald-400 font-sans font-medium animate-in fade-in">
+                        복사됨!
+                      </span>
+                    )}
+                    {hasUpdate ? (
+                      <span className="flex items-center gap-0.5 px-1.5 py-0.5 text-[9px] font-bold bg-sky-500 text-neutral-950 rounded shadow-sm">
+                        <RefreshCw className="w-2.5 h-2.5" />
+                        업데이트
+                      </span>
+                    ) : item.isNew ? (
                       <span className="flex items-center gap-0.5 px-1.5 py-0.5 text-[9px] font-bold bg-amber-500 text-neutral-950 rounded shadow-sm">
                         <Sparkles className="w-2.5 h-2.5" />
                         NEW
                       </span>
-                    )}
+                    ) : null}
                   </div>
                   {item.subInfo ? (
                     <div className="text-xs text-neutral-400 font-medium mt-0.5 select-text">
@@ -166,7 +192,15 @@ export const AssetListView: React.FC<AssetListViewProps> = ({
 
                 {/* Status */}
                 <td className="py-2 px-3 text-center">
-                  {isDownloaded ? (
+                  {hasUpdate ? (
+                    <span
+                      className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-bold bg-sky-500/20 text-sky-300 border border-sky-500/40"
+                      title="이전에 다운로드 완료했으나, 서버에 신규 변경점(업데이트)이 있습니다"
+                    >
+                      <RefreshCw className="w-3 h-3 text-sky-400" />
+                      업데이트
+                    </span>
+                  ) : isDownloaded ? (
                     <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-medium bg-emerald-500/20 text-white border border-emerald-500/40">
                       <CheckCircle2 className="w-3 h-3 text-emerald-400" />
                       완료

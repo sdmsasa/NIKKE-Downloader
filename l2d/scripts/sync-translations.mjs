@@ -166,6 +166,19 @@ const SECTION_TO_MANUFACTURER = {
   'V.T.C.': 'other'
 };
 
+function shouldUpdateManufacturer(currentMfg, newMfg) {
+  if (!currentMfg) return true;
+  if (currentMfg === 'other' && newMfg && newMfg !== 'other') return true;
+  return false;
+}
+
+function shouldUpdateSubInfo(currentSubInfo, newSubInfo, isNpcRow) {
+  if (!currentSubInfo) return true;
+  if (currentSubInfo === 'NPC' && newSubInfo && newSubInfo !== 'NPC') return true;
+  if (!isNpcRow && newSubInfo) return true;
+  return false;
+}
+
 function run() {
   const idToKorean = {};
   const idToSubInfo = {};
@@ -214,7 +227,10 @@ function run() {
         // Manufacturer mapping
         idToManufacturer[id] = compKey;
         if (charName && charName !== '-') {
-          nameToManufacturer[charName.toLowerCase()] = compKey;
+          const lowerName = charName.toLowerCase();
+          if (shouldUpdateManufacturer(nameToManufacturer[lowerName], compKey)) {
+            nameToManufacturer[lowerName] = compKey;
+          }
         }
       }
     }
@@ -226,6 +242,7 @@ function run() {
     const content = fs.readFileSync(metaPath, 'utf8');
     const lines = content.split('\n');
     let currentManufacturer = 'other';
+    let colMap = null;
 
     for (const line of lines) {
       const trimmed = line.trim();
@@ -234,18 +251,40 @@ function run() {
         currentManufacturer = SECTION_TO_MANUFACTURER[secName] || 'other';
         continue;
       }
-      if (!trimmed.startsWith('|') || trimmed.includes('공식 ID') || trimmed.includes('---')) continue;
+      if (!trimmed.startsWith('|') || trimmed.includes('---')) continue;
       const cols = trimmed.split('|').map(s => s.trim()).filter((_, i, arr) => i > 0 && i < arr.length - 1);
+
+      if (cols.some(c => c.includes('공식 ID') || c.includes('공식ID'))) {
+        colMap = {};
+        cols.forEach((col, idx) => {
+          const c = col.replace(/\s+/g, '');
+          if (c.includes('공식ID') || c === 'ID') colMap.id = idx;
+          else if (c.includes('식별자') || c.toLowerCase().includes('slug')) colMap.slug = idx;
+          else if (c.includes('캐릭터명') || c === '캐릭터' || c === '이름') colMap.charName = idx;
+          else if (c.includes('스킨명') || c === '스킨') colMap.skinName = idx;
+          else if (c.includes('이격')) colMap.altName = idx;
+          else if (c.includes('역할')) colMap.role = idx;
+          else if (c.includes('조회키')) colMap.krSearchKey = idx;
+          else if (c.includes('한글명') || c.includes('표시용')) colMap.krDisplayName = idx;
+        });
+        continue;
+      }
+
       if (cols.length >= 7) {
-        let id, engSlug, charName, _skinName, _altName, role, krSearchKey, krDisplayName;
-        if (cols.length >= 8) {
-          [id, engSlug, charName, _skinName, _altName, role, krSearchKey, krDisplayName] = cols;
-        } else {
-          [id, engSlug, charName, _skinName, _altName, role, krDisplayName] = cols;
-          krSearchKey = engSlug;
-        }
+        const getCol = (key) => (colMap && colMap[key] !== undefined && colMap[key] < cols.length ? cols[colMap[key]] : '');
+        const id = colMap ? getCol('id') : cols[0];
+        const slug = colMap ? getCol('slug') : cols[1];
+        const charName = colMap ? getCol('charName') : cols[2];
+        const _skinName = colMap ? getCol('skinName') : cols[3];
+        const _altName = colMap ? getCol('altName') : cols[4];
+        const role = colMap ? getCol('role') : cols[5];
+        const krDisplayName = colMap ? getCol('krDisplayName') : (cols.length >= 8 ? cols[7] : cols[6]);
+        const krSearchKey = colMap ? getCol('krSearchKey') : (cols.length >= 8 ? cols[6] : slug);
+
         if (!id || id === '-') continue;
 
+        const isBase = role === 'Base';
+        const isNpcRow = currentManufacturer === 'other' || role === 'NPC';
         const finalDisplayName = krDisplayName && krDisplayName !== '-' ? krDisplayName : formatCharacterDisplayName(null, krSearchKey || charName);
         
         idToKorean[id] = finalDisplayName;
@@ -256,27 +295,43 @@ function run() {
           idToManufacturer[id] = currentManufacturer;
         }
 
-        if (engSlug && engSlug !== '-') {
-          nameToKorean[engSlug.toLowerCase()] = finalDisplayName;
-          const noUnderscore = engSlug.replace(/_/g, ' ').toLowerCase();
-          nameToKorean[noUnderscore] = finalDisplayName;
-          nameToManufacturer[engSlug.toLowerCase()] = currentManufacturer;
-          nameToManufacturer[noUnderscore] = currentManufacturer;
+        if (slug && slug !== '-') {
+          const slugLower = slug.toLowerCase();
+          const noUnderscore = slug.replace(/_/g, ' ').toLowerCase();
+
+          if (!nameToKorean[slugLower] || !isNpcRow) {
+            nameToKorean[slugLower] = finalDisplayName;
+          }
+          if (!nameToKorean[noUnderscore] || !isNpcRow) {
+            nameToKorean[noUnderscore] = finalDisplayName;
+          }
+
+          if (shouldUpdateManufacturer(nameToManufacturer[slugLower], currentManufacturer)) {
+            nameToManufacturer[slugLower] = currentManufacturer;
+          }
+          if (shouldUpdateManufacturer(nameToManufacturer[noUnderscore], currentManufacturer)) {
+            nameToManufacturer[noUnderscore] = currentManufacturer;
+          }
 
           if (subInfo) {
-            nameToSubInfo[engSlug.toLowerCase()] = subInfo;
-            nameToSubInfo[noUnderscore] = subInfo;
+            if (shouldUpdateSubInfo(nameToSubInfo[slugLower], subInfo, isNpcRow)) {
+              nameToSubInfo[slugLower] = subInfo;
+            }
+            if (shouldUpdateSubInfo(nameToSubInfo[noUnderscore], subInfo, isNpcRow)) {
+              nameToSubInfo[noUnderscore] = subInfo;
+            }
           }
         }
         if (charName && charName !== '-') {
-          if (!nameToKorean[charName.toLowerCase()]) {
-            nameToKorean[charName.toLowerCase()] = finalDisplayName;
-            if (subInfo && !nameToSubInfo[charName.toLowerCase()]) {
-              nameToSubInfo[charName.toLowerCase()] = subInfo;
-            }
+          const charLower = charName.toLowerCase();
+          if (!nameToKorean[charLower] || isBase) {
+            nameToKorean[charLower] = finalDisplayName;
           }
-          if (!nameToManufacturer[charName.toLowerCase()] || nameToManufacturer[charName.toLowerCase()] === 'other') {
-            nameToManufacturer[charName.toLowerCase()] = currentManufacturer;
+          if (subInfo && (!nameToSubInfo[charLower] || isBase)) {
+            nameToSubInfo[charLower] = subInfo;
+          }
+          if (shouldUpdateManufacturer(nameToManufacturer[charLower], currentManufacturer)) {
+            nameToManufacturer[charLower] = currentManufacturer;
           }
         }
       }

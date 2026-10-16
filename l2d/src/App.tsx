@@ -18,7 +18,8 @@ import {
   buildAssetDownloadPlan,
   HistoryStorage,
   type DownloadProgressInfo,
-  type FailedTaskInfo
+  type FailedTaskInfo,
+  type DownloadHistoryRecord
 } from './services/downloadEngine';
 import { Header } from './components/Header';
 import { CategoryTabs } from './components/CategoryTabs';
@@ -68,11 +69,16 @@ export function App() {
     }
   });
 
-  // Download History
-  const [downloadedIds, setDownloadedIds] = useState<Set<string>>(() => {
-    const history = HistoryStorage.getHistory();
-    return new Set(Object.keys(history));
+  // Download History & Signatures
+  const [downloadHistory, setDownloadHistory] = useState<Record<string, DownloadHistoryRecord>>(() => {
+    return HistoryStorage.getHistory();
   });
+  const downloadedIds = useMemo(() => new Set(Object.keys(downloadHistory)), [downloadHistory]);
+
+  const currentNewBatchSignature = useMemo(() => {
+    if (!data?.newIds || data.newIds.size === 0) return '';
+    return Array.from(data.newIds).sort().join('|');
+  }, [data?.newIds]);
 
   // Filter & Search (Persistent)
   const [filter, setFilter] = useState<FilterState>(() => {
@@ -229,7 +235,7 @@ export function App() {
 
       // Refresh download history
       const history = HistoryStorage.getHistory();
-      setDownloadedIds(new Set(Object.keys(history)));
+      setDownloadHistory(history);
 
       if (forceRefresh) {
         // Guarantee smooth visual feedback duration (minimum 600ms)
@@ -313,6 +319,21 @@ export function App() {
     };
   }, [data, allAssetItems]);
 
+  // Items that were previously downloaded, but have a new update in the current new batch
+  const updatedIds = useMemo(() => {
+    const set = new Set<string>();
+    if (!currentNewBatchSignature) return set;
+    allAssetItems.forEach(item => {
+      if (item.isNew && downloadedIds.has(item.id)) {
+        const record = downloadHistory[item.id];
+        if (!record?.newBatchSignature || record.newBatchSignature !== currentNewBatchSignature) {
+          set.add(item.id);
+        }
+      }
+    });
+    return set;
+  }, [allAssetItems, downloadedIds, downloadHistory, currentNewBatchSignature]);
+
   // Filtered & Sorted items
   const filteredItems = useMemo(() => {
     let list = [...categoryItems];
@@ -336,7 +357,7 @@ export function App() {
     if (filter.onlyDownloaded === 'downloaded') {
       list = list.filter(item => downloadedIds.has(item.id));
     } else if (filter.onlyDownloaded === 'not_downloaded') {
-      list = list.filter(item => !downloadedIds.has(item.id));
+      list = list.filter(item => !downloadedIds.has(item.id) || updatedIds.has(item.id));
     }
 
     // Sorting
@@ -352,7 +373,7 @@ export function App() {
     });
 
     return list;
-  }, [categoryItems, filter.search, filter.manufacturer, filter.onlyDownloaded, filter.sortBy, downloadedIds]);
+  }, [categoryItems, filter.search, filter.manufacturer, filter.onlyDownloaded, filter.sortBy, downloadedIds, updatedIds]);
 
   // Selection actions
   const handleCategoryChange = (cat: AssetCategory) => {
@@ -402,7 +423,7 @@ export function App() {
   const handleSelectUndownloadedOnly = () => {
     const next = new Set<string>();
     filteredItems.forEach(item => {
-      if (!downloadedIds.has(item.id)) {
+      if (!downloadedIds.has(item.id) || updatedIds.has(item.id)) {
         next.add(item.id);
       }
     });
@@ -423,7 +444,7 @@ export function App() {
   const handleClearHistory = () => {
     if (window.confirm('다운로드 완료 기록을 초기화하시겠습니까?')) {
       HistoryStorage.clearHistory();
-      setDownloadedIds(new Set());
+      setDownloadHistory({});
     }
   };
 
@@ -598,8 +619,8 @@ export function App() {
             if (itemFilesSuccess > 0) {
               completedItemCount++;
               newlyDownloaded.push(item);
-              HistoryStorage.recordDownloaded(item);
-              setDownloadedIds(prev => new Set(prev).add(item.id));
+              HistoryStorage.recordDownloaded(item, currentNewBatchSignature);
+              setDownloadHistory(HistoryStorage.getHistory());
               addLog(`[완료] ${item.name} (${item.id})`, 'success');
             } else {
               failedItemCount++;
@@ -799,6 +820,7 @@ export function App() {
                     item={item}
                     isSelected={selectedIds.has(item.id)}
                     isDownloaded={downloadedIds.has(item.id)}
+                    hasUpdate={updatedIds.has(item.id)}
                     onToggleSelect={() => toggleSelect(item.id)}
                     onDownloadSingle={() => handleStartDownload([item])}
                     onOpenDetail={() => setDetailItem(item)}
@@ -810,6 +832,7 @@ export function App() {
                 items={filteredItems}
                 selectedIds={selectedIds}
                 downloadedIds={downloadedIds}
+                updatedIds={updatedIds}
                 onToggleSelect={toggleSelect}
                 onDownloadSingle={(item) => handleStartDownload([item])}
                 onOpenDetail={(item) => setDetailItem(item)}
@@ -832,6 +855,8 @@ export function App() {
       {detailItem && (
         <AssetDetailModal
           item={detailItem}
+          isDownloaded={downloadedIds.has(detailItem.id)}
+          hasUpdate={updatedIds.has(detailItem.id)}
           onClose={() => setDetailItem(null)}
           onDownloadSingle={(item) => handleStartDownload([item])}
         />
@@ -849,7 +874,7 @@ export function App() {
           if (progress.failedTasks && progress.failedTasks.length > 0) {
             handleStartDownload(progress.failedTasks.map(f => f.item));
           } else {
-            const failedList = allAssetItems.filter(i => selectedIds.has(i.id) && !downloadedIds.has(i.id));
+            const failedList = allAssetItems.filter(i => selectedIds.has(i.id) && (!downloadedIds.has(i.id) || updatedIds.has(i.id)));
             handleStartDownload(failedList);
           }
         }}

@@ -28,6 +28,16 @@
   code, pre, .font-mono {
     font-family: 'JetBrains Mono', monospace;
   }
+
+  img {
+    -webkit-user-drag: none;
+    user-drag: none;
+  }
+
+  .select-text {
+    user-select: text !important;
+    -webkit-user-select: text !important;
+  }
 }
 
 /* Custom Scrollbar - Neutral Gray */

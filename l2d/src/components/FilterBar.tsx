@@ -149,7 +149,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
               className={`px-2.5 py-1 rounded text-[11px] font-medium transition-colors cursor-pointer ${
                 filter.onlyDownloaded === 'not_downloaded' ? 'bg-[#383838] text-white shadow-sm' : 'text-white hover:bg-[#262626]'
               }`}
-              title="아직 다운로드받지 않은 항목만 화면에 표시"
+              title="아직 다운로드받지 않았거나 새 변경점(업데이트)이 있는 항목 표시"
             >
               미다운로드
             </button>
@@ -223,7 +223,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
           <button
             onClick={onSelectUndownloadedOnly}
             className="px-2.5 py-1.5 bg-[#222222] hover:bg-[#2c2c2c] text-white border border-[#333333] rounded-xl transition-colors font-medium hidden sm:flex cursor-pointer"
-            title="아직 다운로드받지 않은 항목만 체크"
+            title="아직 다운로드받지 않았거나 새 변경점(업데이트)이 있는 항목만 체크"
           >
             미다운로드 체크
           </button>

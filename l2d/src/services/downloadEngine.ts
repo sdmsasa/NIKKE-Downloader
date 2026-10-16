@@ -317,6 +317,7 @@ export interface DownloadHistoryRecord {
   downloadedAt: string;
   type: string;
   name: string;
+  newBatchSignature?: string;
 }
 
 export const HistoryStorage = {
@@ -336,13 +337,15 @@ export const HistoryStorage = {
     return !!history[id];
   },
 
-  recordDownloaded(item: AnyAssetItem): void {
+  recordDownloaded(item: AnyAssetItem, newBatchSignature?: string): void {
     try {
       const history = this.getHistory();
+      const existing = history[item.id];
       history[item.id] = {
         downloadedAt: new Date().toISOString(),
         type: item.type,
-        name: item.name
+        name: item.name,
+        newBatchSignature: item.isNew ? newBatchSignature : existing?.newBatchSignature
       };
       localStorage.setItem(this.KEY, JSON.stringify(history));
     } catch (e) {
@@ -350,15 +353,17 @@ export const HistoryStorage = {
     }
   },
 
-  recordMultiple(items: AnyAssetItem[]): void {
+  recordMultiple(items: AnyAssetItem[], newBatchSignature?: string): void {
     try {
       const history = this.getHistory();
       const now = new Date().toISOString();
       for (const item of items) {
+        const existing = history[item.id];
         history[item.id] = {
           downloadedAt: now,
           type: item.type,
-          name: item.name
+          name: item.name,
+          newBatchSignature: item.isNew ? newBatchSignature : existing?.newBatchSignature
         };
       }
       localStorage.setItem(this.KEY, JSON.stringify(history));
