@@ -29,6 +29,7 @@ import { AssetListView } from './components/AssetListView';
 import { AssetDetailModal } from './components/AssetDetailModal';
 import { DownloadManagerModal } from './components/DownloadManagerModal';
 import { SettingsModal } from './components/SettingsModal';
+import { UpdateSummaryModal } from './components/UpdateSummaryModal';
 import { FloatingCardSizeSlider } from './components/FloatingCardSizeSlider';
 import { Loader2, AlertCircle, RefreshCw, Sparkles, CheckCircle2, X } from 'lucide-react';
 import { getCharacterManufacturer } from './data/manufacturers';
@@ -149,6 +150,7 @@ export function App() {
   const [detailItem, setDetailItem] = useState<AnyAssetItem | null>(null);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [isDownloadManagerOpen, setIsDownloadManagerOpen] = useState(false);
+  const [isUpdateSummaryOpen, setIsUpdateSummaryOpen] = useState(false);
 
   // Download Progress Engine State
   const [progress, setProgress] = useState<DownloadProgressInfo>({
@@ -712,6 +714,7 @@ export function App() {
         onPickDirectory={handlePickDirectory}
         onOpenSettings={() => setIsSettingsOpen(true)}
         onOpenDownloadManager={() => setIsDownloadManagerOpen(true)}
+        onOpenUpdateSummary={() => setIsUpdateSummaryOpen(true)}
         onStartDownload={() => handleStartDownload()}
         onRefreshData={() => loadData(true)}
         isDownloading={progress.isRunning}
@@ -889,6 +892,20 @@ export function App() {
         setOptions={setOptions}
         onClearHistory={handleClearHistory}
         downloadedCount={downloadedIds.size}
+      />
+
+      {/* Update Summary Modal */}
+      <UpdateSummaryModal
+        isOpen={isUpdateSummaryOpen}
+        onClose={() => setIsUpdateSummaryOpen(false)}
+        newItems={allAssetItems.filter(item => item.isNew)}
+        downloadedIds={downloadedIds}
+        onOpenDetail={(item) => {
+          setIsUpdateSummaryOpen(false);
+          setDetailItem(item);
+        }}
+        onDownloadSingle={(item) => handleStartDownload([item])}
+        onDownloadAllNew={(items) => handleStartDownload(items)}
       />
 
       {/* Top-Right Floating Toast Notification */}

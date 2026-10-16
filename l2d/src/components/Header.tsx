@@ -1,5 +1,5 @@
 import React from 'react';
-import { Folder, FolderOpen, Archive, Settings, Download, RefreshCw, Sparkles } from 'lucide-react';
+import { Folder, FolderOpen, Archive, Settings, Download, RefreshCw, Sparkles, History } from 'lucide-react';
 import type { DownloadOptions } from '../types';
 
 interface HeaderProps {
@@ -12,6 +12,7 @@ interface HeaderProps {
   onPickDirectory: () => void;
   onOpenSettings: () => void;
   onOpenDownloadManager: () => void;
+  onOpenUpdateSummary: () => void;
   onStartDownload: () => void;
   onRefreshData: () => void;
   isDownloading: boolean;
@@ -28,6 +29,7 @@ export const Header: React.FC<HeaderProps> = ({
   onPickDirectory,
   onOpenSettings,
   onOpenDownloadManager,
+  onOpenUpdateSummary,
   onStartDownload,
   onRefreshData,
   isDownloading,
@@ -40,7 +42,7 @@ export const Header: React.FC<HeaderProps> = ({
         
         {/* Left: Title */}
         <div className="flex items-center gap-3 w-full md:w-auto justify-between md:justify-start">
-          <div className="flex items-center gap-2.5">
+          <div className="flex items-center gap-2 flex-wrap sm:flex-nowrap">
             <h1 className="text-lg font-black text-white tracking-tight">
               니케 스파인 에셋 다운로더
             </h1>
@@ -48,11 +50,25 @@ export const Header: React.FC<HeaderProps> = ({
               Spine Live2D
             </span>
             {newCount > 0 && (
-              <span className="flex items-center gap-1 px-2 py-0.5 text-[10px] font-bold bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 rounded-full animate-pulse">
+              <button
+                type="button"
+                onClick={onOpenUpdateSummary}
+                className="flex items-center gap-1 px-2 py-0.5 text-[10px] font-bold bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 border border-cyan-500/40 rounded-full animate-pulse transition-colors cursor-pointer"
+                title="신규 업데이트 내역 보기"
+              >
                 <Sparkles className="w-2.5 h-2.5 text-cyan-300" />
                 +{newCount} NEW
-              </span>
+              </button>
             )}
+            <button
+              type="button"
+              onClick={onOpenUpdateSummary}
+              className="flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium rounded-lg bg-[#222222] hover:bg-[#2c2c2c] text-neutral-300 hover:text-white border border-[#333333] hover:border-neutral-500 transition-colors cursor-pointer shadow-sm"
+              title="업데이트 내역 확인"
+            >
+              <History className="w-3.5 h-3.5 text-cyan-400" />
+              <span className="hidden sm:inline">업데이트 내역</span>
+            </button>
           </div>
 
           <button
