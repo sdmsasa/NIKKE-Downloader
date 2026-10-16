@@ -1,8 +1,7 @@
 import React, { useState, useRef } from 'react';
 import type { AnyAssetItem } from '../types';
-import { Check, Download, ExternalLink, Sparkles, CheckCircle2, RefreshCw } from 'lucide-react';
+import { Check, Download, ExternalLink, Sparkles, CheckCircle2, RefreshCw, Copy } from 'lucide-react';
 import iconUnknown from '../assets/corp/icn_corp_unknown.png';
-import { useLongPressCopy } from '../utils/useLongPressCopy';
 
 interface AssetCardProps {
   item: AnyAssetItem;
@@ -69,14 +68,6 @@ export const AssetCard: React.FC<AssetCardProps> = ({
   const mouseDownPosRef = useRef<{ x: number; y: number } | null>(null);
 
   const displayName = item.displayName || item.krName || item.name;
-
-  const { getLongPressProps, consumeLongPress } = useLongPressCopy({
-    delayMs: 500,
-    onCopied: () => {
-      setCopiedName(true);
-      setTimeout(() => setCopiedName(false), 1500);
-    }
-  });
 
   const handleMouseDown = (e: React.MouseEvent) => {
     mouseDownPosRef.current = { x: e.clientX, y: e.clientY };
@@ -220,24 +211,34 @@ export const AssetCard: React.FC<AssetCardProps> = ({
       <div className="p-3 flex-1 flex flex-col justify-between gap-2 bg-[#1c1c1c] select-text">
         <div>
           {/* Main Title (Korean display name first) */}
-          <div className="flex items-center justify-between gap-1.5 min-w-0">
+          <div className="flex items-center justify-between gap-1 min-w-0">
             <h3
-              {...getLongPressProps(displayName)}
               onClick={(e) => {
-                if (consumeLongPress()) return;
                 if (isDragOrSelection(e)) return;
                 onOpenDetail();
               }}
               className="text-[13.5px] sm:text-sm font-extrabold text-neutral-100 hover:text-orange-400 transition-colors truncate cursor-pointer tracking-tight select-text flex-1"
-              title={`${displayName} (0.5초 길게 눌러 이름 복사)`}
+              title={displayName}
             >
               {displayName}
             </h3>
-            {copiedName && (
-              <span className="text-[10px] text-emerald-400 font-sans font-medium flex-shrink-0 animate-in fade-in">
-                복사됨!
-              </span>
-            )}
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                navigator.clipboard.writeText(displayName);
+                setCopiedName(true);
+                setTimeout(() => setCopiedName(false), 2000);
+              }}
+              className="p-1 text-neutral-400 hover:text-white hover:bg-[#282828] rounded-md transition-colors cursor-pointer flex-shrink-0"
+              title="이름 복사"
+            >
+              {copiedName ? (
+                <Check className="w-3.5 h-3.5 text-emerald-400" />
+              ) : (
+                <Copy className="w-3.5 h-3.5" />
+              )}
+            </button>
           </div>
 
           {/* Sub Row: Company · Squad · Org · Other metadata */}
@@ -262,20 +263,25 @@ export const AssetCard: React.FC<AssetCardProps> = ({
                 if (isDragOrSelection(e)) return;
                 navigator.clipboard.writeText(item.id);
                 setCopiedId(true);
-                setTimeout(() => setCopiedId(false), 1500);
+                setTimeout(() => setCopiedId(false), 2000);
               }}
               onKeyDown={(e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
                   e.preventDefault();
                   navigator.clipboard.writeText(item.id);
                   setCopiedId(true);
-                  setTimeout(() => setCopiedId(false), 1500);
+                  setTimeout(() => setCopiedId(false), 2000);
                 }
               }}
-              className="inline-block px-1.5 py-0.5 rounded text-[9px] font-mono font-medium bg-[#262626] hover:bg-[#333333] text-white border border-[#383838] transition-colors cursor-pointer select-text"
+              className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[9px] font-mono font-medium bg-[#262626] hover:bg-[#333333] text-white border border-[#383838] transition-colors cursor-pointer select-text"
               title="클릭하여 ID 복사"
             >
-              {copiedId ? '복사됨' : item.id}
+              <span>{item.id}</span>
+              {copiedId ? (
+                <Check className="w-2.5 h-2.5 text-emerald-400" />
+              ) : (
+                <Copy className="w-2.5 h-2.5 text-neutral-500" />
+              )}
             </span>
 
             {item.type === 'character' ? (

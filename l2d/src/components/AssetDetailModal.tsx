@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import type { AnyAssetItem, CharacterPose } from '../types';
-import { X, Download, Copy, Check, ExternalLink, Image as ImageIcon, Sparkles, Loader2, RefreshCw } from 'lucide-react';
+import { X, Download, Copy, Check, ExternalLink, Image as ImageIcon, Sparkles, Loader2, RefreshCw, Link2 } from 'lucide-react';
 import { AssetUrls, getCharacterPoseFileName } from '../services/nkasApi';
 import iconUnknown from '../assets/corp/icn_corp_unknown.png';
-import { useLongPressCopy } from '../utils/useLongPressCopy';
 
 interface AssetDetailModalProps {
   item: AnyAssetItem | null;
@@ -27,22 +26,6 @@ export const AssetDetailModal: React.FC<AssetDetailModalProps> = ({
   const [copiedFileName, setCopiedFileName] = useState<string | null>(null);
   const [downloadingUrl, setDownloadingUrl] = useState<string | null>(null);
 
-  const { getLongPressProps: getNameLongPressProps } = useLongPressCopy({
-    delayMs: 500,
-    onCopied: () => {
-      setCopiedName(true);
-      setTimeout(() => setCopiedName(false), 1500);
-    }
-  });
-
-  const { getLongPressProps: getFileLongPressProps, consumeLongPress: consumeFileLongPress } = useLongPressCopy({
-    delayMs: 500,
-    onCopied: (fileName) => {
-      setCopiedFileName(fileName);
-      setTimeout(() => setCopiedFileName(null), 1500);
-    }
-  });
-
   // Prevent background body scrolling when modal is open & support Escape key
   React.useEffect(() => {
     const originalOverflow = document.body.style.overflow;
@@ -63,15 +46,28 @@ export const AssetDetailModal: React.FC<AssetDetailModalProps> = ({
 
   if (!item) return null;
 
-  const copyToClipboard = (text: string, isId: boolean = false) => {
-    navigator.clipboard.writeText(text);
-    if (isId) {
-      setCopiedId(true);
-      setTimeout(() => setCopiedId(false), 2000);
-    } else {
-      setCopiedUrl(text);
-      setTimeout(() => setCopiedUrl(null), 2000);
-    }
+  const handleCopyId = (id: string) => {
+    navigator.clipboard.writeText(id);
+    setCopiedId(true);
+    setTimeout(() => setCopiedId(false), 2000);
+  };
+
+  const handleCopyName = (name: string) => {
+    navigator.clipboard.writeText(name);
+    setCopiedName(true);
+    setTimeout(() => setCopiedName(false), 2000);
+  };
+
+  const handleCopyFileName = (fileName: string) => {
+    navigator.clipboard.writeText(fileName);
+    setCopiedFileName(fileName);
+    setTimeout(() => setCopiedFileName(null), 2000);
+  };
+
+  const handleCopyUrl = (url: string) => {
+    navigator.clipboard.writeText(url);
+    setCopiedUrl(url);
+    setTimeout(() => setCopiedUrl(null), 2000);
   };
 
   // Direct single file browser download
@@ -261,17 +257,22 @@ export const AssetDetailModal: React.FC<AssetDetailModalProps> = ({
               <div className="flex items-center gap-2">
                 <div className="flex items-center gap-1.5">
                   <h2
-                    {...getNameLongPressProps(item.displayName || item.krName || item.name)}
-                    className="text-base font-bold text-white select-text cursor-pointer hover:text-orange-400 transition-colors"
-                    title={`${item.displayName || item.krName || item.name} (0.5초 길게 눌러 이름 복사)`}
+                    className="text-base font-bold text-white select-text"
                   >
                     {item.displayName || item.krName || item.name}
                   </h2>
-                  {copiedName && (
-                    <span className="text-[10px] text-emerald-400 font-sans font-medium animate-in fade-in">
-                      복사됨!
-                    </span>
-                  )}
+                  <button
+                    type="button"
+                    onClick={() => handleCopyName(item.displayName || item.krName || item.name)}
+                    className="p-1.5 text-neutral-400 hover:text-white hover:bg-[#282828] rounded-lg transition-colors cursor-pointer"
+                    title="이름 복사"
+                  >
+                    {copiedName ? (
+                      <Check className="w-3.5 h-3.5 text-emerald-400" />
+                    ) : (
+                      <Copy className="w-3.5 h-3.5" />
+                    )}
+                  </button>
                 </div>
                 
                 {/* Clickable ID button that copies ID to clipboard */}
@@ -279,7 +280,7 @@ export const AssetDetailModal: React.FC<AssetDetailModalProps> = ({
                   type="button"
                   onClick={() => {
                     if (window.getSelection()?.toString()) return;
-                    copyToClipboard(item.id, true);
+                    handleCopyId(item.id);
                   }}
                   className="flex items-center gap-1 px-2 py-0.5 text-xs font-mono bg-[#282828] hover:bg-[#333333] text-neutral-300 hover:text-white border border-[#383838] rounded-md transition-colors group cursor-pointer select-text"
                   title="클릭하여 ID 복사"
@@ -290,7 +291,6 @@ export const AssetDetailModal: React.FC<AssetDetailModalProps> = ({
                   ) : (
                     <Copy className="w-3 h-3 text-neutral-500 group-hover:text-neutral-300" />
                   )}
-                  {copiedId && <span className="text-[10px] text-emerald-400 font-sans font-medium">복사됨!</span>}
                 </button>
 
                 {hasUpdate ? (
@@ -444,12 +444,11 @@ export const AssetDetailModal: React.FC<AssetDetailModalProps> = ({
                   <div
                     key={idx}
                     onClick={() => {
-                      if (consumeFileLongPress()) return;
                       if (window.getSelection()?.toString()) return;
                       handleDownloadSingleFile(file.url, file.name);
                     }}
                     className="flex items-center justify-between p-2.5 rounded-xl bg-[#242424] hover:bg-[#2c2c2c] border border-[#303030] hover:border-orange-500/50 transition-all cursor-pointer group shadow-sm select-text"
-                    title={`클릭하여 ${file.name} 개별 다운로드 (0.5초 길게 눌러 파일명 복사)`}
+                    title={`클릭하여 ${file.name} 개별 다운로드`}
                   >
                     <div className="flex items-center gap-2.5 min-w-0 pr-2 select-text">
                       <div className="p-1.5 rounded-lg bg-[#1a1a1a] text-neutral-400 group-hover:text-orange-400 group-hover:bg-orange-500/10 transition-colors flex-shrink-0">
@@ -460,20 +459,11 @@ export const AssetDetailModal: React.FC<AssetDetailModalProps> = ({
                         )}
                       </div>
                       <div className="flex flex-col min-w-0 select-text">
-                        <div className="flex items-center gap-1.5 min-w-0">
-                          <span
-                            {...getFileLongPressProps(file.name)}
-                            className="text-xs font-mono font-medium text-neutral-200 group-hover:text-white truncate select-text cursor-pointer hover:underline decoration-neutral-500"
-                            title={`${file.name} (0.5초 길게 눌러 파일명 복사)`}
-                          >
-                            {file.name}
-                          </span>
-                          {copiedFileName === file.name && (
-                            <span className="text-[10px] text-emerald-400 font-sans font-medium flex-shrink-0 animate-in fade-in">
-                              복사됨!
-                            </span>
-                          )}
-                        </div>
+                        <span
+                          className="text-xs font-mono font-medium text-neutral-200 group-hover:text-white truncate select-text"
+                        >
+                          {file.name}
+                        </span>
                         <span className="text-[10px] text-neutral-500 group-hover:text-neutral-400 select-text">
                           {file.type}
                         </span>
@@ -485,14 +475,25 @@ export const AssetDetailModal: React.FC<AssetDetailModalProps> = ({
                       onClick={(e) => e.stopPropagation()}
                     >
                       <button
-                        onClick={() => copyToClipboard(file.url)}
+                        onClick={() => handleCopyFileName(file.name)}
+                        className="p-1.5 text-neutral-400 hover:text-white hover:bg-[#333333] rounded-lg transition-colors cursor-pointer"
+                        title="파일명 복사"
+                      >
+                        {copiedFileName === file.name ? (
+                          <Check className="w-3.5 h-3.5 text-emerald-400" />
+                        ) : (
+                          <Copy className="w-3.5 h-3.5" />
+                        )}
+                      </button>
+                      <button
+                        onClick={() => handleCopyUrl(file.url)}
                         className="p-1.5 text-neutral-400 hover:text-white hover:bg-[#333333] rounded-lg transition-colors cursor-pointer"
                         title="URL 복사"
                       >
                         {copiedUrl === file.url ? (
                           <Check className="w-3.5 h-3.5 text-emerald-400" />
                         ) : (
-                          <Copy className="w-3.5 h-3.5" />
+                          <Link2 className="w-3.5 h-3.5" />
                         )}
                       </button>
                       <a

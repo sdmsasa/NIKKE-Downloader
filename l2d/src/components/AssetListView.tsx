@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import type { AnyAssetItem } from '../types';
-import { Check, Download, ExternalLink, Sparkles, CheckCircle2, RefreshCw } from 'lucide-react';
+import { Check, Download, ExternalLink, Sparkles, CheckCircle2, RefreshCw, Copy } from 'lucide-react';
 import iconUnknown from '../assets/corp/icn_corp_unknown.png';
-import { useLongPressCopy } from '../utils/useLongPressCopy';
 
 interface AssetListViewProps {
   items: AnyAssetItem[];
@@ -26,18 +25,16 @@ export const AssetListView: React.FC<AssetListViewProps> = ({
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [copiedName, setCopiedName] = useState<string | null>(null);
 
-  const { getLongPressProps, consumeLongPress } = useLongPressCopy({
-    delayMs: 500,
-    onCopied: (text) => {
-      setCopiedName(text);
-      setTimeout(() => setCopiedName(null), 1500);
-    }
-  });
+  const handleCopyName = (name: string) => {
+    navigator.clipboard.writeText(name);
+    setCopiedName(name);
+    setTimeout(() => setCopiedName(null), 2000);
+  };
 
   const handleCopyId = (id: string) => {
     navigator.clipboard.writeText(id);
     setCopiedId(id);
-    setTimeout(() => setCopiedId(null), 1500);
+    setTimeout(() => setCopiedId(null), 2000);
   };
 
   return (
@@ -101,10 +98,15 @@ export const AssetListView: React.FC<AssetListViewProps> = ({
                       if (window.getSelection()?.toString()) return;
                       handleCopyId(item.id);
                     }}
-                    className="inline-flex items-center px-2 py-0.5 rounded bg-[#222222] hover:bg-[#2c2c2c] border border-[#333333] hover:border-neutral-400 font-mono text-[11px] text-white transition-colors cursor-pointer select-text"
+                    className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-[#222222] hover:bg-[#2c2c2c] border border-[#333333] hover:border-neutral-400 font-mono text-[11px] text-white transition-colors cursor-pointer select-text"
                     title="클릭하여 ID 복사"
                   >
-                    <span>{copiedId === item.id ? '복사됨' : item.id}</span>
+                    <span>{item.id}</span>
+                    {copiedId === item.id ? (
+                      <Check className="w-2.5 h-2.5 text-emerald-400" />
+                    ) : (
+                      <Copy className="w-2.5 h-2.5 text-neutral-500" />
+                    )}
                   </button>
                 </td>
 
@@ -134,33 +136,44 @@ export const AssetListView: React.FC<AssetListViewProps> = ({
 
                 {/* Name */}
                 <td className="py-2 px-3">
-                  <div
-                    {...getLongPressProps(item.displayName || item.krName || item.name)}
-                    onClick={() => {
-                      if (consumeLongPress()) return;
-                      if (window.getSelection()?.toString()) return;
-                      onOpenDetail(item);
-                    }}
-                    className="font-bold text-sm text-neutral-100 hover:text-orange-400 transition-colors flex items-center gap-2 cursor-pointer select-text"
-                    title={`${item.displayName || item.krName || item.name} (0.5초 길게 눌러 이름 복사)`}
-                  >
-                    <span>{item.displayName || item.krName || item.name}</span>
-                    {copiedName === (item.displayName || item.krName || item.name) && (
-                      <span className="text-[10px] text-emerald-400 font-sans font-medium animate-in fade-in">
-                        복사됨!
-                      </span>
-                    )}
-                    {hasUpdate ? (
-                      <span className="flex items-center gap-0.5 px-1.5 py-0.5 text-[9px] font-bold bg-sky-500 text-neutral-950 rounded shadow-sm">
-                        <RefreshCw className="w-2.5 h-2.5" />
-                        업데이트
-                      </span>
-                    ) : item.isNew ? (
-                      <span className="flex items-center gap-0.5 px-1.5 py-0.5 text-[9px] font-bold bg-amber-500 text-neutral-950 rounded shadow-sm">
-                        <Sparkles className="w-2.5 h-2.5" />
-                        NEW
-                      </span>
-                    ) : null}
+                  <div className="flex items-center gap-1.5">
+                    <div
+                      onClick={() => {
+                        if (window.getSelection()?.toString()) return;
+                        onOpenDetail(item);
+                      }}
+                      className="font-bold text-sm text-neutral-100 hover:text-orange-400 transition-colors flex items-center gap-2 cursor-pointer select-text"
+                      title={item.displayName || item.krName || item.name}
+                    >
+                      <span>{item.displayName || item.krName || item.name}</span>
+                      {hasUpdate ? (
+                        <span className="flex items-center gap-0.5 px-1.5 py-0.5 text-[9px] font-bold bg-sky-500 text-neutral-950 rounded shadow-sm">
+                          <RefreshCw className="w-2.5 h-2.5" />
+                          업데이트
+                        </span>
+                      ) : item.isNew ? (
+                        <span className="flex items-center gap-0.5 px-1.5 py-0.5 text-[9px] font-bold bg-amber-500 text-neutral-950 rounded shadow-sm">
+                          <Sparkles className="w-2.5 h-2.5" />
+                          NEW
+                        </span>
+                      ) : null}
+                    </div>
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        const nameToCopy = item.displayName || item.krName || item.name;
+                        handleCopyName(nameToCopy);
+                      }}
+                      className="p-1 text-neutral-400 hover:text-white hover:bg-[#282828] rounded-md transition-colors cursor-pointer flex-shrink-0"
+                      title="이름 복사"
+                    >
+                      {copiedName === (item.displayName || item.krName || item.name) ? (
+                        <Check className="w-3.5 h-3.5 text-emerald-400" />
+                      ) : (
+                        <Copy className="w-3.5 h-3.5" />
+                      )}
+                    </button>
                   </div>
                   {item.subInfo ? (
                     <div className="text-xs text-neutral-400 font-medium mt-0.5 select-text">
