@@ -203,10 +203,10 @@ export function App() {
   }, [options]);
 
   // Toast notification state
-  const [toast, setToast] = useState<{ id: number; type: 'success' | 'error' | 'info'; title: string; message?: string } | null>(null);
+  const [toast, setToast] = useState<{ id: number; type: 'success' | 'error' | 'info' | 'warning'; title: string; message?: string } | null>(null);
   const toastTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const showToast = (type: 'success' | 'error' | 'info', title: string, message?: string) => {
+  const showToast = (type: 'success' | 'error' | 'info' | 'warning', title: string, message?: string) => {
     if (toastTimerRef.current) clearTimeout(toastTimerRef.current);
     const id = Date.now();
     setToast({ id, type, title, message });
@@ -461,10 +461,27 @@ export function App() {
 
   // Start Download Execution
   const handleStartDownload = async (targetItems?: AnyAssetItem[]) => {
-    const itemsToDownload = targetItems || allAssetItems.filter(item => selectedIds.has(item.id));
+    let itemsToDownload = targetItems || allAssetItems.filter(item => selectedIds.has(item.id));
+    
+    // If no models are checked, offer smart full-list download confirmation or friendly guidance
     if (itemsToDownload.length === 0) {
-      alert('다운로드할 모델을 1개 이상 선택해 주세요.');
-      return;
+      if (filteredItems.length > 0) {
+        const confirmed = window.confirm(
+          `선택된 모델이 없습니다.\n\n현재 화면에 표시된 모델 전체 (${filteredItems.length}개)를 선택하고 다운로드를 시작하시겠습니까?`
+        );
+        if (confirmed) {
+          const next = new Set<string>();
+          filteredItems.forEach(item => next.add(item.id));
+          setSelectedIds(next);
+          itemsToDownload = [...filteredItems];
+        } else {
+          showToast('info', '모델 선택 필요', '다운로드할 카드를 클릭하거나 [전체 선택] 버튼을 눌러주세요.');
+          return;
+        }
+      } else {
+        showToast('warning', '다운로드 가능한 모델 없음', '검색어 또는 필터 조건을 변경해 주세요.');
+        return;
+      }
     }
 
     if (detailItem) {
@@ -508,6 +525,10 @@ export function App() {
           effectiveMode = 'zip';
         }
       }
+    }
+
+    if (options.mode === 'directory' && effectiveMode === 'zip') {
+      showToast('info', 'ZIP 압축 모드로 진행', '로컬 폴더 미지정 또는 권한 취소로 ZIP 다운로드로 자동 전환되었습니다.');
     }
 
     setIsDownloadManagerOpen(true);
@@ -589,7 +610,7 @@ export function App() {
 
               setProgress(prev => ({ ...prev, currentFileName: plan.targetPath }));
 
-              if (options.mode === 'directory' && activeDirHandle) {
+              if (effectiveMode === 'directory' && activeDirHandle) {
                 const pathSegments = plan.targetPath.split('/');
                 const res = await writeUrlToFileSystem(activeDirHandle, pathSegments, plan.url, (bytes) => {
                   totalBytes += bytes;
@@ -916,11 +937,13 @@ export function App() {
               ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30'
               : toast.type === 'error'
               ? 'bg-rose-500/20 text-rose-400 border border-rose-500/30'
+              : toast.type === 'warning'
+              ? 'bg-amber-500/20 text-amber-400 border border-amber-500/30'
               : 'bg-cyan-500/20 text-cyan-400 border border-cyan-500/30'
           }`}>
             {toast.type === 'success' ? (
               <CheckCircle2 className="w-5 h-5" />
-            ) : toast.type === 'error' ? (
+            ) : toast.type === 'error' || toast.type === 'warning' ? (
               <AlertCircle className="w-5 h-5" />
             ) : (
               <Sparkles className="w-5 h-5" />

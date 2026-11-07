@@ -86,8 +86,16 @@ export const AssetDetailModal: React.FC<AssetDetailModalProps> = ({
       document.body.removeChild(link);
       setTimeout(() => URL.revokeObjectURL(blobUrl), 1000);
     } catch (err) {
-      console.warn('Direct blob download failed, falling back to open in window', err);
-      window.open(url, '_blank');
+      console.warn('Direct blob download failed, falling back to anchor link download', err);
+      // Fallback: trigger anchor download directly to bypass popup blocker
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = filename;
+      link.target = '_blank';
+      link.rel = 'noreferrer';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
     } finally {
       setDownloadingUrl(null);
     }

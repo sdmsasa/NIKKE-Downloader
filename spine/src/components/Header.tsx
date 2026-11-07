@@ -173,12 +173,22 @@ export const Header: React.FC<HeaderProps> = ({
 
           {/* Main Download CTA Button */}
           <button
+            type="button"
             onClick={onStartDownload}
-            disabled={selectedCount === 0 || isDownloading}
+            disabled={isDownloading}
+            title={
+              isDownloading
+                ? '다운로드가 진행 중입니다'
+                : selectedCount > 0
+                ? `선택된 ${selectedCount}개 모델 다운로드 시작`
+                : '클릭하여 다운로드 (미선택 시 현재 목록 전체 다운로드 제안)'
+            }
             className={`flex items-center gap-2 px-5 py-2 rounded-xl font-bold text-xs shadow-lg transition-all ${
-              selectedCount === 0 || isDownloading
-                ? 'bg-[#222222] text-neutral-600 border border-[#2a2a2a] cursor-not-allowed'
-                : 'bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-400 hover:to-amber-400 text-white shadow-orange-500/25 active:scale-95'
+              isDownloading
+                ? 'bg-[#222222] text-neutral-500 border border-[#2a2a2a] cursor-not-allowed opacity-75'
+                : selectedCount > 0
+                ? 'bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-400 hover:to-amber-400 text-white shadow-orange-500/25 active:scale-95 cursor-pointer'
+                : 'bg-[#222222] hover:bg-[#2c2c2c] text-orange-400 hover:text-orange-300 border border-orange-500/40 hover:border-orange-500/70 shadow-md active:scale-95 cursor-pointer'
             }`}
           >
             <Download className="w-4 h-4" />
