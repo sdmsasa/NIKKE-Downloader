@@ -566,7 +566,7 @@ export function App() {
             ...prev,
             currentTaskName: `[${index + 1}/${itemsToDownload.length}] ${item.name} (${item.id})`
           }));
-          addLog(`[에셋 검색] ${item.name} (${item.id}) Live2D 파일 검색 중...`, 'info');
+          addLog(`[에셋 검색] ${item.name} (${item.id}) Spine 파일 검색 중...`, 'info');
 
           try {
             const plans = await buildAssetDownloadPlan(item, options);
@@ -943,7 +943,7 @@ export function App() {
 
       {/* Footer */}
       <footer className="mt-auto border-t border-[#282828] py-4 text-center text-xs text-neutral-500">
-        <p>니케 스파인 에셋 다운로더 · NIKKE Live2D Resource Tool · Data source from nkas.pages.dev</p>
+        <p>니케 스파인 에셋 다운로더 · NIKKE Spine Resource Tool · Data source from nkas.pages.dev</p>
       </footer>
 
     </div>

@@ -47,7 +47,7 @@ export const Header: React.FC<HeaderProps> = ({
               니케 스파인 에셋 다운로더
             </h1>
             <span className="px-2 py-0.5 text-[10px] font-semibold bg-orange-500/20 text-orange-400 border border-orange-500/30 rounded-md">
-              Spine Live2D
+              Spine
             </span>
             {newCount > 0 && (
               <button

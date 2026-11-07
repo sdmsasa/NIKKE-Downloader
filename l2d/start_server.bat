@@ -1,9 +1,9 @@
 @echo off
-title NIKKE Live2D Downloader
+title NIKKE Spine Downloader
 cd /d "%~dp0"
 
 echo ========================================================
-echo   NIKKE Live2D Downloader
+echo   NIKKE Spine Downloader
 echo   Starting server and opening browser...
 echo ========================================================
 echo.

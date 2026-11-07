@@ -117,7 +117,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                 <div>
                   <span className="font-semibold text-neutral-200 block">대분류 폴더로 자동 구분</span>
                   <span className="text-neutral-400 text-[11px]">
-                    L2D/, SKILLCUT/, RAPTURE/, FAVORITE ITEM/, EVENT SCENE/ 폴더 아래에 생성
+                    SPINE/, SKILLCUT/, RAPTURE/, FAVORITE ITEM/, EVENT SCENE/ 폴더 아래에 생성
                   </span>
                 </div>
                 <input
