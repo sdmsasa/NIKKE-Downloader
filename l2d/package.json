@@ -1,6 +1,6 @@
 {
-  "name": "nikke-live2d-downloader",
-  "productName": "NIKKE Live2D Downloader",
+  "name": "nikke-spine-downloader",
+  "productName": "NIKKE Spine Downloader",
   "homepage": "https://sdmsasa.github.io/NIKKE-Downloader",
   "private": true,
   "version": "1.0.0",

@@ -97,7 +97,7 @@ export interface DownloadTask {
 export interface DownloadOptions {
   mode: 'directory' | 'zip';
   folderNaming: 'id_name' | 'bracket_id_name' | 'name_id' | 'id_only' | 'name_only';
-  categorySubfolders: boolean; // characters/, bursts/ ...
+  categorySubfolders: boolean; // SPINE/, SKILLCUT/, RAPTURE/ ...
   characterSubfolders: boolean; // idle/, aim/, cover/, images/
   poses: {
     idle: boolean;

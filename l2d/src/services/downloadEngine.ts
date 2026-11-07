@@ -62,9 +62,9 @@ export async function buildAssetDownloadPlan(
   const plans: DownloadFilePlan[] = [];
   const folderName = formatItemFolderName(item, options.folderNaming);
 
-  // Category prefix matching D:\l2d folder structure
+  // Category prefix matching D:\SPINE folder structure
   const categoryDir = options.categorySubfolders
-    ? item.type === 'character' ? 'L2D'
+    ? item.type === 'character' ? 'SPINE'
       : item.type === 'burst' ? 'SKILLCUT'
       : item.type === 'monster' ? 'RAPTURE'
       : item.type === 'favorite' ? 'FAVORITE ITEM'

@@ -2,7 +2,8 @@ import type { CharacterItem, BurstItem, MonsterItem, FavoriteItem, EventSceneIte
 import { getKoreanName, getCharacterSubInfo } from '../data/translations';
 import characterPosesData from '../data/characterPoses.json';
 
-const L2D_BASE = 'https://nkas-l2d.pages.dev';
+// 외부 NKAS Spine 에셋 CDN 호스트 주소 (서드파티 도메인이므로 유지)
+const SPINE_BASE = 'https://nkas-l2d.pages.dev';
 const MAIN_BASE = 'https://nkas.pages.dev';
 const CACHE_KEY = 'nikke_cached_nkas_data_v4';
 
@@ -101,12 +102,12 @@ async function fetchFreshNKASData(forceRefresh: boolean = false): Promise<Fetche
     aliasesRes,
     colorsRes
   ] = await Promise.all([
-    fetch(`${L2D_BASE}/characters.json${cacheBust}`, fetchOptions).then(r => r.json()).catch(() => ({})),
-    fetch(`${L2D_BASE}/bursts.json${cacheBust}`, fetchOptions).then(r => r.json()).catch(() => ({})),
-    fetch(`${L2D_BASE}/monsters.json${cacheBust}`, fetchOptions).then(r => r.json()).catch(() => ({})),
-    fetch(`${L2D_BASE}/favorites.json${cacheBust}`, fetchOptions).then(r => r.json()).catch(() => ({})),
-    fetch(`${L2D_BASE}/eventscenes.json${cacheBust}`, fetchOptions).then(r => r.json()).catch(() => ({})),
-    fetch(`${L2D_BASE}/new.json${cacheBust}`, fetchOptions).then(r => r.json()).catch(() => ([])),
+    fetch(`${SPINE_BASE}/characters.json${cacheBust}`, fetchOptions).then(r => r.json()).catch(() => ({})),
+    fetch(`${SPINE_BASE}/bursts.json${cacheBust}`, fetchOptions).then(r => r.json()).catch(() => ({})),
+    fetch(`${SPINE_BASE}/monsters.json${cacheBust}`, fetchOptions).then(r => r.json()).catch(() => ({})),
+    fetch(`${SPINE_BASE}/favorites.json${cacheBust}`, fetchOptions).then(r => r.json()).catch(() => ({})),
+    fetch(`${SPINE_BASE}/eventscenes.json${cacheBust}`, fetchOptions).then(r => r.json()).catch(() => ({})),
+    fetch(`${SPINE_BASE}/new.json${cacheBust}`, fetchOptions).then(r => r.json()).catch(() => ([])),
     fetch(`${MAIN_BASE}/nk_data/aliases.json${cacheBust}`, fetchOptions).then(r => r.json()).catch(() => ({})),
     fetch(`${MAIN_BASE}/nk_data/colors.json${cacheBust}`, fetchOptions).then(r => r.json()).catch(() => ({}))
   ]);
@@ -178,7 +179,7 @@ async function fetchFreshNKASData(forceRefresh: boolean = false): Promise<Fetche
         displayName: name,
         subInfo: '랩쳐 / 보스',
         isNew: newIds.has(id),
-        thumbnail: `${L2D_BASE}/monsters/${id}/default/${id}.png`
+        thumbnail: `${SPINE_BASE}/monsters/${id}/default/${id}.png`
       };
     });
 
@@ -256,42 +257,42 @@ export const AssetUrls = {
   characterPose: (charId: string, pose: CharacterPose, fileOrExt: 'atlas' | 'skel' | 'png' | string) => {
     const baseName = getCharacterPoseFileName(charId, pose);
     if (fileOrExt.endsWith('.png') || fileOrExt.endsWith('.skel') || fileOrExt.endsWith('.atlas')) {
-      return `${L2D_BASE}/characters/${charId}/${pose}/${fileOrExt}`;
+      return `${SPINE_BASE}/characters/${charId}/${pose}/${fileOrExt}`;
     }
     const cleanExt = fileOrExt.startsWith('.') ? fileOrExt.slice(1) : fileOrExt;
-    return `${L2D_BASE}/characters/${charId}/${pose}/${baseName}.${cleanExt}`;
+    return `${SPINE_BASE}/characters/${charId}/${pose}/${baseName}.${cleanExt}`;
   },
 
   burst: (burstId: string, fileOrExt: 'atlas' | 'skel' | 'png' | string) => {
     if (fileOrExt.endsWith('.png') || fileOrExt.endsWith('.skel') || fileOrExt.endsWith('.atlas')) {
-      return `${L2D_BASE}/bursts/${burstId}/${fileOrExt}`;
+      return `${SPINE_BASE}/bursts/${burstId}/${fileOrExt}`;
     }
     const cleanExt = fileOrExt.startsWith('.') ? fileOrExt.slice(1) : fileOrExt;
-    return `${L2D_BASE}/bursts/${burstId}/${burstId}.${cleanExt}`;
+    return `${SPINE_BASE}/bursts/${burstId}/${burstId}.${cleanExt}`;
   },
 
   monster: (monsterId: string, fileOrExt: 'atlas' | 'skel' | 'png' | string) => {
     if (fileOrExt.endsWith('.png') || fileOrExt.endsWith('.skel') || fileOrExt.endsWith('.atlas')) {
-      return `${L2D_BASE}/monsters/${monsterId}/default/${fileOrExt}`;
+      return `${SPINE_BASE}/monsters/${monsterId}/default/${fileOrExt}`;
     }
     const cleanExt = fileOrExt.startsWith('.') ? fileOrExt.slice(1) : fileOrExt;
-    return `${L2D_BASE}/monsters/${monsterId}/default/${monsterId}.${cleanExt}`;
+    return `${SPINE_BASE}/monsters/${monsterId}/default/${monsterId}.${cleanExt}`;
   },
 
   favorite: (favId: string, fileOrExt: 'atlas' | 'skel' | 'png' | string) => {
     if (fileOrExt.endsWith('.png') || fileOrExt.endsWith('.skel') || fileOrExt.endsWith('.atlas')) {
-      return `${L2D_BASE}/favorites/${favId}/default/${fileOrExt}`;
+      return `${SPINE_BASE}/favorites/${favId}/default/${fileOrExt}`;
     }
     const cleanExt = fileOrExt.startsWith('.') ? fileOrExt.slice(1) : fileOrExt;
-    return `${L2D_BASE}/favorites/${favId}/default/${favId}.${cleanExt}`;
+    return `${SPINE_BASE}/favorites/${favId}/default/${favId}.${cleanExt}`;
   },
 
   eventScene: (eventId: string, fileOrExt: 'atlas' | 'skel' | 'png' | string) => {
     if (fileOrExt.endsWith('.png') || fileOrExt.endsWith('.skel') || fileOrExt.endsWith('.atlas')) {
-      return `${L2D_BASE}/eventscenes/${eventId}/${fileOrExt}`;
+      return `${SPINE_BASE}/eventscenes/${eventId}/${fileOrExt}`;
     }
     const cleanExt = fileOrExt.startsWith('.') ? fileOrExt.slice(1) : fileOrExt;
-    return `${L2D_BASE}/eventscenes/${eventId}/${eventId}.${cleanExt}`;
+    return `${SPINE_BASE}/eventscenes/${eventId}/${eventId}.${cleanExt}`;
   },
 
   characterIcon: (charId: string) => `${MAIN_BASE}/characters/si_${charId}_s.png`,

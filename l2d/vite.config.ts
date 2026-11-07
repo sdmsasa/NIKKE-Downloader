@@ -5,7 +5,7 @@ import os from 'node:os'
 import { fileURLToPath } from 'node:url'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
-const cacheDir = path.join(os.tmpdir(), 'vite-nikke-l2d-cache')
+const cacheDir = path.join(os.tmpdir(), 'vite-nikke-spine-cache')
 
 // https://vite.dev/config/
 export default defineConfig({
