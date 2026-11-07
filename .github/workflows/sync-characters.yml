@@ -38,14 +38,14 @@ jobs:
         with:
           node-version: 22
           cache: 'npm'
-          cache-dependency-path: 'l2d/package-lock.json'
+          cache-dependency-path: 'spine/package-lock.json'
 
       - name: Install dependencies
-        working-directory: ./l2d
+        working-directory: ./spine
         run: npm ci
 
       - name: Sync character translations
-        working-directory: ./l2d
+        working-directory: ./spine
         env:
           OBSIDIAN_SETTINGS_DIR: ${{ github.workspace }}/obsidian-repo/NIKKE/Settings
         run: npm run sync-translations
@@ -53,17 +53,17 @@ jobs:
       - name: Check for changes
         id: check_changes
         run: |
-          if [ -n "$(git status --porcelain l2d/src/data/)" ]; then
+          if [ -n "$(git status --porcelain spine/src/data/)" ]; then
             echo "has_changes=true" >> $GITHUB_OUTPUT
-            echo "Changes detected in l2d/src/data/"
+            echo "Changes detected in spine/src/data/"
           else
             echo "has_changes=false" >> $GITHUB_OUTPUT
-            echo "No changes in l2d/src/data/"
+            echo "No changes in spine/src/data/"
           fi
 
       - name: Build project
         if: steps.check_changes.outputs.has_changes == 'true' || github.event_name == 'workflow_dispatch' || github.event_name == 'push'
-        working-directory: ./l2d
+        working-directory: ./spine
         run: npm run build
 
       - name: Commit and push updated translations to main
@@ -71,7 +71,7 @@ jobs:
         run: |
           git config --local user.name "github-actions[bot]"
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git add l2d/src/data/
+          git add spine/src/data/
           git commit -m "feat(data): auto-sync character metadata and manufacturers [skip ci]"
           git push origin main
 
@@ -79,6 +79,6 @@ jobs:
         if: steps.check_changes.outputs.has_changes == 'true' || github.event_name == 'workflow_dispatch' || github.event_name == 'push'
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: l2d/dist
+          folder: spine/dist
           branch: gh-pages
           clean: true
