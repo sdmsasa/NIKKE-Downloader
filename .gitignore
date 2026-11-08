@@ -20,3 +20,10 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
+
+# Dependencies & Build Outputs
+node_modules/
+dist/
+dist-ssr/
+*.tsbuildinfo
+.turbo/
