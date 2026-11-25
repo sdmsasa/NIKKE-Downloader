@@ -208,14 +208,14 @@ export const ID_TO_KOREAN: Record<string, string> = {
   "c030_02": "폴리: 치얼 업 폴리스",
   "c900__잉그리드": "잉그리드",
   "c900": "잉그리드",
+  "c994__라피": "라피: RR-15436",
+  "c994": "라피: RR-15436",
   "c300__솔져eg": "솔져 E.G.",
   "c300": "솔져 E.G.",
   "c301__솔져fa": "솔져 F.A.",
   "c301": "솔져 F.A.",
   "c306__솔져ow": "솔져 O.W.",
   "c306": "솔져 O.W.",
-  "c994__라피": "라피: RR-15436",
-  "c994": "라피: RR-15436",
   "c994__양산형니케": "양산형 니케: 라피",
   "c450__나가": "나가",
   "c450": "나가",
@@ -647,6 +647,8 @@ export const ID_TO_KOREAN: Record<string, string> = {
   "c471_01": "스노우 화이트: 라크리모사",
   "c942__엔더슨": "엔더슨",
   "c942": "엔더슨",
+  "c942_01__엔더슨": "엔더슨",
+  "c942_01": "엔더슨",
   "c942__지휘관": "지휘관",
   "c225__홍련": "홍련: 흑영",
   "c225": "홍련: 흑영",
@@ -985,6 +987,9 @@ export const ID_TO_KOREAN: Record<string, string> = {
   "c966": "라푼젤",
   "c9029__라플라스": "라플라스",
   "c9029": "라플라스",
+  "c990__라피": "라피",
+  "c990": "라피",
+  "c992__라피": "라피",
   "c915__랩칠리언": "랩칠리언",
   "c915": "랩칠리언",
   "c931__롬": "롬",
@@ -1013,6 +1018,8 @@ export const ID_TO_KOREAN: Record<string, string> = {
   "c013__마리아5": "마리아-5",
   "c013__마리아55": "마리아-55",
   "c013__마리아n": "마리아-n",
+  "c9001__마오": "마오",
+  "c9001": "마오",
   "c9003__미세스미스": "미세스 미스",
   "c9003": "미세스 미스",
   "c9045__세피": "세피",
@@ -1042,8 +1049,6 @@ export const ID_TO_KOREAN: Record<string, string> = {
   "c9020": "프리시아: 프리티",
   "c941__피나": "피나",
   "c941": "피나",
-  "c9001__마오": "마오",
-  "c9001": "마오",
   "c227__피노키오": "피노키오",
   "c227": "피노키오",
   "c9023__한슨": "한슨",
@@ -1052,9 +1057,6 @@ export const ID_TO_KOREAN: Record<string, string> = {
   "c998": "헤르민",
   "c965__홍련": "홍련: 흑영",
   "c965": "홍련",
-  "c990__라피": "라피",
-  "c990": "라피",
-  "c992__라피": "라피",
   "c996__검은물을덮은소녀": "검은 물을 덮은 소녀",
   "c9014__검은헬레틱": "검은 헬레틱",
   "c9014": "검은 헬레틱",
@@ -1204,7 +1206,6 @@ export const ID_TO_KOREAN: Record<string, string> = {
   "c923": "로열 남성",
   "c941__마오": "마오",
   "c942_01__지휘관": "지휘관: 갓데스",
-  "c942_01": "지휘관: 갓데스",
   "c947__genericmalebystander": "남성 시민 기본",
   "c948__genericfemalebystander": "여성 시민 기본",
   "c951__genericboy": "남자 아이",
@@ -1439,14 +1440,14 @@ export const ID_TO_SUBINFO: Record<string, string> = {
   "c030_02": "ELYSION · A.C.P.U.",
   "c900__잉그리드": "ELYSION · ELYSION CEO · NPC",
   "c900": "ELYSION · ELYSION CEO · NPC",
+  "c994__라피": "ELYSION · 리플레이스 · NPC",
+  "c994": "ELYSION · 리플레이스 · NPC",
   "c300__솔져eg": "ELYSION · 리플레이스",
   "c300": "ELYSION · 리플레이스",
   "c301__솔져fa": "ELYSION · 리플레이스",
   "c301": "ELYSION · 리플레이스",
   "c306__솔져ow": "ELYSION · 리플레이스",
   "c306": "ELYSION · 리플레이스",
-  "c994__라피": "ELYSION · 리플레이스 · NPC",
-  "c994": "ELYSION · 리플레이스 · NPC",
   "c994__양산형니케": "ELYSION · 리플레이스 · NPC",
   "c450__나가": "MISSILIS · 다즐링 펄",
   "c450": "MISSILIS · 다즐링 펄",
@@ -1878,6 +1879,8 @@ export const ID_TO_SUBINFO: Record<string, string> = {
   "c471_01": "PILGRIM · 갓데스",
   "c942__엔더슨": "PILGRIM · 갓데스 · NPC",
   "c942": "PILGRIM · 갓데스 · NPC",
+  "c942_01__엔더슨": "PILGRIM · 갓데스 · NPC",
+  "c942_01": "PILGRIM · 갓데스 · NPC",
   "c942__지휘관": "PILGRIM · 갓데스 · NPC",
   "c225__홍련": "이격",
   "c225": "PILGRIM · 갓데스",
@@ -2216,6 +2219,9 @@ export const ID_TO_SUBINFO: Record<string, string> = {
   "c966": "NPC · 갓데스",
   "c9029__라플라스": "NPC",
   "c9029": "NPC",
+  "c990__라피": "NPC",
+  "c990": "NPC",
+  "c992__라피": "NPC",
   "c915__랩칠리언": "NPC",
   "c915": "NPC",
   "c931__롬": "NPC",
@@ -2244,6 +2250,8 @@ export const ID_TO_SUBINFO: Record<string, string> = {
   "c013__마리아5": "NPC",
   "c013__마리아55": "NPC",
   "c013__마리아n": "NPC",
+  "c9001__마오": "NPC",
+  "c9001": "NPC",
   "c9003__미세스미스": "NPC",
   "c9003": "NPC",
   "c9045__세피": "NPC",
@@ -2273,8 +2281,6 @@ export const ID_TO_SUBINFO: Record<string, string> = {
   "c9020": "NPC",
   "c941__피나": "NPC",
   "c941": "NPC",
-  "c9001__마오": "NPC",
-  "c9001": "NPC",
   "c227__피노키오": "NPC · 파이오니아",
   "c227": "NPC · 파이오니아",
   "c9023__한슨": "NPC",
@@ -2283,9 +2289,6 @@ export const ID_TO_SUBINFO: Record<string, string> = {
   "c998": "NPC",
   "c965__홍련": "NPC · 갓데스",
   "c965": "NPC · 갓데스",
-  "c990__라피": "NPC",
-  "c990": "NPC",
-  "c992__라피": "NPC",
   "c996__검은물을덮은소녀": "NPC",
   "c9014__검은헬레틱": "NPC",
   "c9014": "NPC",
@@ -2433,7 +2436,6 @@ export const ID_TO_SUBINFO: Record<string, string> = {
   "c923": "NPC",
   "c941__마오": "NPC",
   "c942_01__지휘관": "NPC",
-  "c942_01": "NPC",
   "c947__genericmalebystander": "NPC",
   "c948__genericfemalebystander": "NPC",
   "c951__genericboy": "NPC",
@@ -8980,6 +8982,13 @@ export const MARKDOWN_CHARACTERS: MarkdownCharacterEntry[] = [
     "variantType": "base"
   },
   {
+    "id": "c994",
+    "displayName": "라피: RR-15436",
+    "subInfo": "ELYSION · 리플레이스 · NPC",
+    "manufacturer": "elysion",
+    "variantType": "alt"
+  },
+  {
     "id": "c300",
     "displayName": "솔져 E.G.",
     "subInfo": "ELYSION · 리플레이스",
@@ -9002,13 +9011,6 @@ export const MARKDOWN_CHARACTERS: MarkdownCharacterEntry[] = [
     "color": "#67686C",
     "manufacturer": "elysion",
     "variantType": "base"
-  },
-  {
-    "id": "c994",
-    "displayName": "라피: RR-15436",
-    "subInfo": "ELYSION · 리플레이스 · NPC",
-    "manufacturer": "elysion",
-    "variantType": "alt"
   },
   {
     "id": "c994",
@@ -10719,6 +10721,13 @@ export const MARKDOWN_CHARACTERS: MarkdownCharacterEntry[] = [
     "variantType": "base"
   },
   {
+    "id": "c942_01",
+    "displayName": "엔더슨",
+    "subInfo": "PILGRIM · 갓데스 · NPC",
+    "manufacturer": "pilgrim",
+    "variantType": "base"
+  },
+  {
     "id": "c942",
     "displayName": "지휘관",
     "subInfo": "PILGRIM · 갓데스 · NPC",
@@ -12058,6 +12067,20 @@ export const MARKDOWN_CHARACTERS: MarkdownCharacterEntry[] = [
     "variantType": "base"
   },
   {
+    "id": "c990",
+    "displayName": "라피",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c992",
+    "displayName": "라피",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
     "id": "c915",
     "displayName": "랩칠리언",
     "subInfo": "NPC",
@@ -12234,6 +12257,13 @@ export const MARKDOWN_CHARACTERS: MarkdownCharacterEntry[] = [
     "variantType": "base"
   },
   {
+    "id": "c9001",
+    "displayName": "마오",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
     "id": "c9003",
     "displayName": "미세스 미스",
     "subInfo": "NPC",
@@ -12347,13 +12377,6 @@ export const MARKDOWN_CHARACTERS: MarkdownCharacterEntry[] = [
     "variantType": "base"
   },
   {
-    "id": "c9001",
-    "displayName": "마오",
-    "subInfo": "NPC",
-    "manufacturer": "other",
-    "variantType": "base"
-  },
-  {
     "id": "c227",
     "displayName": "피노키오",
     "subInfo": "NPC · 파이오니아",
@@ -12381,20 +12404,6 @@ export const MARKDOWN_CHARACTERS: MarkdownCharacterEntry[] = [
     "color": "#BB0307",
     "manufacturer": "other",
     "variantType": "alt"
-  },
-  {
-    "id": "c990",
-    "displayName": "라피",
-    "subInfo": "NPC",
-    "manufacturer": "other",
-    "variantType": "base"
-  },
-  {
-    "id": "c992",
-    "displayName": "라피",
-    "subInfo": "NPC",
-    "manufacturer": "other",
-    "variantType": "base"
   },
   {
     "id": "c996",
