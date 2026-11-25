@@ -6,6 +6,7 @@ import iconPilgrim from '../assets/corp/PILGRIM.webp';
 import iconHeretic from '../assets/corp/HERETIC.webp';
 import iconAbnormal from '../assets/corp/ABNORMAL.webp';
 import iconUnknown from '../assets/corp/icn_corp_unknown.png';
+import { resolveSharedCharacter } from './translations';
 
 // Auto-generated from Obsidian NIKKE Settings
 export type ManufacturerType = 'all' | 'elysion' | 'missilis' | 'tetra' | 'pilgrim' | 'heretic' | 'abnormal' | 'other';
@@ -2836,6 +2837,11 @@ export const NAME_TO_MANUFACTURER: Record<string, ManufacturerType> = {
 
 export function getCharacterManufacturer(id: string, name?: string): ManufacturerType {
   if (!id && !name) return 'all';
+  const shared = resolveSharedCharacter(id, name);
+  if (shared && shared.manufacturer) {
+    return shared.manufacturer as ManufacturerType;
+  }
+
   const cleanId = (id || '').toLowerCase().trim();
   const baseId = cleanId.split('_')[0];
 

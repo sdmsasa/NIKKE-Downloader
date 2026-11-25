@@ -5801,6 +5801,7 @@ export const ID_TO_VARIANT: Record<string, CharacterVariantKind> = {
   "c010_03": "skin",
   "c011": "base",
   "c011_01": "skin",
+  "c013": "base",
   "c014": "alt",
   "c016": "alt",
   "c016_01": "skin",
@@ -5891,6 +5892,7 @@ export const ID_TO_VARIANT: Record<string, CharacterVariantKind> = {
   "c582": "base",
   "c583": "alt",
   "c582_01": "skin",
+  "c940": "base",
   "c480": "base",
   "c481": "base",
   "c490": "base",
@@ -5900,6 +5902,7 @@ export const ID_TO_VARIANT: Record<string, CharacterVariantKind> = {
   "c986": "base",
   "c900": "base",
   "c989": "base",
+  "c994": "base",
   "c440": "base",
   "c350_old": "skin",
   "c018": "alt",
@@ -5980,6 +5983,8 @@ export const ID_TO_VARIANT: Record<string, CharacterVariantKind> = {
   "c8004": "base",
   "c8005": "base",
   "c8006": "base",
+  "c9029": "base",
+  "c9031": "base",
   "c973": "base",
   "c9030": "base",
   "c9032": "base",
@@ -6157,6 +6162,7 @@ export const ID_TO_VARIANT: Record<string, CharacterVariantKind> = {
   "c979": "base",
   "c980": "base",
   "c981": "base",
+  "c982": "base",
   "c9008": "base",
   "c227": "base",
   "c472": "alt",
@@ -6183,6 +6189,8 @@ export const ID_TO_VARIANT: Record<string, CharacterVariantKind> = {
   "c562": "base",
   "c563": "base",
   "c944": "base",
+  "c992": "base",
+  "c996": "base",
   "c997": "base",
   "c9009": "base",
   "c9014": "base",
@@ -6270,20 +6278,25 @@ export const ID_TO_VARIANT: Record<string, CharacterVariantKind> = {
   "c252": "base",
   "c253": "base",
   "c254": "base",
+  "c255": "base",
   "c370": "base",
   "c371": "base",
   "c482": "base",
   "c610": "base",
   "c903": "base",
   "c903_01": "base",
+  "c942": "base",
   "c904": "base",
   "c907": "base",
   "c907_01": "base",
+  "c910": "base",
   "c910_01": "base",
   "c911": "base",
+  "c912": "base",
   "c913": "base",
   "c914": "base",
   "c915": "base",
+  "c916": "base",
   "c917": "base",
   "c918": "base",
   "c919": "base",
@@ -6291,7 +6304,10 @@ export const ID_TO_VARIANT: Record<string, CharacterVariantKind> = {
   "c921": "base",
   "c922": "base",
   "c923": "base",
+  "c924": "base",
+  "c928": "base",
   "c930": "base",
+  "c931": "base",
   "c931_01": "base",
   "c932": "base",
   "c933": "base",
@@ -6303,10 +6319,16 @@ export const ID_TO_VARIANT: Record<string, CharacterVariantKind> = {
   "c941": "base",
   "c945": "base",
   "c946": "base",
+  "c947": "base",
+  "c948": "base",
   "c951": "base",
   "c952": "base",
+  "c960": "base",
   "c961": "base",
   "c961_01": "base",
+  "c962": "base",
+  "c963": "base",
+  "c964": "base",
   "c967": "base",
   "c968": "base",
   "c969": "base",
@@ -6328,6 +6350,7 @@ export const ID_TO_VARIANT: Record<string, CharacterVariantKind> = {
   "c9000_05": "base",
   "c9000_06": "base",
   "c9000_07": "base",
+  "c9001": "base",
   "c9002": "base",
   "c9005": "base",
   "c9005_01": "base",
@@ -6337,21 +6360,681 @@ export const ID_TO_VARIANT: Record<string, CharacterVariantKind> = {
   "c9015": "base",
   "c9019": "base",
   "c9026": "base",
+  "c9028": "base",
   "c9034": "base",
   "c9035": "base",
   "c9036": "base",
   "c9037": "base",
+  "c9038": "base",
   "c9039": "base",
   "c9040": "base",
   "c984_01": "base",
   "c984": "base",
   "c990": "base",
+  "c9041": "base",
   "c9045": "base",
   "c991": "base",
+  "c9016": "base",
   "c9018": "base"
 };
 
+export interface SharedIdCandidate {
+  krName: string;
+  baseName: string;
+  subInfo?: string;
+  color?: string;
+  manufacturer: string;
+}
+
+export const ID_TO_SHARED: Record<string, SharedIdCandidate[]> = {
+  "c013": [
+    {
+      "krName": "마리안",
+      "baseName": "마리안",
+      "subInfo": "ELYSION · 실버건 · NPC",
+      "color": "#5176AD",
+      "manufacturer": "elysion"
+    },
+    {
+      "krName": "마리아-102",
+      "baseName": "마리아-102",
+      "subInfo": "NPC",
+      "color": "",
+      "manufacturer": "other"
+    },
+    {
+      "krName": "마리아-105",
+      "baseName": "마리아-105",
+      "subInfo": "NPC",
+      "color": "",
+      "manufacturer": "other"
+    },
+    {
+      "krName": "마리아-113",
+      "baseName": "마리아-113",
+      "subInfo": "NPC",
+      "color": "",
+      "manufacturer": "other"
+    },
+    {
+      "krName": "마리아-2",
+      "baseName": "마리아-2",
+      "subInfo": "NPC",
+      "color": "",
+      "manufacturer": "other"
+    },
+    {
+      "krName": "마리아-202",
+      "baseName": "마리아-202",
+      "subInfo": "NPC",
+      "color": "",
+      "manufacturer": "other"
+    },
+    {
+      "krName": "마리아-234",
+      "baseName": "마리아-234",
+      "subInfo": "NPC",
+      "color": "",
+      "manufacturer": "other"
+    },
+    {
+      "krName": "마리아-235",
+      "baseName": "마리아-235",
+      "subInfo": "NPC",
+      "color": "",
+      "manufacturer": "other"
+    },
+    {
+      "krName": "마리아-24",
+      "baseName": "마리아-24",
+      "subInfo": "NPC",
+      "color": "",
+      "manufacturer": "other"
+    },
+    {
+      "krName": "마리아-3",
+      "baseName": "마리아-3",
+      "subInfo": "NPC",
+      "color": "",
+      "manufacturer": "other"
+    },
+    {
+      "krName": "마리아-311",
+      "baseName": "마리아-311",
+      "subInfo": "NPC",
+      "color": "",
+      "manufacturer": "other"
+    },
+    {
+      "krName": "마리아-320",
+      "baseName": "마리아-320",
+      "subInfo": "NPC",
+      "color": "",
+      "manufacturer": "other"
+    },
+    {
+      "krName": "마리아-330",
+      "baseName": "마리아-330",
+      "subInfo": "NPC",
+      "color": "",
+      "manufacturer": "other"
+    },
+    {
+      "krName": "마리아-331",
+      "baseName": "마리아-331",
+      "subInfo": "NPC",
+      "color": "",
+      "manufacturer": "other"
+    },
+    {
+      "krName": "마리아-4",
+      "baseName": "마리아-4",
+      "subInfo": "NPC",
+      "color": "",
+      "manufacturer": "other"
+    },
+    {
+      "krName": "마리아-446",
+      "baseName": "마리아-446",
+      "subInfo": "NPC",
+      "color": "",
+      "manufacturer": "other"
+    },
+    {
+      "krName": "마리아-447",
+      "baseName": "마리아-447",
+      "subInfo": "NPC",
+      "color": "",
+      "manufacturer": "other"
+    },
+    {
+      "krName": "마리아-448",
+      "baseName": "마리아-448",
+      "subInfo": "NPC",
+      "color": "",
+      "manufacturer": "other"
+    },
+    {
+      "krName": "마리아-449",
+      "baseName": "마리아-449",
+      "subInfo": "NPC",
+      "color": "",
+      "manufacturer": "other"
+    },
+    {
+      "krName": "마리아-5",
+      "baseName": "마리아-5",
+      "subInfo": "NPC",
+      "color": "",
+      "manufacturer": "other"
+    },
+    {
+      "krName": "마리아-55",
+      "baseName": "마리아-55",
+      "subInfo": "NPC",
+      "color": "",
+      "manufacturer": "other"
+    },
+    {
+      "krName": "마리아-n",
+      "baseName": "마리아-n",
+      "subInfo": "NPC",
+      "color": "",
+      "manufacturer": "other"
+    }
+  ],
+  "c992": [
+    {
+      "krName": "라피",
+      "baseName": "라피",
+      "subInfo": "ELYSION · NPC",
+      "color": "",
+      "manufacturer": "elysion"
+    },
+    {
+      "krName": "뷰티",
+      "baseName": "뷰티",
+      "subInfo": "HERETIC · 포비스트 · NPC",
+      "color": "",
+      "manufacturer": "heretic"
+    },
+    {
+      "krName": "온리 원",
+      "baseName": "온리 원",
+      "subInfo": "HERETIC · 포비스트 · NPC",
+      "color": "",
+      "manufacturer": "heretic"
+    }
+  ],
+  "c994": [
+    {
+      "krName": "라피: RR-15436",
+      "baseName": "라피",
+      "subInfo": "ELYSION · 리플레이스 · NPC",
+      "color": "",
+      "manufacturer": "elysion"
+    },
+    {
+      "krName": "양산형 니케: 라피",
+      "baseName": "양산형 니케",
+      "subInfo": "NPC · 리플레이스",
+      "color": "",
+      "manufacturer": "other"
+    },
+    {
+      "krName": "양산형 니케: 라피",
+      "baseName": "Mass Produced Rapi",
+      "subInfo": "NPC",
+      "manufacturer": "other"
+    }
+  ],
+  "c942": [
+    {
+      "krName": "엔더슨",
+      "baseName": "엔더슨",
+      "subInfo": "PILGRIM · 갓데스 · NPC",
+      "color": "",
+      "manufacturer": "pilgrim"
+    },
+    {
+      "krName": "지휘관",
+      "baseName": "지휘관",
+      "subInfo": "PILGRIM · 갓데스 · NPC",
+      "color": "",
+      "manufacturer": "pilgrim"
+    }
+  ],
+  "c982": [
+    {
+      "krName": "레드 슈즈",
+      "baseName": "레드 슈즈",
+      "subInfo": "PILGRIM · 올드 테일즈 · NPC",
+      "color": "",
+      "manufacturer": "pilgrim"
+    },
+    {
+      "krName": "미러",
+      "baseName": "미러",
+      "subInfo": "HERETIC · NPC",
+      "color": "",
+      "manufacturer": "heretic"
+    }
+  ],
+  "c996": [
+    {
+      "krName": "레비",
+      "baseName": "레비",
+      "subInfo": "HERETIC · NPC",
+      "color": "",
+      "manufacturer": "heretic"
+    },
+    {
+      "krName": "검은 물을 덮은 소녀",
+      "baseName": "검은 물을 덮은 소녀",
+      "subInfo": "NPC",
+      "color": "",
+      "manufacturer": "other"
+    }
+  ],
+  "c928": [
+    {
+      "krName": "잉크",
+      "baseName": "잉크",
+      "subInfo": "NPC · AI",
+      "color": "#BBE274",
+      "manufacturer": "other"
+    },
+    {
+      "krName": "여신",
+      "baseName": "여신",
+      "subInfo": "NPC",
+      "color": "",
+      "manufacturer": "other"
+    }
+  ],
+  "c9016": [
+    {
+      "krName": "여사제",
+      "baseName": "여사제",
+      "subInfo": "NPC",
+      "color": "",
+      "manufacturer": "other"
+    },
+    {
+      "krName": "V.T.C. 고위 간부",
+      "baseName": "V.T.C. 고위 간부",
+      "subInfo": "NPC",
+      "color": "",
+      "manufacturer": "other"
+    },
+    {
+      "krName": "V.T.C. 여사제",
+      "baseName": "V.T.C. 여사제",
+      "subInfo": "NPC",
+      "color": "",
+      "manufacturer": "other"
+    }
+  ],
+  "c940": [
+    {
+      "krName": "엘리시온 하퍼",
+      "baseName": "엘리시온 하퍼",
+      "subInfo": "NPC",
+      "color": "",
+      "manufacturer": "elysion"
+    },
+    {
+      "krName": "E.H.",
+      "baseName": "E.H.",
+      "subInfo": "NPC",
+      "color": "",
+      "manufacturer": "elysion"
+    }
+  ],
+  "c9041": [
+    {
+      "krName": "닥터 마리아",
+      "baseName": "닥터 마리아",
+      "subInfo": "NPC",
+      "color": "",
+      "manufacturer": "other"
+    },
+    {
+      "krName": "마리아 박사",
+      "baseName": "마리아 박사",
+      "subInfo": "NPC",
+      "color": "",
+      "manufacturer": "other"
+    }
+  ],
+  "c9029": [
+    {
+      "krName": "라플라스",
+      "baseName": "라플라스",
+      "subInfo": "NPC",
+      "color": "",
+      "manufacturer": "missilis"
+    },
+    {
+      "krName": "소녀: 라플라스",
+      "baseName": "소녀",
+      "subInfo": "NPC",
+      "color": "",
+      "manufacturer": "other"
+    },
+    {
+      "krName": "왜소한 소녀",
+      "baseName": "왜소한 소녀",
+      "subInfo": "NPC",
+      "color": "",
+      "manufacturer": "other"
+    }
+  ],
+  "c931": [
+    {
+      "krName": "롬",
+      "baseName": "롬",
+      "subInfo": "NPC",
+      "color": "",
+      "manufacturer": "other"
+    },
+    {
+      "krName": "콜렉터",
+      "baseName": "콜렉터",
+      "subInfo": "NPC",
+      "color": "",
+      "manufacturer": "other"
+    }
+  ],
+  "c9031": [
+    {
+      "krName": "슈엔",
+      "baseName": "슈엔",
+      "subInfo": "NPC",
+      "color": "",
+      "manufacturer": "missilis"
+    },
+    {
+      "krName": "어린 슈엔",
+      "baseName": "어린 슈엔",
+      "subInfo": "NPC",
+      "color": "",
+      "manufacturer": "other"
+    }
+  ],
+  "c947": [
+    {
+      "krName": "트리키 보이",
+      "baseName": "트리키 보이",
+      "subInfo": "NPC",
+      "color": "",
+      "manufacturer": "other"
+    },
+    {
+      "krName": "남성 시민 기본",
+      "baseName": "남성 시민 기본",
+      "subInfo": "EXTRA · 기타",
+      "color": "",
+      "manufacturer": "other"
+    },
+    {
+      "krName": "남성 시민 기본",
+      "baseName": "Generic Male Bystander",
+      "subInfo": "NPC",
+      "manufacturer": "other"
+    }
+  ],
+  "c960": [
+    {
+      "krName": "프리시아",
+      "baseName": "프리시아",
+      "subInfo": "NPC",
+      "color": "",
+      "manufacturer": "other"
+    },
+    {
+      "krName": "소녀: 프리시아",
+      "baseName": "소녀",
+      "subInfo": "NPC",
+      "color": "",
+      "manufacturer": "other"
+    }
+  ],
+  "c9001": [
+    {
+      "krName": "피나: 마오",
+      "baseName": "피나",
+      "subInfo": "NPC",
+      "color": "",
+      "manufacturer": "other"
+    },
+    {
+      "krName": "마오",
+      "baseName": "마오",
+      "subInfo": "NPC",
+      "color": "",
+      "manufacturer": "other"
+    }
+  ],
+  "c9038": [
+    {
+      "krName": "곰",
+      "baseName": "곰",
+      "subInfo": "NPC",
+      "color": "",
+      "manufacturer": "other"
+    },
+    {
+      "krName": "곰⋯?",
+      "baseName": "곰⋯?",
+      "subInfo": "NPC",
+      "color": "",
+      "manufacturer": "other"
+    }
+  ],
+  "c910": [
+    {
+      "krName": "관리자 스윗 조니",
+      "baseName": "관리자 스윗 조니",
+      "subInfo": "NPC",
+      "color": "",
+      "manufacturer": "other"
+    },
+    {
+      "krName": "스윗 조니",
+      "baseName": "스윗 조니",
+      "subInfo": "NPC",
+      "color": "",
+      "manufacturer": "other"
+    }
+  ],
+  "c924": [
+    {
+      "krName": "라이온",
+      "baseName": "라이온",
+      "subInfo": "NPC",
+      "color": "",
+      "manufacturer": "other"
+    },
+    {
+      "krName": "로열 여성",
+      "baseName": "로열 여성",
+      "subInfo": "NPC",
+      "color": "",
+      "manufacturer": "other"
+    }
+  ],
+  "c9028": [
+    {
+      "krName": "루크",
+      "baseName": "루크",
+      "subInfo": "NPC",
+      "color": "",
+      "manufacturer": "other"
+    },
+    {
+      "krName": "호프",
+      "baseName": "호프",
+      "subInfo": "NPC",
+      "color": "",
+      "manufacturer": "other"
+    }
+  ],
+  "c948": [
+    {
+      "krName": "리스",
+      "baseName": "리스",
+      "subInfo": "NPC",
+      "color": "",
+      "manufacturer": "other"
+    },
+    {
+      "krName": "여성 시민 기본",
+      "baseName": "여성 시민 기본",
+      "subInfo": "EXTRA · 기타",
+      "color": "",
+      "manufacturer": "other"
+    },
+    {
+      "krName": "여성 시민 기본",
+      "baseName": "Generic Female Bystander",
+      "subInfo": "NPC",
+      "manufacturer": "other"
+    }
+  ],
+  "c916": [
+    {
+      "krName": "신입 지휘관",
+      "baseName": "신입 지휘관",
+      "subInfo": "NPC",
+      "color": "",
+      "manufacturer": "other"
+    },
+    {
+      "krName": "남성 지휘관",
+      "baseName": "Male Commander",
+      "subInfo": "NPC",
+      "manufacturer": "other"
+    }
+  ],
+  "c912": [
+    {
+      "krName": "아나운서",
+      "baseName": "아나운서",
+      "subInfo": "NPC",
+      "color": "",
+      "manufacturer": "other"
+    },
+    {
+      "krName": "여성 시민",
+      "baseName": "Generic Female",
+      "subInfo": "NPC",
+      "manufacturer": "other"
+    }
+  ],
+  "c255": [
+    {
+      "krName": "엘리시온 미케닉",
+      "baseName": "엘리시온 미케닉",
+      "subInfo": "NPC",
+      "color": "",
+      "manufacturer": "other"
+    },
+    {
+      "krName": "양산형 니케: White",
+      "baseName": "Mass Produced White",
+      "subInfo": "NPC",
+      "manufacturer": "other"
+    }
+  ],
+  "c964": [
+    {
+      "krName": "Product 12: 6000-D",
+      "baseName": "Product 12: 6000-D",
+      "subInfo": "NPC",
+      "color": "",
+      "manufacturer": "other"
+    },
+    {
+      "krName": "Product 12: 6000-D",
+      "baseName": "Product 12",
+      "subInfo": "NPC",
+      "manufacturer": "other"
+    }
+  ],
+  "c962": [
+    {
+      "krName": "Product 12: B-0006",
+      "baseName": "Product 12: B-0006",
+      "subInfo": "NPC",
+      "color": "",
+      "manufacturer": "other"
+    },
+    {
+      "krName": "Product 12: B-0006",
+      "baseName": "Product 12",
+      "subInfo": "NPC",
+      "manufacturer": "other"
+    }
+  ],
+  "c963": [
+    {
+      "krName": "Product 12: C-1002",
+      "baseName": "Product 12: C-1002",
+      "subInfo": "NPC",
+      "color": "",
+      "manufacturer": "other"
+    },
+    {
+      "krName": "Product 12: C-1002",
+      "baseName": "Product 12",
+      "subInfo": "NPC",
+      "manufacturer": "other"
+    }
+  ]
+};
+
+export function resolveSharedCharacter(id?: string, name?: string): SharedIdCandidate | undefined {
+  if (!id || !name) return undefined;
+  const cleanId = id.toLowerCase().trim();
+  const baseId = cleanId.split('_')[0];
+  const candidates = ID_TO_SHARED[cleanId] || ID_TO_SHARED[baseId];
+  if (!candidates || candidates.length === 0) return undefined;
+
+  const lower = name.toLowerCase().trim();
+  const prefixColonDash = lower.split(/[:-]/)[0].trim();
+  const prefixParen = lower.split(/[:\-(]/)[0].trim();
+  const lookupKeys = Array.from(new Set([lower, prefixColonDash, prefixParen].filter(Boolean)));
+
+  const resolvedKrList = lookupKeys
+    .map((k) => NAME_TO_KOREAN[k])
+    .filter((v): v is string => Boolean(v));
+
+  for (const candidate of candidates) {
+    const cBase = candidate.baseName.toLowerCase();
+    const cKr = candidate.krName.toLowerCase();
+    if (lookupKeys.includes(cBase) || lookupKeys.includes(cKr)) {
+      return candidate;
+    }
+    for (const rKr of resolvedKrList) {
+      const rLower = rKr.toLowerCase();
+      const rBase = rLower.split(/[:(]/)[0].trim();
+      if (cKr === rLower || cBase === rLower || cBase === rBase) {
+        return candidate;
+      }
+    }
+    if (lower.length >= 3 && (cKr.includes(lower) || cBase.includes(lower))) {
+      return candidate;
+    }
+  }
+
+  return undefined;
+}
+
 export function getKoreanName(name: string, id?: string): string | undefined {
+  const shared = resolveSharedCharacter(id, name);
+  if (shared) return shared.krName;
+
   if (id) {
     const cleanId = id.toLowerCase().trim();
     const baseId = cleanId.split('_')[0];
@@ -6370,6 +7053,9 @@ export function getKoreanName(name: string, id?: string): string | undefined {
 }
 
 export function getCharacterSubInfo(id?: string, name?: string): string | undefined {
+  const shared = resolveSharedCharacter(id, name);
+  if (shared) return shared.subInfo;
+
   if (id) {
     const cleanId = id.toLowerCase().trim();
     const baseId = cleanId.split('_')[0];
@@ -6388,6 +7074,9 @@ export function getCharacterSubInfo(id?: string, name?: string): string | undefi
 }
 
 export function getCharacterColor(id?: string, name?: string): string | undefined {
+  const shared = resolveSharedCharacter(id, name);
+  if (shared) return shared.color;
+
   if (id) {
     const cleanId = id.toLowerCase().trim();
     const baseId = cleanId.split('_')[0];

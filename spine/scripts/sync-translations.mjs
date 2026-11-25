@@ -200,12 +200,13 @@ function run() {
   const idToManufacturer = {};
   const nameToManufacturer = {};
 
-  // Track character names per ID so shared/reused IDs with conflicting names
-  // are not forced into a single wrong translation/manufacturer mapping.
+  // Track character entries per ID so shared/reused IDs with different names
+  // are treated as distinct objects and resolved by (id, name) instead of overwriting each other.
+  const idCandidates = {}; // lowerId -> Map<normBaseName, { krName, baseName, subInfo, color, manufacturer }>
   const idNonNpcNames = {};
   const idAllNames = {};
   const idHasNonNpc = new Set();
-  const recordIdName = (lowerId, charName, isNpc) => {
+  const recordIdCandidate = (lowerId, charName, entry, isNpc) => {
     const normName = (charName || '').trim().toLowerCase();
     if (!normName || normName === '-') return;
     if (!idAllNames[lowerId]) idAllNames[lowerId] = new Set();
@@ -214,6 +215,26 @@ function run() {
       idHasNonNpc.add(lowerId);
       if (!idNonNpcNames[lowerId]) idNonNpcNames[lowerId] = new Set();
       idNonNpcNames[lowerId].add(normName);
+    }
+    if (!idCandidates[lowerId]) idCandidates[lowerId] = new Map();
+    const existing = idCandidates[lowerId].get(normName);
+    if (!existing) {
+      idCandidates[lowerId].set(normName, {
+        krName: entry.krName,
+        baseName: charName.trim(),
+        subInfo: entry.subInfo,
+        color: entry.color,
+        manufacturer: entry.manufacturer || 'other'
+      });
+    } else {
+      if (entry.krName && (!isNpc || !existing.krName)) existing.krName = entry.krName;
+      if (entry.subInfo && shouldUpdateSubInfo(existing.subInfo, entry.subInfo, isNpc)) {
+        existing.subInfo = entry.subInfo;
+      }
+      if (entry.color && (!isNpc || !existing.color)) existing.color = entry.color;
+      if (shouldUpdateManufacturer(existing.manufacturer, entry.manufacturer)) {
+        existing.manufacturer = entry.manufacturer;
+      }
     }
   };
 
@@ -243,7 +264,6 @@ function run() {
         const isNpcOrExtra =
           compKey === 'other' ||
           (roleOrOther && ['NPC', '기타', '엑스트라'].includes(roleOrOther.trim()));
-        recordIdName(lowerId, charName, isNpcOrExtra);
 
         const cleanAlt = altName && altName !== '-' ? altName : '';
         const cleanSkin = skinName && skinName !== '-' ? skinName : '';
@@ -273,6 +293,13 @@ function run() {
             }
           }
         }
+
+        recordIdCandidate(lowerId, charName, {
+          krName: displayName,
+          subInfo,
+          color: hexColor,
+          manufacturer: compKey
+        }, isNpcOrExtra);
 
         // Manufacturer mapping
         idToManufacturer[lowerId] = compKey;
@@ -337,7 +364,6 @@ function run() {
 
         const isBase = role === 'Base';
         const isNpcRow = currentManufacturer === 'other' || role === 'NPC';
-        recordIdName(lowerId, charName, isNpcRow);
         const cleanAlt = altName && altName !== '-' ? altName : '';
         const cleanSkin = skinName && skinName !== '-' ? skinName : '';
         const finalDisplayName =
@@ -365,6 +391,12 @@ function run() {
         if (subInfo && shouldUpdateSubInfo(idToSubInfo[lowerId], subInfo, isNpcRow)) {
           idToSubInfo[lowerId] = subInfo;
         }
+
+        recordIdCandidate(lowerId, charName, {
+          krName: finalDisplayName,
+          subInfo: role && role !== '-' && role !== 'Base' ? role : undefined,
+          manufacturer: currentManufacturer
+        }, isNpcRow);
 
         if (!idToManufacturer[lowerId] || idToManufacturer[lowerId] === 'other') {
           idToManufacturer[lowerId] = currentManufacturer;
@@ -541,24 +573,28 @@ function run() {
     }
   }
 
-  // Exclude IDs shared by multiple distinct character names so they fall back to name/raw Spine list
+  // For IDs shared by multiple distinct character names, move them to ID_TO_SHARED
+  // so each character is treated as a distinct object and matched by (id, name).
   const ambiguousIds = new Set();
+  const sharedIdMap = {};
   for (const lowerId of Object.keys(idAllNames)) {
     const nonNpcCount = idNonNpcNames[lowerId] ? idNonNpcNames[lowerId].size : 0;
     const allCount = idAllNames[lowerId].size;
     if (nonNpcCount > 1 || (nonNpcCount === 0 && allCount > 1)) {
       ambiguousIds.add(lowerId);
+      if (idCandidates[lowerId]) {
+        sharedIdMap[lowerId] = Array.from(idCandidates[lowerId].values());
+      }
     }
   }
   for (const ambId of ambiguousIds) {
     delete idToKorean[ambId];
     delete idToSubInfo[ambId];
     delete idToColor[ambId];
-    delete idToVariant[ambId];
     delete idToManufacturer[ambId];
   }
   if (ambiguousIds.size > 0) {
-    console.log(`Excluded ${ambiguousIds.size} ambiguous shared IDs: ${Array.from(ambiguousIds).join(', ')}`);
+    console.log(`Moved ${ambiguousIds.size} shared IDs to ID_TO_SHARED: ${Array.from(ambiguousIds).join(', ')}`);
   }
 
   // Write translations.ts
@@ -621,7 +657,57 @@ export const ID_TO_VARIANT: Record<string, CharacterVariantKind> = {
 ${idVariantEntries}
 };
 
+export interface SharedIdCandidate {
+  krName: string;
+  baseName: string;
+  subInfo?: string;
+  color?: string;
+  manufacturer: string;
+}
+
+export const ID_TO_SHARED: Record<string, SharedIdCandidate[]> = ${JSON.stringify(sharedIdMap, null, 2)};
+
+export function resolveSharedCharacter(id?: string, name?: string): SharedIdCandidate | undefined {
+  if (!id || !name) return undefined;
+  const cleanId = id.toLowerCase().trim();
+  const baseId = cleanId.split('_')[0];
+  const candidates = ID_TO_SHARED[cleanId] || ID_TO_SHARED[baseId];
+  if (!candidates || candidates.length === 0) return undefined;
+
+  const lower = name.toLowerCase().trim();
+  const prefixColonDash = lower.split(/[:-]/)[0].trim();
+  const prefixParen = lower.split(/[:\\-(]/)[0].trim();
+  const lookupKeys = Array.from(new Set([lower, prefixColonDash, prefixParen].filter(Boolean)));
+
+  const resolvedKrList = lookupKeys
+    .map((k) => NAME_TO_KOREAN[k])
+    .filter((v): v is string => Boolean(v));
+
+  for (const candidate of candidates) {
+    const cBase = candidate.baseName.toLowerCase();
+    const cKr = candidate.krName.toLowerCase();
+    if (lookupKeys.includes(cBase) || lookupKeys.includes(cKr)) {
+      return candidate;
+    }
+    for (const rKr of resolvedKrList) {
+      const rLower = rKr.toLowerCase();
+      const rBase = rLower.split(/[:(]/)[0].trim();
+      if (cKr === rLower || cBase === rLower || cBase === rBase) {
+        return candidate;
+      }
+    }
+    if (lower.length >= 3 && (cKr.includes(lower) || cBase.includes(lower))) {
+      return candidate;
+    }
+  }
+
+  return undefined;
+}
+
 export function getKoreanName(name: string, id?: string): string | undefined {
+  const shared = resolveSharedCharacter(id, name);
+  if (shared) return shared.krName;
+
   if (id) {
     const cleanId = id.toLowerCase().trim();
     const baseId = cleanId.split('_')[0];
@@ -640,6 +726,9 @@ export function getKoreanName(name: string, id?: string): string | undefined {
 }
 
 export function getCharacterSubInfo(id?: string, name?: string): string | undefined {
+  const shared = resolveSharedCharacter(id, name);
+  if (shared) return shared.subInfo;
+
   if (id) {
     const cleanId = id.toLowerCase().trim();
     const baseId = cleanId.split('_')[0];
@@ -658,6 +747,9 @@ export function getCharacterSubInfo(id?: string, name?: string): string | undefi
 }
 
 export function getCharacterColor(id?: string, name?: string): string | undefined {
+  const shared = resolveSharedCharacter(id, name);
+  if (shared) return shared.color;
+
   if (id) {
     const cleanId = id.toLowerCase().trim();
     const baseId = cleanId.split('_')[0];
@@ -720,6 +812,7 @@ import iconPilgrim from '../assets/corp/PILGRIM.webp';
 import iconHeretic from '../assets/corp/HERETIC.webp';
 import iconAbnormal from '../assets/corp/ABNORMAL.webp';
 import iconUnknown from '../assets/corp/icn_corp_unknown.png';
+import { resolveSharedCharacter } from './translations';
 
 // Auto-generated from Obsidian NIKKE Settings
 export type ManufacturerType = 'all' | 'elysion' | 'missilis' | 'tetra' | 'pilgrim' | 'heretic' | 'abnormal' | 'other';
@@ -754,6 +847,11 @@ ${nameMfgEntries}
 
 export function getCharacterManufacturer(id: string, name?: string): ManufacturerType {
   if (!id && !name) return 'all';
+  const shared = resolveSharedCharacter(id, name);
+  if (shared && shared.manufacturer) {
+    return shared.manufacturer as ManufacturerType;
+  }
+
   const cleanId = (id || '').toLowerCase().trim();
   const baseId = cleanId.split('_')[0];
 
