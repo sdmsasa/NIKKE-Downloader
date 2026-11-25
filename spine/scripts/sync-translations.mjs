@@ -224,12 +224,18 @@ function run() {
   // Track primary character per ID (by source priority) and store colliding characters
   // under composite keys `${id}__${sanitizeName(name)}`, matching nikke-spine-character-list.
   const idBaseInfo = {}; // lowerId -> { pureName, priority }
+  const idManufacturersSet = {}; // lowerId -> Set<manufacturer>
+  const idDistinctNames = {}; // lowerId -> Set<sanitizedName>
   const upsertIdRecord = (lowerId, charName, displayName, subInfo, hexColor, manufacturer, sourceFile, isNpc) => {
     const pureName = (charName || '').trim();
     if (!pureName || pureName === '-') return;
     const sNew = sanitizeName(pureName);
     const newPriority = getSourcePriority(sourceFile);
     const existing = idBaseInfo[lowerId];
+    if (!idManufacturersSet[lowerId]) idManufacturersSet[lowerId] = new Set();
+    if (manufacturer) idManufacturersSet[lowerId].add(manufacturer);
+    if (!idDistinctNames[lowerId]) idDistinctNames[lowerId] = new Set();
+    if (sNew) idDistinctNames[lowerId].add(sNew);
 
     const compositeKey = `${lowerId}__${sNew}`;
     if (!idToKorean[compositeKey] || !isNpc) {
@@ -574,6 +580,10 @@ function run() {
     }
   }
 
+  const sharedConflictIds = Object.keys(idManufacturersSet).filter(
+    (id) => idManufacturersSet[id].size > 1 && idDistinctNames[id] && idDistinctNames[id].size > 1
+  );
+
   // Write translations.ts
   const idEntries = Object.entries(idToKorean)
     .map(([k, v]) => `  "${k}": "${v}"`)
@@ -671,9 +681,11 @@ function isNameCompatible(inputName: string, recordName: string): boolean {
   return false;
 }
 
+const SHARED_CONFLICT_IDS = new Set(${JSON.stringify(sharedConflictIds)});
+
 /**
  * Resolve the exact key in ID_TO_* (either composite \`\${id}__\${sanitizeName(name)}\` or plain \`id\`),
- * blocking cross-character contamination when an ID is shared by different characters.
+ * blocking cross-character contamination when an ID is shared across different manufacturers.
  */
 export function resolveCharacterIdKey(id?: string, name?: string): string | undefined {
   if (!id) return undefined;
@@ -707,7 +719,7 @@ export function resolveCharacterIdKey(id?: string, name?: string): string | unde
 
   const directKey = ID_TO_KOREAN[cleanId] ? cleanId : (ID_TO_KOREAN[baseId] ? baseId : undefined);
   if (directKey) {
-    if (name && !isNameCompatible(name, ID_TO_KOREAN[directKey])) {
+    if (name && SHARED_CONFLICT_IDS.has(baseId) && !isNameCompatible(name, ID_TO_KOREAN[directKey])) {
       return undefined;
     }
     return directKey;

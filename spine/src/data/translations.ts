@@ -8175,9 +8175,11 @@ function isNameCompatible(inputName: string, recordName: string): boolean {
   return false;
 }
 
+const SHARED_CONFLICT_IDS = new Set(["c013","c992","c994","c942","c982","c996","c940","c9029","c9031"]);
+
 /**
  * Resolve the exact key in ID_TO_* (either composite `${id}__${sanitizeName(name)}` or plain `id`),
- * blocking cross-character contamination when an ID is shared by different characters.
+ * blocking cross-character contamination when an ID is shared across different manufacturers.
  */
 export function resolveCharacterIdKey(id?: string, name?: string): string | undefined {
   if (!id) return undefined;
@@ -8211,7 +8213,7 @@ export function resolveCharacterIdKey(id?: string, name?: string): string | unde
 
   const directKey = ID_TO_KOREAN[cleanId] ? cleanId : (ID_TO_KOREAN[baseId] ? baseId : undefined);
   if (directKey) {
-    if (name && !isNameCompatible(name, ID_TO_KOREAN[directKey])) {
+    if (name && SHARED_CONFLICT_IDS.has(baseId) && !isNameCompatible(name, ID_TO_KOREAN[directKey])) {
       return undefined;
     }
     return directKey;

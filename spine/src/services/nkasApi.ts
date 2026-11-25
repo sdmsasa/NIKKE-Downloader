@@ -5,7 +5,7 @@ import characterPosesData from '../data/characterPoses.json';
 // 외부 NKAS Spine 에셋 CDN 호스트 주소 (서드파티 도메인이므로 유지)
 const SPINE_BASE = 'https://nkas-l2d.pages.dev';
 const MAIN_BASE = 'https://nkas.pages.dev';
-const CACHE_KEY = 'nikke_cached_nkas_data_v4';
+const CACHE_KEY = 'nikke_cached_nkas_data_v5';
 
 export interface FetchedData {
   characters: CharacterItem[];
