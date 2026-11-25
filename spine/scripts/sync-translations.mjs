@@ -200,6 +200,23 @@ function run() {
   const idToManufacturer = {};
   const nameToManufacturer = {};
 
+  // Track character names per ID so shared/reused IDs with conflicting names
+  // are not forced into a single wrong translation/manufacturer mapping.
+  const idNonNpcNames = {};
+  const idAllNames = {};
+  const idHasNonNpc = new Set();
+  const recordIdName = (lowerId, charName, isNpc) => {
+    const normName = (charName || '').trim().toLowerCase();
+    if (!normName || normName === '-') return;
+    if (!idAllNames[lowerId]) idAllNames[lowerId] = new Set();
+    idAllNames[lowerId].add(normName);
+    if (!isNpc) {
+      idHasNonNpc.add(lowerId);
+      if (!idNonNpcNames[lowerId]) idNonNpcNames[lowerId] = new Set();
+      idNonNpcNames[lowerId].add(normName);
+    }
+  };
+
   // 1. Read company markdown files for company/squad/role subInfo and manufacturer
   const companyFiles = ['ELYSION.md', 'MISSILIS.md', 'TETRA.md', 'PILGRIM.md', 'HERETIC.md', 'ABNORMAL.md', 'NPC.md', 'EXTRA.md'];
   for (const compFile of companyFiles) {
@@ -223,6 +240,11 @@ function run() {
         }
         if (!id || id === '-') continue;
         const lowerId = id.toLowerCase();
+        const isNpcOrExtra =
+          compKey === 'other' ||
+          (roleOrOther && ['NPC', '기타', '엑스트라'].includes(roleOrOther.trim()));
+        recordIdName(lowerId, charName, isNpcOrExtra);
+
         const cleanAlt = altName && altName !== '-' ? altName : '';
         const cleanSkin = skinName && skinName !== '-' ? skinName : '';
         const displayName = formatCharacterDisplayName({
@@ -230,19 +252,20 @@ function run() {
           alternate: cleanAlt,
           variant: cleanSkin
         }, charName);
-        idToKorean[lowerId] = displayName;
+        if (!isNpcOrExtra || !idToKorean[lowerId]) {
+          idToKorean[lowerId] = displayName;
+        }
 
         const subInfo = formatSubInfo({ company, company2, squad, squad2, org, role: roleOrOther });
-        if (subInfo) {
+        if (subInfo && shouldUpdateSubInfo(idToSubInfo[lowerId], subInfo, isNpcOrExtra)) {
           idToSubInfo[lowerId] = subInfo;
         }
 
         const hexColor = normalizeHexColor(_color);
         if (hexColor) {
-          idToColor[lowerId] = hexColor;
-          const isNpcOrExtra =
-            compKey === 'other' ||
-            (roleOrOther && ['NPC', '기타', '엑스트라'].includes(roleOrOther.trim()));
+          if (!isNpcOrExtra || !idToColor[lowerId]) {
+            idToColor[lowerId] = hexColor;
+          }
           if (charName && charName !== '-' && !cleanAlt && !cleanSkin && !isNpcOrExtra) {
             const lowerName = charName.toLowerCase();
             if (!nameToColor[lowerName]) {
@@ -314,6 +337,7 @@ function run() {
 
         const isBase = role === 'Base';
         const isNpcRow = currentManufacturer === 'other' || role === 'NPC';
+        recordIdName(lowerId, charName, isNpcRow);
         const cleanAlt = altName && altName !== '-' ? altName : '';
         const cleanSkin = skinName && skinName !== '-' ? skinName : '';
         const finalDisplayName =
@@ -324,7 +348,9 @@ function run() {
                 krSearchKey || charName
               );
         
-        idToKorean[lowerId] = finalDisplayName;
+        if (!isNpcRow || !idToKorean[lowerId]) {
+          idToKorean[lowerId] = finalDisplayName;
+        }
 
         const isSkinId = !isNpcRow && /_\d+$/.test(lowerId) && !lowerId.endsWith('_00');
         if (role === 'Skin' || cleanSkin || isSkinId) {
@@ -336,6 +362,9 @@ function run() {
         }
 
         const subInfo = idToSubInfo[lowerId] || (role && role !== '-' && role !== 'Base' ? role : undefined);
+        if (subInfo && shouldUpdateSubInfo(idToSubInfo[lowerId], subInfo, isNpcRow)) {
+          idToSubInfo[lowerId] = subInfo;
+        }
 
         if (!idToManufacturer[lowerId] || idToManufacturer[lowerId] === 'other') {
           idToManufacturer[lowerId] = currentManufacturer;
@@ -510,6 +539,26 @@ function run() {
         }
       }
     }
+  }
+
+  // Exclude IDs shared by multiple distinct character names so they fall back to name/raw Spine list
+  const ambiguousIds = new Set();
+  for (const lowerId of Object.keys(idAllNames)) {
+    const nonNpcCount = idNonNpcNames[lowerId] ? idNonNpcNames[lowerId].size : 0;
+    const allCount = idAllNames[lowerId].size;
+    if (nonNpcCount > 1 || (nonNpcCount === 0 && allCount > 1)) {
+      ambiguousIds.add(lowerId);
+    }
+  }
+  for (const ambId of ambiguousIds) {
+    delete idToKorean[ambId];
+    delete idToSubInfo[ambId];
+    delete idToColor[ambId];
+    delete idToVariant[ambId];
+    delete idToManufacturer[ambId];
+  }
+  if (ambiguousIds.size > 0) {
+    console.log(`Excluded ${ambiguousIds.size} ambiguous shared IDs: ${Array.from(ambiguousIds).join(', ')}`);
   }
 
   // Write translations.ts
