@@ -175,6 +175,27 @@ const SECTION_TO_MANUFACTURER = {
   'V.T.C.': 'other'
 };
 
+function sanitizeName(str) {
+  if (!str) return '';
+  return str
+    .normalize('NFC')
+    .replace(/[().\s_\-:\\/]/g, '')
+    .toLowerCase();
+}
+
+function getSourcePriority(sourceFile) {
+  if (!sourceFile) return 0;
+  const lower = sourceFile.toLowerCase();
+  // 엘리시온 > 미실리스 > 테트라 > 필그림 > 헬레틱 > 어브노멀 > 기타(NPC/EXTRA/META)
+  if (lower === 'elysion.md') return 20;
+  if (lower === 'missilis.md') return 19;
+  if (lower === 'tetra.md') return 18;
+  if (lower === 'pilgrim.md') return 17;
+  if (lower === 'heretic.md') return 16;
+  if (lower === 'abnormal.md') return 15;
+  return 10;
+}
+
 function shouldUpdateManufacturer(currentMfg, newMfg) {
   if (!currentMfg) return true;
   if (currentMfg === 'other' && newMfg && newMfg !== 'other') return true;
@@ -200,41 +221,52 @@ function run() {
   const idToManufacturer = {};
   const nameToManufacturer = {};
 
-  // Track character entries per ID so shared/reused IDs with different names
-  // are treated as distinct objects and resolved by (id, name) instead of overwriting each other.
-  const idCandidates = {}; // lowerId -> Map<normBaseName, { krName, baseName, subInfo, color, manufacturer }>
-  const idNonNpcNames = {};
-  const idAllNames = {};
-  const idHasNonNpc = new Set();
-  const recordIdCandidate = (lowerId, charName, entry, isNpc) => {
-    const normName = (charName || '').trim().toLowerCase();
-    if (!normName || normName === '-') return;
-    if (!idAllNames[lowerId]) idAllNames[lowerId] = new Set();
-    idAllNames[lowerId].add(normName);
-    if (!isNpc) {
-      idHasNonNpc.add(lowerId);
-      if (!idNonNpcNames[lowerId]) idNonNpcNames[lowerId] = new Set();
-      idNonNpcNames[lowerId].add(normName);
+  // Track primary character per ID (by source priority) and store colliding characters
+  // under composite keys `${id}__${sanitizeName(name)}`, matching nikke-spine-character-list.
+  const idBaseInfo = {}; // lowerId -> { pureName, priority }
+  const upsertIdRecord = (lowerId, charName, displayName, subInfo, hexColor, manufacturer, sourceFile, isNpc) => {
+    const pureName = (charName || '').trim();
+    if (!pureName || pureName === '-') return;
+    const sNew = sanitizeName(pureName);
+    const newPriority = getSourcePriority(sourceFile);
+    const existing = idBaseInfo[lowerId];
+
+    const compositeKey = `${lowerId}__${sNew}`;
+    if (!idToKorean[compositeKey] || !isNpc) {
+      idToKorean[compositeKey] = displayName;
     }
-    if (!idCandidates[lowerId]) idCandidates[lowerId] = new Map();
-    const existing = idCandidates[lowerId].get(normName);
-    if (!existing) {
-      idCandidates[lowerId].set(normName, {
-        krName: entry.krName,
-        baseName: charName.trim(),
-        subInfo: entry.subInfo,
-        color: entry.color,
-        manufacturer: entry.manufacturer || 'other'
-      });
-    } else {
-      if (entry.krName && (!isNpc || !existing.krName)) existing.krName = entry.krName;
-      if (entry.subInfo && shouldUpdateSubInfo(existing.subInfo, entry.subInfo, isNpc)) {
-        existing.subInfo = entry.subInfo;
+    if (subInfo && shouldUpdateSubInfo(idToSubInfo[compositeKey], subInfo, isNpc)) {
+      idToSubInfo[compositeKey] = subInfo;
+    }
+    if (hexColor && (!idToColor[compositeKey] || !isNpc)) {
+      idToColor[compositeKey] = hexColor;
+    }
+    if (shouldUpdateManufacturer(idToManufacturer[compositeKey], manufacturer)) {
+      idToManufacturer[compositeKey] = manufacturer;
+    }
+
+    const isSameCharacter = !existing || sanitizeName(existing.pureName) === sNew;
+    if (isSameCharacter) {
+      if (existing && newPriority < existing.priority) {
+        return;
       }
-      if (entry.color && (!isNpc || !existing.color)) existing.color = entry.color;
-      if (shouldUpdateManufacturer(existing.manufacturer, entry.manufacturer)) {
-        existing.manufacturer = entry.manufacturer;
+      idBaseInfo[lowerId] = { pureName, priority: newPriority };
+      idToKorean[lowerId] = displayName;
+      if (subInfo && shouldUpdateSubInfo(idToSubInfo[lowerId], subInfo, isNpc)) {
+        idToSubInfo[lowerId] = subInfo;
       }
+      if (hexColor && (!idToColor[lowerId] || !isNpc)) {
+        idToColor[lowerId] = hexColor;
+      }
+      if (shouldUpdateManufacturer(idToManufacturer[lowerId], manufacturer)) {
+        idToManufacturer[lowerId] = manufacturer;
+      }
+    } else if (newPriority > existing.priority) {
+      idBaseInfo[lowerId] = { pureName, priority: newPriority };
+      idToKorean[lowerId] = displayName;
+      if (subInfo) idToSubInfo[lowerId] = subInfo;
+      if (hexColor) idToColor[lowerId] = hexColor;
+      if (manufacturer) idToManufacturer[lowerId] = manufacturer;
     }
   };
 
@@ -272,20 +304,9 @@ function run() {
           alternate: cleanAlt,
           variant: cleanSkin
         }, charName);
-        if (!isNpcOrExtra || !idToKorean[lowerId]) {
-          idToKorean[lowerId] = displayName;
-        }
-
         const subInfo = formatSubInfo({ company, company2, squad, squad2, org, role: roleOrOther });
-        if (subInfo && shouldUpdateSubInfo(idToSubInfo[lowerId], subInfo, isNpcOrExtra)) {
-          idToSubInfo[lowerId] = subInfo;
-        }
-
         const hexColor = normalizeHexColor(_color);
         if (hexColor) {
-          if (!isNpcOrExtra || !idToColor[lowerId]) {
-            idToColor[lowerId] = hexColor;
-          }
           if (charName && charName !== '-' && !cleanAlt && !cleanSkin && !isNpcOrExtra) {
             const lowerName = charName.toLowerCase();
             if (!nameToColor[lowerName]) {
@@ -294,15 +315,9 @@ function run() {
           }
         }
 
-        recordIdCandidate(lowerId, charName, {
-          krName: displayName,
-          subInfo,
-          color: hexColor,
-          manufacturer: compKey
-        }, isNpcOrExtra);
+        upsertIdRecord(lowerId, charName, displayName, subInfo, hexColor, compKey, compFile, isNpcOrExtra);
 
-        // Manufacturer mapping
-        idToManufacturer[lowerId] = compKey;
+        // Manufacturer mapping (by name)
         if (charName && charName !== '-') {
           const lowerName = charName.toLowerCase();
           if (shouldUpdateManufacturer(nameToManufacturer[lowerName], compKey)) {
@@ -374,10 +389,6 @@ function run() {
                 krSearchKey || charName
               );
         
-        if (!isNpcRow || !idToKorean[lowerId]) {
-          idToKorean[lowerId] = finalDisplayName;
-        }
-
         const isSkinId = !isNpcRow && /_\d+$/.test(lowerId) && !lowerId.endsWith('_00');
         if (role === 'Skin' || cleanSkin || isSkinId) {
           idToVariant[lowerId] = 'skin';
@@ -387,20 +398,8 @@ function run() {
           idToVariant[lowerId] = 'base';
         }
 
-        const subInfo = idToSubInfo[lowerId] || (role && role !== '-' && role !== 'Base' ? role : undefined);
-        if (subInfo && shouldUpdateSubInfo(idToSubInfo[lowerId], subInfo, isNpcRow)) {
-          idToSubInfo[lowerId] = subInfo;
-        }
-
-        recordIdCandidate(lowerId, charName, {
-          krName: finalDisplayName,
-          subInfo: role && role !== '-' && role !== 'Base' ? role : undefined,
-          manufacturer: currentManufacturer
-        }, isNpcRow);
-
-        if (!idToManufacturer[lowerId] || idToManufacturer[lowerId] === 'other') {
-          idToManufacturer[lowerId] = currentManufacturer;
-        }
+        const subInfo = role && role !== '-' && role !== 'Base' ? role : undefined;
+        upsertIdRecord(lowerId, charName, finalDisplayName, subInfo, '', currentManufacturer, 'CHARACTERS_META.md', isNpcRow);
 
         if (slug && slug !== '-') {
           const slugLower = slug.toLowerCase();
@@ -481,7 +480,7 @@ function run() {
         section = 'id_variant';
         continue;
       }
-      if (line.includes('export function getKoreanName') || line.includes('export function getCharacterSubInfo') || line.includes('export function getCharacterColor') || line.includes('export function getCharacterVariantType')) {
+      if (line.includes('export function getKoreanName') || line.includes('export function getCharacterSubInfo') || line.includes('export function getCharacterColor') || line.includes('export function getCharacterVariantType') || line.includes('export interface ') || line.includes('export const ID_TO_SHARED') || line.trim() === '};') {
         section = '';
         continue;
       }
@@ -522,7 +521,9 @@ function run() {
         while ((match = kvRegex.exec(line)) !== null) {
           const [_, key, val] = match;
           const lowerKey = key.toLowerCase();
-          if (!idToVariant[lowerKey]) idToVariant[lowerKey] = val;
+          if (!idToVariant[lowerKey] && (val === 'base' || val === 'alt' || val === 'skin')) {
+            idToVariant[lowerKey] = val;
+          }
         }
       }
     }
@@ -571,30 +572,6 @@ function run() {
         }
       }
     }
-  }
-
-  // For IDs shared by multiple distinct character names, move them to ID_TO_SHARED
-  // so each character is treated as a distinct object and matched by (id, name).
-  const ambiguousIds = new Set();
-  const sharedIdMap = {};
-  for (const lowerId of Object.keys(idAllNames)) {
-    const nonNpcCount = idNonNpcNames[lowerId] ? idNonNpcNames[lowerId].size : 0;
-    const allCount = idAllNames[lowerId].size;
-    if (nonNpcCount > 1 || (nonNpcCount === 0 && allCount > 1)) {
-      ambiguousIds.add(lowerId);
-      if (idCandidates[lowerId]) {
-        sharedIdMap[lowerId] = Array.from(idCandidates[lowerId].values());
-      }
-    }
-  }
-  for (const ambId of ambiguousIds) {
-    delete idToKorean[ambId];
-    delete idToSubInfo[ambId];
-    delete idToColor[ambId];
-    delete idToManufacturer[ambId];
-  }
-  if (ambiguousIds.size > 0) {
-    console.log(`Moved ${ambiguousIds.size} shared IDs to ID_TO_SHARED: ${Array.from(ambiguousIds).join(', ')}`);
   }
 
   // Write translations.ts
@@ -657,63 +634,91 @@ export const ID_TO_VARIANT: Record<string, CharacterVariantKind> = {
 ${idVariantEntries}
 };
 
-export interface SharedIdCandidate {
-  krName: string;
-  baseName: string;
-  subInfo?: string;
-  color?: string;
-  manufacturer: string;
+export function sanitizeName(str: string): string {
+  if (!str) return '';
+  return str
+    .normalize('NFC')
+    .replace(/[().\\s_\\-:\\\\/]/g, '')
+    .toLowerCase();
 }
 
-export const ID_TO_SHARED: Record<string, SharedIdCandidate[]> = ${JSON.stringify(sharedIdMap, null, 2)};
+function isNameCompatible(inputName: string, recordName: string): boolean {
+  const sInput = sanitizeName(inputName);
+  const sRecord = sanitizeName(recordName);
+  if (!sInput || !sRecord) return true;
+  if (sInput === sRecord || sInput.includes(sRecord) || sRecord.includes(sInput)) {
+    return true;
+  }
 
-export function resolveSharedCharacter(id?: string, name?: string): SharedIdCandidate | undefined {
-  if (!id || !name) return undefined;
-  const cleanId = id.toLowerCase().trim();
-  const baseId = cleanId.split('_')[0];
-  const candidates = ID_TO_SHARED[cleanId] || ID_TO_SHARED[baseId];
-  if (!candidates || candidates.length === 0) return undefined;
+  // Check translated Korean name of inputName (including prefix before ':' / '-' / '(')
+  const lower = inputName.toLowerCase().trim();
+  const prefixes = [
+    lower,
+    lower.split(/[:-]/)[0].trim(),
+    lower.split(/[:\\-(]/)[0].trim()
+  ].filter(Boolean);
 
-  const lower = name.toLowerCase().trim();
-  const prefixColonDash = lower.split(/[:-]/)[0].trim();
-  const prefixParen = lower.split(/[:\\-(]/)[0].trim();
-  const lookupKeys = Array.from(new Set([lower, prefixColonDash, prefixParen].filter(Boolean)));
-
-  const resolvedKrList = lookupKeys
-    .map((k) => NAME_TO_KOREAN[k])
-    .filter((v): v is string => Boolean(v));
-
-  for (const candidate of candidates) {
-    const cBase = candidate.baseName.toLowerCase();
-    const cKr = candidate.krName.toLowerCase();
-    if (lookupKeys.includes(cBase) || lookupKeys.includes(cKr)) {
-      return candidate;
-    }
-    for (const rKr of resolvedKrList) {
-      const rLower = rKr.toLowerCase();
-      const rBase = rLower.split(/[:(]/)[0].trim();
-      if (cKr === rLower || cBase === rLower || cBase === rBase) {
-        return candidate;
+  for (const key of prefixes) {
+    const kr = NAME_TO_KOREAN[key];
+    if (kr) {
+      const sKr = sanitizeName(kr);
+      if (sKr === sRecord || sKr.includes(sRecord) || sRecord.includes(sKr)) {
+        return true;
       }
     }
-    if (lower.length >= 3 && (cKr.includes(lower) || cBase.includes(lower))) {
-      return candidate;
+  }
+
+  return false;
+}
+
+/**
+ * Resolve the exact key in ID_TO_* (either composite \`\${id}__\${sanitizeName(name)}\` or plain \`id\`),
+ * blocking cross-character contamination when an ID is shared by different characters.
+ */
+export function resolveCharacterIdKey(id?: string, name?: string): string | undefined {
+  if (!id) return undefined;
+  const cleanId = id.toLowerCase().trim();
+  const baseId = cleanId.split('_')[0];
+
+  if (name) {
+    const candidateNames = [sanitizeName(name)];
+    const lower = name.toLowerCase().trim();
+    const prefixes = [
+      lower,
+      lower.split(/[:-]/)[0].trim(),
+      lower.split(/[:\\-(]/)[0].trim()
+    ].filter(Boolean);
+    for (const key of prefixes) {
+      const kr = NAME_TO_KOREAN[key];
+      if (kr) {
+        candidateNames.push(sanitizeName(kr));
+        candidateNames.push(sanitizeName(kr.split(/[:(]/)[0].trim()));
+      }
     }
+
+    for (const sName of candidateNames) {
+      if (!sName) continue;
+      const compClean = \`\${cleanId}__\${sName}\`;
+      if (ID_TO_KOREAN[compClean]) return compClean;
+      const compBase = \`\${baseId}__\${sName}\`;
+      if (ID_TO_KOREAN[compBase]) return compBase;
+    }
+  }
+
+  const directKey = ID_TO_KOREAN[cleanId] ? cleanId : (ID_TO_KOREAN[baseId] ? baseId : undefined);
+  if (directKey) {
+    if (name && !isNameCompatible(name, ID_TO_KOREAN[directKey])) {
+      return undefined;
+    }
+    return directKey;
   }
 
   return undefined;
 }
 
 export function getKoreanName(name: string, id?: string): string | undefined {
-  const shared = resolveSharedCharacter(id, name);
-  if (shared) return shared.krName;
-
-  if (id) {
-    const cleanId = id.toLowerCase().trim();
-    const baseId = cleanId.split('_')[0];
-    if (ID_TO_KOREAN[cleanId]) return ID_TO_KOREAN[cleanId];
-    if (ID_TO_KOREAN[baseId]) return ID_TO_KOREAN[baseId];
-  }
+  const key = resolveCharacterIdKey(id, name);
+  if (key && ID_TO_KOREAN[key]) return ID_TO_KOREAN[key];
 
   if (name) {
     const lower = name.toLowerCase().trim();
@@ -726,10 +731,11 @@ export function getKoreanName(name: string, id?: string): string | undefined {
 }
 
 export function getCharacterSubInfo(id?: string, name?: string): string | undefined {
-  const shared = resolveSharedCharacter(id, name);
-  if (shared) return shared.subInfo;
-
-  if (id) {
+  const key = resolveCharacterIdKey(id, name);
+  if (key && ID_TO_SUBINFO[key]) return ID_TO_SUBINFO[key];
+  if (id && !key && ID_TO_KOREAN[id.toLowerCase().trim().split('_')[0]]) {
+    // Shared ID blocked due to incompatible name: fall through to name-based lookup only
+  } else if (id) {
     const cleanId = id.toLowerCase().trim();
     const baseId = cleanId.split('_')[0];
     if (ID_TO_SUBINFO[cleanId]) return ID_TO_SUBINFO[cleanId];
@@ -747,10 +753,11 @@ export function getCharacterSubInfo(id?: string, name?: string): string | undefi
 }
 
 export function getCharacterColor(id?: string, name?: string): string | undefined {
-  const shared = resolveSharedCharacter(id, name);
-  if (shared) return shared.color;
-
-  if (id) {
+  const key = resolveCharacterIdKey(id, name);
+  if (key && ID_TO_COLOR[key]) return ID_TO_COLOR[key];
+  if (id && !key && ID_TO_KOREAN[id.toLowerCase().trim().split('_')[0]]) {
+    // Shared ID blocked due to incompatible name
+  } else if (id) {
     const cleanId = id.toLowerCase().trim();
     const baseId = cleanId.split('_')[0];
     if (ID_TO_COLOR[cleanId]) return ID_TO_COLOR[cleanId];
@@ -812,7 +819,7 @@ import iconPilgrim from '../assets/corp/PILGRIM.webp';
 import iconHeretic from '../assets/corp/HERETIC.webp';
 import iconAbnormal from '../assets/corp/ABNORMAL.webp';
 import iconUnknown from '../assets/corp/icn_corp_unknown.png';
-import { resolveSharedCharacter } from './translations';
+import { resolveCharacterIdKey, ID_TO_KOREAN } from './translations';
 
 // Auto-generated from Obsidian NIKKE Settings
 export type ManufacturerType = 'all' | 'elysion' | 'missilis' | 'tetra' | 'pilgrim' | 'heretic' | 'abnormal' | 'other';
@@ -847,17 +854,18 @@ ${nameMfgEntries}
 
 export function getCharacterManufacturer(id: string, name?: string): ManufacturerType {
   if (!id && !name) return 'all';
-  const shared = resolveSharedCharacter(id, name);
-  if (shared && shared.manufacturer) {
-    return shared.manufacturer as ManufacturerType;
-  }
-
   const cleanId = (id || '').toLowerCase().trim();
   const baseId = cleanId.split('_')[0];
 
-  // 1. Check exact ID or base ID
-  if (ID_TO_MANUFACTURER[cleanId]) return ID_TO_MANUFACTURER[cleanId];
-  if (ID_TO_MANUFACTURER[baseId]) return ID_TO_MANUFACTURER[baseId];
+  // 1. Check composite key or compatible ID
+  const resolvedKey = resolveCharacterIdKey(id, name);
+  if (resolvedKey && ID_TO_MANUFACTURER[resolvedKey]) return ID_TO_MANUFACTURER[resolvedKey];
+  if (!resolvedKey && ID_TO_KOREAN[baseId]) {
+    // Shared ID blocked due to incompatible name: fall through to name-based lookup
+  } else {
+    if (ID_TO_MANUFACTURER[cleanId]) return ID_TO_MANUFACTURER[cleanId];
+    if (ID_TO_MANUFACTURER[baseId]) return ID_TO_MANUFACTURER[baseId];
+  }
 
   // 2. Check Collab pattern c8xx
   if (/^c8\\d{2}/.test(cleanId)) return 'abnormal';
