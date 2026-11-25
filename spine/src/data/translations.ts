@@ -645,11 +645,10 @@ export const ID_TO_KOREAN: Record<string, string> = {
   "c471": "스노우 화이트: 헤비암즈",
   "c471_01__스노우화이트": "스노우 화이트: 라크리모사",
   "c471_01": "스노우 화이트: 라크리모사",
-  "c942__엔더슨": "엔더슨",
-  "c942": "엔더슨",
+  "c942__지휘관": "지휘관",
+  "c942": "지휘관",
   "c942_01__엔더슨": "엔더슨",
   "c942_01": "엔더슨",
-  "c942__지휘관": "지휘관",
   "c225__홍련": "홍련: 흑영",
   "c225": "홍련: 흑영",
   "c225_01__홍련": "홍련: 연화",
@@ -1192,6 +1191,7 @@ export const ID_TO_KOREAN: Record<string, string> = {
   "c254__massproducedpurple": "양산형 니케: Purple",
   "c254": "양산형 니케: Purple",
   "c255__massproducedwhite": "양산형 니케: White",
+  "c942__엔더슨": "엔더슨",
   "c911__genericmale": "남성 시민",
   "c911": "남성 시민",
   "c912__genericfemale": "여성 시민",
@@ -1205,7 +1205,6 @@ export const ID_TO_KOREAN: Record<string, string> = {
   "c923__로열남성": "로열 남성",
   "c923": "로열 남성",
   "c941__마오": "마오",
-  "c942_01__지휘관": "지휘관: 갓데스",
   "c947__genericmalebystander": "남성 시민 기본",
   "c948__genericfemalebystander": "여성 시민 기본",
   "c951__genericboy": "남자 아이",
@@ -1224,6 +1223,7 @@ export const ID_TO_KOREAN: Record<string, string> = {
   "c974_01__massproducedmeleeb": "양산형 근접 전투 니케 B",
   "c974_01": "양산형 근접 전투 니케 B",
   "c9001__피나": "피나",
+  "c942_01__지휘관": "지휘관: 갓데스",
   "c9027_00": "도로시",
   "c474_00": "도로시",
   "c235_00": "노아",
@@ -1877,11 +1877,10 @@ export const ID_TO_SUBINFO: Record<string, string> = {
   "c471": "PILGRIM · 갓데스",
   "c471_01__스노우화이트": "Skin",
   "c471_01": "PILGRIM · 갓데스",
-  "c942__엔더슨": "PILGRIM · 갓데스 · NPC",
+  "c942__지휘관": "PILGRIM · 갓데스 · NPC",
   "c942": "PILGRIM · 갓데스 · NPC",
   "c942_01__엔더슨": "PILGRIM · 갓데스 · NPC",
   "c942_01": "PILGRIM · 갓데스 · NPC",
-  "c942__지휘관": "PILGRIM · 갓데스 · NPC",
   "c225__홍련": "이격",
   "c225": "PILGRIM · 갓데스",
   "c225_01__홍련": "Skin",
@@ -2422,6 +2421,7 @@ export const ID_TO_SUBINFO: Record<string, string> = {
   "c254__massproducedpurple": "NPC",
   "c254": "NPC",
   "c255__massproducedwhite": "NPC",
+  "c942__엔더슨": "NPC",
   "c911__genericmale": "NPC",
   "c911": "NPC",
   "c912__genericfemale": "NPC",
@@ -2435,7 +2435,6 @@ export const ID_TO_SUBINFO: Record<string, string> = {
   "c923__로열남성": "NPC",
   "c923": "NPC",
   "c941__마오": "NPC",
-  "c942_01__지휘관": "NPC",
   "c947__genericmalebystander": "NPC",
   "c948__genericfemalebystander": "NPC",
   "c951__genericboy": "NPC",
@@ -2454,6 +2453,7 @@ export const ID_TO_SUBINFO: Record<string, string> = {
   "c974_01__massproducedmeleeb": "NPC",
   "c974_01": "NPC",
   "c9001__피나": "NPC",
+  "c942_01__지휘관": "NPC",
   "c9027_00": "HERETIC · NPC"
 };
 
@@ -10715,7 +10715,7 @@ export const MARKDOWN_CHARACTERS: MarkdownCharacterEntry[] = [
   },
   {
     "id": "c942",
-    "displayName": "엔더슨",
+    "displayName": "지휘관",
     "subInfo": "PILGRIM · 갓데스 · NPC",
     "manufacturer": "pilgrim",
     "variantType": "base"
@@ -10723,13 +10723,6 @@ export const MARKDOWN_CHARACTERS: MarkdownCharacterEntry[] = [
   {
     "id": "c942_01",
     "displayName": "엔더슨",
-    "subInfo": "PILGRIM · 갓데스 · NPC",
-    "manufacturer": "pilgrim",
-    "variantType": "base"
-  },
-  {
-    "id": "c942",
-    "displayName": "지휘관",
     "subInfo": "PILGRIM · 갓데스 · NPC",
     "manufacturer": "pilgrim",
     "variantType": "base"
@@ -12105,146 +12098,6 @@ export const MARKDOWN_CHARACTERS: MarkdownCharacterEntry[] = [
   {
     "id": "c9041",
     "displayName": "마리아 박사",
-    "subInfo": "NPC",
-    "manufacturer": "other",
-    "variantType": "base"
-  },
-  {
-    "id": "c013",
-    "displayName": "마리아-102",
-    "subInfo": "NPC",
-    "manufacturer": "other",
-    "variantType": "base"
-  },
-  {
-    "id": "c013",
-    "displayName": "마리아-105",
-    "subInfo": "NPC",
-    "manufacturer": "other",
-    "variantType": "base"
-  },
-  {
-    "id": "c013",
-    "displayName": "마리아-113",
-    "subInfo": "NPC",
-    "manufacturer": "other",
-    "variantType": "base"
-  },
-  {
-    "id": "c013",
-    "displayName": "마리아-2",
-    "subInfo": "NPC",
-    "manufacturer": "other",
-    "variantType": "base"
-  },
-  {
-    "id": "c013",
-    "displayName": "마리아-202",
-    "subInfo": "NPC",
-    "manufacturer": "other",
-    "variantType": "base"
-  },
-  {
-    "id": "c013",
-    "displayName": "마리아-234",
-    "subInfo": "NPC",
-    "manufacturer": "other",
-    "variantType": "base"
-  },
-  {
-    "id": "c013",
-    "displayName": "마리아-235",
-    "subInfo": "NPC",
-    "manufacturer": "other",
-    "variantType": "base"
-  },
-  {
-    "id": "c013",
-    "displayName": "마리아-24",
-    "subInfo": "NPC",
-    "manufacturer": "other",
-    "variantType": "base"
-  },
-  {
-    "id": "c013",
-    "displayName": "마리아-3",
-    "subInfo": "NPC",
-    "manufacturer": "other",
-    "variantType": "base"
-  },
-  {
-    "id": "c013",
-    "displayName": "마리아-311",
-    "subInfo": "NPC",
-    "manufacturer": "other",
-    "variantType": "base"
-  },
-  {
-    "id": "c013",
-    "displayName": "마리아-320",
-    "subInfo": "NPC",
-    "manufacturer": "other",
-    "variantType": "base"
-  },
-  {
-    "id": "c013",
-    "displayName": "마리아-330",
-    "subInfo": "NPC",
-    "manufacturer": "other",
-    "variantType": "base"
-  },
-  {
-    "id": "c013",
-    "displayName": "마리아-331",
-    "subInfo": "NPC",
-    "manufacturer": "other",
-    "variantType": "base"
-  },
-  {
-    "id": "c013",
-    "displayName": "마리아-4",
-    "subInfo": "NPC",
-    "manufacturer": "other",
-    "variantType": "base"
-  },
-  {
-    "id": "c013",
-    "displayName": "마리아-446",
-    "subInfo": "NPC",
-    "manufacturer": "other",
-    "variantType": "base"
-  },
-  {
-    "id": "c013",
-    "displayName": "마리아-447",
-    "subInfo": "NPC",
-    "manufacturer": "other",
-    "variantType": "base"
-  },
-  {
-    "id": "c013",
-    "displayName": "마리아-448",
-    "subInfo": "NPC",
-    "manufacturer": "other",
-    "variantType": "base"
-  },
-  {
-    "id": "c013",
-    "displayName": "마리아-449",
-    "subInfo": "NPC",
-    "manufacturer": "other",
-    "variantType": "base"
-  },
-  {
-    "id": "c013",
-    "displayName": "마리아-5",
-    "subInfo": "NPC",
-    "manufacturer": "other",
-    "variantType": "base"
-  },
-  {
-    "id": "c013",
-    "displayName": "마리아-55",
     "subInfo": "NPC",
     "manufacturer": "other",
     "variantType": "base"

@@ -325,6 +325,8 @@ function run() {
         upsertIdRecord(lowerId, charName, displayName, subInfo, hexColor, compKey, compFile, isNpcOrExtra);
 
         // Record canonical Markdown character card entry (ordered & prioritized by source file)
+        // Exclude mass-produced NPC variants like "마리아-102", "마리아-2"
+        const isExcludedMariaVariant = /^마리아-\d+$/.test((charName || '').trim());
         const mdVariantType =
           !isNpcOrExtra && /_\d+$/.test(lowerId) && !lowerId.endsWith('_00')
             ? 'skin'
@@ -336,7 +338,7 @@ function run() {
         const mdKey = `${lowerId}__${sanitizeName(displayName)}`;
         const mdPriority = getSourcePriority(compFile);
         const existingMd = markdownCharMap.get(mdKey);
-        if (!existingMd || mdPriority > existingMd.priority) {
+        if (!isExcludedMariaVariant && (!existingMd || mdPriority > existingMd.priority)) {
           markdownCharMap.set(mdKey, {
             id: lowerId,
             displayName,
