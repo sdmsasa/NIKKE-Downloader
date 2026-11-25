@@ -1,13 +1,21 @@
 import React from 'react';
 import { Search, X, LayoutGrid, List } from 'lucide-react';
-import type { FilterState, DownloadOptions } from '../types';
+import type { FilterState, DownloadOptions, CharacterVariantType } from '../types';
 import { MANUFACTURERS } from '../data/manufacturers';
+
+interface VariantCounts {
+  total: number;
+  base: number;
+  alt: number;
+  skin: number;
+}
 
 interface FilterBarProps {
   filter: FilterState;
   setFilter: React.Dispatch<React.SetStateAction<FilterState>>;
   options: DownloadOptions;
   setOptions: React.Dispatch<React.SetStateAction<DownloadOptions>>;
+  variantCounts?: VariantCounts;
   selectedCount: number;
   filteredCount: number;
   onSelectAll: () => void;
@@ -22,6 +30,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
   setFilter,
   options,
   setOptions,
+  variantCounts,
   selectedCount,
   filteredCount,
   onSelectAll,
@@ -32,36 +41,94 @@ export const FilterBar: React.FC<FilterBarProps> = ({
 }) => {
   const [showOptionsDropdown, setShowOptionsDropdown] = React.useState(false);
 
+  const selectedVariants = filter.variantTypes || [];
+  const allVariantsSelected = selectedVariants.length === 0;
+
+  const toggleVariantType = (type: CharacterVariantType) => {
+    setFilter(prev => {
+      const current = prev.variantTypes || [];
+      const exists = current.includes(type);
+      const next = exists ? current.filter(t => t !== type) : [...current, type];
+      // Reset to empty (= all) when none or all 3 types are selected
+      if (next.length === 0 || next.length === 3) {
+        return { ...prev, variantTypes: [] };
+      }
+      return { ...prev, variantTypes: next };
+    });
+  };
+
   return (
     <div className="flex flex-col gap-1.5 py-0.5">
       
-      {/* 1. Manufacturer (기업/소속) Filter Buttons (Enlarged Icons & Tight Spacing) */}
+      {/* 1. Manufacturer (기업/소속) Filter Buttons + Thin Variant Count/Filter Bar */}
       {(filter.category === 'characters' || filter.category === 'bursts' || filter.category === 'favorites' || filter.category === 'updates') && (
-        <div className="flex items-center gap-1.5 overflow-x-auto py-0.5 no-scrollbar">
-          <span className="text-xs text-white font-bold mr-1 flex-shrink-0">
-            기업:
-          </span>
-          {MANUFACTURERS.map((m) => {
-            const isActive = filter.manufacturer === m.id;
-            const isAll = m.id === 'all';
-            return (
+        <div className="flex flex-col gap-1">
+          <div className="flex items-center gap-1.5 overflow-x-auto py-0.5 no-scrollbar">
+            {MANUFACTURERS.map((m) => {
+              const isActive = filter.manufacturer === m.id;
+              const isAll = m.id === 'all';
+              return (
+                <button
+                  key={m.id}
+                  onClick={() => setFilter(prev => ({ ...prev, manufacturer: m.id }))}
+                  className={`flex items-center justify-center gap-2 py-1 rounded-lg text-xs font-semibold whitespace-nowrap transition-all duration-150 border cursor-pointer ${
+                    isAll ? 'px-3 min-w-[46px]' : 'px-3'
+                  } ${
+                    isActive
+                      ? 'bg-[#383838] border-neutral-300 text-white font-bold shadow-sm'
+                      : 'bg-[#1c1c1c] text-white border-[#2e2e2e] hover:bg-[#262626]'
+                  }`}
+                  title={m.label}
+                >
+                  <img src={m.icon} alt="" className="w-6.5 h-6.5 object-contain" />
+                  {!isAll && <span className="text-white font-bold">{m.label}</span>}
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Thin Character Variant Summary & Multi-Select Bar */}
+          {variantCounts && (
+            <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar">
               <button
-                key={m.id}
-                onClick={() => setFilter(prev => ({ ...prev, manufacturer: m.id }))}
-                className={`flex items-center justify-center gap-2 py-1 rounded-lg text-xs font-semibold whitespace-nowrap transition-all duration-150 border cursor-pointer ${
-                  isAll ? 'px-3 min-w-[46px]' : 'px-3'
-                } ${
-                  isActive
+                type="button"
+                onClick={() => setFilter(prev => ({ ...prev, variantTypes: [] }))}
+                className={`flex items-center gap-1 px-2.5 py-0.5 rounded-md text-[11px] border transition-all cursor-pointer whitespace-nowrap ${
+                  allVariantsSelected
                     ? 'bg-[#383838] border-neutral-300 text-white font-bold shadow-sm'
-                    : 'bg-[#1c1c1c] text-white border-[#2e2e2e] hover:bg-[#262626]'
+                    : 'bg-[#181818] border-[#2a2a2a] text-neutral-300 hover:text-white hover:bg-[#222222]'
                 }`}
-                title={m.label}
+                title="전체 유형 보기"
               >
-                <img src={m.icon} alt="" className="w-6.5 h-6.5 object-contain" />
-                {!isAll && <span className="text-white font-bold">{m.label}</span>}
+                <span>총합:</span>
+                <span className="font-mono font-bold text-white">{variantCounts.total.toLocaleString()}</span>
               </button>
-            );
-          })}
+
+              {([
+                { key: 'base', label: '베이스', count: variantCounts.base },
+                { key: 'alt', label: '이격', count: variantCounts.alt },
+                { key: 'skin', label: '스킨', count: variantCounts.skin }
+              ] as const).map(({ key, label, count }) => {
+                const isSelected = selectedVariants.includes(key);
+                return (
+                  <button
+                    key={key}
+                    type="button"
+                    onClick={() => toggleVariantType(key)}
+                    className={`flex items-center gap-1 px-2.5 py-0.5 rounded-md text-[11px] border transition-all cursor-pointer whitespace-nowrap ${
+                      isSelected
+                        ? 'bg-[#383838] border-neutral-300 text-white font-bold shadow-sm'
+                        : 'bg-[#181818] border-[#2a2a2a] text-neutral-300 hover:text-white hover:bg-[#222222]'
+                    }`}
+                    title={`${label} 캐릭터 필터 (다중 선택 가능)`}
+                  >
+                    <span>{label}:</span>
+                    <span className="font-mono font-bold text-white">{count.toLocaleString()}</span>
+                  </button>
+                );
+              })}
+            </div>
+          )}
         </div>
       )}
 

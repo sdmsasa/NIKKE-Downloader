@@ -33,6 +33,7 @@ import { UpdateSummaryModal } from './components/UpdateSummaryModal';
 import { FloatingCardSizeSlider } from './components/FloatingCardSizeSlider';
 import { Loader2, AlertCircle, RefreshCw, Sparkles, CheckCircle2, X } from 'lucide-react';
 import { getCharacterManufacturer } from './data/manufacturers';
+import { getCharacterVariantType } from './data/translations';
 import { getSearchVariants, matchSearchQuery } from './utils/searchHelper';
 
 const STORAGE_KEYS = {
@@ -91,6 +92,7 @@ export function App() {
       category: 'characters',
       search: '',
       manufacturer: 'all',
+      variantTypes: [],
       onlyNew: false,
       onlySelected: false,
       onlyDownloaded: 'all',
@@ -338,23 +340,53 @@ export function App() {
     return set;
   }, [allAssetItems, downloadedIds, downloadHistory, currentNewBatchSignature]);
 
+  // Items scoped by category & manufacturer (used for variant summary counts and downstream filtering)
+  const manufacturerScopedItems = useMemo(() => {
+    let list = categoryItems;
+    if (filter.manufacturer && filter.manufacturer !== 'all') {
+      list = list.filter((item) => {
+        const charId = (item as any).characterId || item.id;
+        return getCharacterManufacturer(charId, item.name) === filter.manufacturer;
+      });
+    }
+    return list;
+  }, [categoryItems, filter.manufacturer]);
+
+  const variantCounts = useMemo(() => {
+    let base = 0;
+    let alt = 0;
+    let skin = 0;
+    for (const item of manufacturerScopedItems) {
+      const charId = (item as any).characterId || item.id;
+      const vType = getCharacterVariantType(charId, item.name);
+      if (vType === 'base') base++;
+      else if (vType === 'alt') alt++;
+      else if (vType === 'skin') skin++;
+    }
+    return {
+      total: manufacturerScopedItems.length,
+      base,
+      alt,
+      skin
+    };
+  }, [manufacturerScopedItems]);
+
   // Filtered & Sorted items
   const filteredItems = useMemo(() => {
-    let list = [...categoryItems];
+    let list = [...manufacturerScopedItems];
+
+    // Variant type multi-select filter (base, alt, skin)
+    if (filter.variantTypes && filter.variantTypes.length > 0) {
+      list = list.filter((item) => {
+        const charId = (item as any).characterId || item.id;
+        return filter.variantTypes!.includes(getCharacterVariantType(charId, item.name));
+      });
+    }
 
     // Smart Multi-Attribute Search Filter (English, Korean, ID, Space-tolerant, Typo-tolerant)
     if (filter.search.trim()) {
       const variants = getSearchVariants(filter.search);
       list = list.filter((item) => matchSearchQuery(item as any, variants));
-    }
-
-    // Manufacturer filter (Elysion, Missilis, Tetra, Pilgrim, Abnormal)
-    if (filter.manufacturer && filter.manufacturer !== 'all') {
-      list = list.filter((item) => {
-        const charId = (item as any).characterId || item.id;
-        const m = getCharacterManufacturer(charId, item.name);
-        return m === filter.manufacturer;
-      });
     }
 
     // Downloaded status filter
@@ -377,7 +409,7 @@ export function App() {
     });
 
     return list;
-  }, [categoryItems, filter.search, filter.manufacturer, filter.onlyDownloaded, filter.sortBy, downloadedIds, updatedIds]);
+  }, [manufacturerScopedItems, filter.variantTypes, filter.search, filter.onlyDownloaded, filter.sortBy, downloadedIds, updatedIds]);
 
   // Selection actions
   const handleCategoryChange = (cat: AssetCategory) => {
@@ -799,6 +831,7 @@ export function App() {
                 setFilter={setFilter}
                 options={options}
                 setOptions={setOptions}
+                variantCounts={variantCounts}
                 selectedCount={selectedIds.size}
                 filteredCount={filteredItems.length}
                 onSelectAll={handleSelectAll}

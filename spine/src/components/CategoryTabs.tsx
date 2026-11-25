@@ -32,7 +32,7 @@ export const CategoryTabs: React.FC<CategoryTabsProps> = ({
     },
     {
       id: 'monsters',
-      label: 'RAPTURE',
+      label: '랩쳐',
       count: counts.monsters
     },
     {

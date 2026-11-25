@@ -192,6 +192,7 @@ function run() {
   const idToKorean = {};
   const idToSubInfo = {};
   const idToColor = {};
+  const idToVariant = {};
   const nameToKorean = {};
   const nameToSubInfo = {};
   const nameToColor = {};
@@ -325,6 +326,15 @@ function run() {
         
         idToKorean[lowerId] = finalDisplayName;
 
+        const isSkinId = !isNpcRow && /_\d+$/.test(lowerId) && !lowerId.endsWith('_00');
+        if (role === 'Skin' || cleanSkin || isSkinId) {
+          idToVariant[lowerId] = 'skin';
+        } else if (role === '이격' || cleanAlt) {
+          idToVariant[lowerId] = 'alt';
+        } else {
+          idToVariant[lowerId] = 'base';
+        }
+
         const subInfo = idToSubInfo[lowerId] || (role && role !== '-' && role !== 'Base' ? role : undefined);
 
         if (!idToManufacturer[lowerId] || idToManufacturer[lowerId] === 'other') {
@@ -406,7 +416,11 @@ function run() {
         section = 'name_color';
         continue;
       }
-      if (line.includes('export function getKoreanName') || line.includes('export function getCharacterSubInfo') || line.includes('export function getCharacterColor')) {
+      if (line.includes('export const ID_TO_VARIANT')) {
+        section = 'id_variant';
+        continue;
+      }
+      if (line.includes('export function getKoreanName') || line.includes('export function getCharacterSubInfo') || line.includes('export function getCharacterColor') || line.includes('export function getCharacterVariantType')) {
         section = '';
         continue;
       }
@@ -442,6 +456,12 @@ function run() {
         while ((match = kvRegex.exec(line)) !== null) {
           const [_, key, val] = match;
           if (!nameToColor[key.toLowerCase()]) nameToColor[key.toLowerCase()] = val;
+        }
+      } else if (section === 'id_variant') {
+        while ((match = kvRegex.exec(line)) !== null) {
+          const [_, key, val] = match;
+          const lowerKey = key.toLowerCase();
+          if (!idToVariant[lowerKey]) idToVariant[lowerKey] = val;
         }
       }
     }
@@ -517,6 +537,10 @@ function run() {
     .map(([k, v]) => `  "${k}": "${v}"`)
     .join(',\n');
 
+  const idVariantEntries = Object.entries(idToVariant)
+    .map(([k, v]) => `  "${k}": "${v}"`)
+    .join(',\n');
+
   const translationsOutput = `// Auto-generated Korean name & metadata mappings from Obsidian NIKKE Settings
 export const ID_TO_KOREAN: Record<string, string> = {
 ${idEntries}
@@ -540,6 +564,12 @@ ${idColorEntries}
 
 export const NAME_TO_COLOR: Record<string, string> = {
 ${nameColorEntries}
+};
+
+export type CharacterVariantKind = 'base' | 'alt' | 'skin';
+
+export const ID_TO_VARIANT: Record<string, CharacterVariantKind> = {
+${idVariantEntries}
 };
 
 export function getKoreanName(name: string, id?: string): string | undefined {
@@ -595,6 +625,30 @@ export function getCharacterColor(id?: string, name?: string): string | undefine
 
   return undefined;
 }
+
+export function getCharacterVariantType(id?: string, name?: string): CharacterVariantKind {
+  if (id) {
+    const cleanId = id.toLowerCase().trim();
+    const baseId = cleanId.split('_')[0];
+    if (ID_TO_VARIANT[cleanId]) return ID_TO_VARIANT[cleanId];
+    if (!cleanId.startsWith('c9') && /_\\d+$/.test(cleanId) && !cleanId.endsWith('_00')) {
+      return 'skin';
+    }
+    if (name && name.includes(' - ')) {
+      return 'skin';
+    }
+    if (ID_TO_VARIANT[baseId] === 'alt') {
+      return 'alt';
+    }
+  }
+
+  if (name) {
+    if (name.includes(' - ')) return 'skin';
+    if (name.includes(':')) return 'alt';
+  }
+
+  return 'base';
+}
 `;
 
   fs.writeFileSync(targetTranslationsFile, translationsOutput, 'utf8');
@@ -638,7 +692,7 @@ export const MANUFACTURERS: ManufacturerInfo[] = [
   { id: 'pilgrim', label: '필그림', enLabel: 'Pilgrim', color: 'text-purple-400', badgeBg: 'bg-purple-950/80 text-purple-300 border-purple-600/50', icon: iconPilgrim },
   { id: 'heretic', label: '헬레틱', enLabel: 'Heretic', color: 'text-red-400', badgeBg: 'bg-red-950/80 text-red-300 border-red-600/50', icon: iconHeretic },
   { id: 'abnormal', label: '어브노멀', enLabel: 'Abnormal', color: 'text-rose-400', badgeBg: 'bg-rose-950/80 text-rose-300 border-rose-600/50', icon: iconAbnormal },
-  { id: 'other', label: '기타', enLabel: 'Other', color: 'text-neutral-400', badgeBg: 'bg-neutral-800 text-neutral-300 border-neutral-600/60', icon: iconUnknown }
+  { id: 'other', label: 'NPC', enLabel: 'NPC', color: 'text-neutral-400', badgeBg: 'bg-neutral-800 text-neutral-300 border-neutral-600/60', icon: iconUnknown }
 ];
 
 export const ID_TO_MANUFACTURER: Record<string, ManufacturerType> = {

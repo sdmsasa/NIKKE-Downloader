@@ -27,7 +27,7 @@ export const MANUFACTURERS: ManufacturerInfo[] = [
   { id: 'pilgrim', label: '필그림', enLabel: 'Pilgrim', color: 'text-purple-400', badgeBg: 'bg-purple-950/80 text-purple-300 border-purple-600/50', icon: iconPilgrim },
   { id: 'heretic', label: '헬레틱', enLabel: 'Heretic', color: 'text-red-400', badgeBg: 'bg-red-950/80 text-red-300 border-red-600/50', icon: iconHeretic },
   { id: 'abnormal', label: '어브노멀', enLabel: 'Abnormal', color: 'text-rose-400', badgeBg: 'bg-rose-950/80 text-rose-300 border-rose-600/50', icon: iconAbnormal },
-  { id: 'other', label: '기타', enLabel: 'Other', color: 'text-neutral-400', badgeBg: 'bg-neutral-800 text-neutral-300 border-neutral-600/60', icon: iconUnknown }
+  { id: 'other', label: 'NPC', enLabel: 'NPC', color: 'text-neutral-400', badgeBg: 'bg-neutral-800 text-neutral-300 border-neutral-600/60', icon: iconUnknown }
 ];
 
 export const ID_TO_MANUFACTURER: Record<string, ManufacturerType> = {

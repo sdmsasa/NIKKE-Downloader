@@ -2,6 +2,8 @@ export type AssetCategory = 'characters' | 'bursts' | 'monsters' | 'favorites' |
 
 export type CharacterPose = 'idle' | 'aim' | 'cover';
 
+export type CharacterVariantType = 'base' | 'alt' | 'skin';
+
 export interface CharacterItem {
   id: string; // e.g. "c010_00"
   name: string; // e.g. "Rapi"
@@ -123,6 +125,7 @@ export interface FilterState {
   category: AssetCategory;
   search: string;
   manufacturer: 'all' | 'elysion' | 'missilis' | 'tetra' | 'pilgrim' | 'heretic' | 'abnormal' | 'other';
+  variantTypes?: CharacterVariantType[];
   onlyNew: boolean;
   onlySelected: boolean;
   onlyDownloaded: 'all' | 'downloaded' | 'not_downloaded';

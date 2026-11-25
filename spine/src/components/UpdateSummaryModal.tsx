@@ -22,7 +22,7 @@ const CATEGORY_NAMES: Record<CategoryFilter, string> = {
   burst: '스킬컷',
   favorite: '애장품',
   eventscene: '이벤트 씬',
-  monster: 'RAPTURE'
+  monster: '랩쳐'
 };
 
 const CATEGORY_TAG_STYLES: Record<string, string> = {
