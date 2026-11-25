@@ -221,6 +221,7 @@ function run() {
           company = compFile.replace('.md', '');
         }
         if (!id || id === '-') continue;
+        const lowerId = id.toLowerCase();
         const cleanAlt = altName && altName !== '-' ? altName : '';
         const cleanSkin = skinName && skinName !== '-' ? skinName : '';
         const displayName = formatCharacterDisplayName({
@@ -228,16 +229,16 @@ function run() {
           alternate: cleanAlt,
           variant: cleanSkin
         }, charName);
-        idToKorean[id] = displayName;
+        idToKorean[lowerId] = displayName;
 
         const subInfo = formatSubInfo({ company, company2, squad, squad2, org, role: roleOrOther });
         if (subInfo) {
-          idToSubInfo[id] = subInfo;
+          idToSubInfo[lowerId] = subInfo;
         }
 
         const hexColor = normalizeHexColor(_color);
         if (hexColor) {
-          idToColor[id.toLowerCase()] = hexColor;
+          idToColor[lowerId] = hexColor;
           const isNpcOrExtra =
             compKey === 'other' ||
             (roleOrOther && ['NPC', '기타', '엑스트라'].includes(roleOrOther.trim()));
@@ -250,7 +251,7 @@ function run() {
         }
 
         // Manufacturer mapping
-        idToManufacturer[id] = compKey;
+        idToManufacturer[lowerId] = compKey;
         if (charName && charName !== '-') {
           const lowerName = charName.toLowerCase();
           if (shouldUpdateManufacturer(nameToManufacturer[lowerName], compKey)) {
@@ -308,6 +309,7 @@ function run() {
         const krSearchKey = colMap ? getCol('krSearchKey') : (isSixCol ? '' : (cols.length >= 8 ? cols[6] : slug));
 
         if (!id || id === '-') continue;
+        const lowerId = id.toLowerCase();
 
         const isBase = role === 'Base';
         const isNpcRow = currentManufacturer === 'other' || role === 'NPC';
@@ -321,12 +323,12 @@ function run() {
                 krSearchKey || charName
               );
         
-        idToKorean[id] = finalDisplayName;
+        idToKorean[lowerId] = finalDisplayName;
 
-        const subInfo = idToSubInfo[id] || (role && role !== '-' && role !== 'Base' ? role : undefined);
+        const subInfo = idToSubInfo[lowerId] || (role && role !== '-' && role !== 'Base' ? role : undefined);
 
-        if (!idToManufacturer[id] || idToManufacturer[id] === 'other') {
-          idToManufacturer[id] = currentManufacturer;
+        if (!idToManufacturer[lowerId] || idToManufacturer[lowerId] === 'other') {
+          idToManufacturer[lowerId] = currentManufacturer;
         }
 
         if (slug && slug !== '-') {
@@ -412,7 +414,8 @@ function run() {
       if (section === 'id_korean') {
         while ((match = kvRegex.exec(line)) !== null) {
           const [_, key, val] = match;
-          if (!idToKorean[key]) idToKorean[key] = val;
+          const lowerKey = key.toLowerCase();
+          if (!idToKorean[lowerKey]) idToKorean[lowerKey] = val;
         }
       } else if (section === 'name_korean') {
         while ((match = kvRegex.exec(line)) !== null) {
@@ -422,7 +425,8 @@ function run() {
       } else if (section === 'id_subinfo') {
         while ((match = kvRegex.exec(line)) !== null) {
           const [_, key, val] = match;
-          if (!idToSubInfo[key]) idToSubInfo[key] = val;
+          const lowerKey = key.toLowerCase();
+          if (!idToSubInfo[lowerKey]) idToSubInfo[lowerKey] = val;
         }
       } else if (section === 'name_subinfo') {
         while ((match = kvRegex.exec(line)) !== null) {
@@ -471,8 +475,9 @@ function run() {
       if (inIdMfg) {
         while ((match = kvRegex.exec(line)) !== null) {
           const [_, key, val] = match;
-          if (!idToManufacturer[key]) {
-            idToManufacturer[key] = val;
+          const lowerKey = key.toLowerCase();
+          if (!idToManufacturer[lowerKey]) {
+            idToManufacturer[lowerKey] = val;
           }
         }
       }

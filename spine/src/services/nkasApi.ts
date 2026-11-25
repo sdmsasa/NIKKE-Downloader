@@ -70,15 +70,20 @@ export function saveNKASDataToCache(data: FetchedData): void {
   }
 }
 
-export async function fetchAllNKASData(forceRefresh: boolean = false): Promise<FetchedData> {
+export async function fetchAllNKASData(
+  forceRefresh: boolean = false,
+  onBackgroundUpdate?: (fresh: FetchedData) => void
+): Promise<FetchedData> {
   const cached = getCachedNKASData();
-  // If cache exists and not forced, return cached data
+  // If cache exists and not forced, return cached data immediately and refresh with cache-bypass in background
   if (cached && !forceRefresh) {
-    // Silently refresh in background
     setTimeout(() => {
-      fetchFreshNKASData(false).then(fresh => {
-        saveNKASDataToCache(fresh);
-      }).catch(() => {});
+      fetchFreshNKASData(true)
+        .then(fresh => {
+          saveNKASDataToCache(fresh);
+          onBackgroundUpdate?.(fresh);
+        })
+        .catch(() => {});
     }, 1000);
     return cached;
   }

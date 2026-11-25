@@ -226,7 +226,9 @@ export function App() {
     const start = Date.now();
     try {
       const [fetched, savedHandle] = await Promise.all([
-        fetchAllNKASData(forceRefresh),
+        fetchAllNKASData(forceRefresh, (fresh) => {
+          setData(fresh);
+        }),
         getDirectoryHandleFromIDB()
       ]);
       setData(fetched);
