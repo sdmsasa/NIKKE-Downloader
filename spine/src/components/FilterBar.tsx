@@ -87,21 +87,21 @@ export const FilterBar: React.FC<FilterBarProps> = ({
             })}
           </div>
 
-          {/* Thin Character Variant Summary & Multi-Select Bar */}
+          {/* Thin Character Variant Summary & Multi-Select Text Bar */}
           {variantCounts && (
-            <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar">
+            <div className="flex items-center gap-3 px-1 pt-0.5 text-[11px] overflow-x-auto no-scrollbar">
               <button
                 type="button"
                 onClick={() => setFilter(prev => ({ ...prev, variantTypes: [] }))}
-                className={`flex items-center gap-1 px-2.5 py-0.5 rounded-md text-[11px] border transition-all cursor-pointer whitespace-nowrap ${
+                className={`inline-flex items-baseline gap-1 transition-colors cursor-pointer whitespace-nowrap pb-0.5 border-b ${
                   allVariantsSelected
-                    ? 'bg-[#383838] border-neutral-300 text-white font-bold shadow-sm'
-                    : 'bg-[#181818] border-[#2a2a2a] text-neutral-300 hover:text-white hover:bg-[#222222]'
+                    ? 'text-white font-bold border-white'
+                    : 'text-neutral-400 hover:text-neutral-200 border-transparent'
                 }`}
                 title="전체 유형 보기"
               >
                 <span>총합:</span>
-                <span className="font-mono font-bold text-white">{variantCounts.total.toLocaleString()}</span>
+                <span className="font-mono">{variantCounts.total.toLocaleString()}</span>
               </button>
 
               {([
@@ -111,20 +111,22 @@ export const FilterBar: React.FC<FilterBarProps> = ({
               ] as const).map(({ key, label, count }) => {
                 const isSelected = selectedVariants.includes(key);
                 return (
-                  <button
-                    key={key}
-                    type="button"
-                    onClick={() => toggleVariantType(key)}
-                    className={`flex items-center gap-1 px-2.5 py-0.5 rounded-md text-[11px] border transition-all cursor-pointer whitespace-nowrap ${
-                      isSelected
-                        ? 'bg-[#383838] border-neutral-300 text-white font-bold shadow-sm'
-                        : 'bg-[#181818] border-[#2a2a2a] text-neutral-300 hover:text-white hover:bg-[#222222]'
-                    }`}
-                    title={`${label} 캐릭터 필터 (다중 선택 가능)`}
-                  >
-                    <span>{label}:</span>
-                    <span className="font-mono font-bold text-white">{count.toLocaleString()}</span>
-                  </button>
+                  <React.Fragment key={key}>
+                    <span className="text-neutral-700 select-none">|</span>
+                    <button
+                      type="button"
+                      onClick={() => toggleVariantType(key)}
+                      className={`inline-flex items-baseline gap-1 transition-colors cursor-pointer whitespace-nowrap pb-0.5 border-b ${
+                        isSelected
+                          ? 'text-orange-400 font-bold border-orange-400'
+                          : 'text-neutral-400 hover:text-neutral-200 border-transparent'
+                      }`}
+                      title={`${label} 필터 (다중 선택 가능)`}
+                    >
+                      <span>{label}:</span>
+                      <span className="font-mono">{count.toLocaleString()}</span>
+                    </button>
+                  </React.Fragment>
                 );
               })}
             </div>
