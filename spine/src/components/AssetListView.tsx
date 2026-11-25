@@ -54,7 +54,8 @@ export const AssetListView: React.FC<AssetListViewProps> = ({
         </thead>
         <tbody className="divide-y divide-[#262626]">
           {items.map((item) => {
-            const isSelected = selectedIds.has(item.id);
+            const itemKey = item.type === 'character' && item.uid ? item.uid : item.id;
+            const isSelected = selectedIds.has(itemKey);
             const isDownloaded = downloadedIds.has(item.id);
             const hasUpdate = updatedIds ? updatedIds.has(item.id) : false;
 
@@ -68,10 +69,10 @@ export const AssetListView: React.FC<AssetListViewProps> = ({
 
             return (
               <tr
-                key={item.id}
+                key={itemKey}
                 onClick={() => {
                   if (window.getSelection()?.toString()) return;
-                  onToggleSelect(item.id);
+                  onToggleSelect(itemKey);
                 }}
                 className={`hover:bg-[#242424] cursor-pointer transition-colors ${
                   isSelected ? 'bg-orange-500/5' : ''
@@ -81,7 +82,7 @@ export const AssetListView: React.FC<AssetListViewProps> = ({
                 <td className="py-2 px-3 text-center" onClick={(e) => e.stopPropagation()}>
                   <button
                     type="button"
-                    onClick={() => onToggleSelect(item.id)}
+                    onClick={() => onToggleSelect(itemKey)}
                     className="w-6 h-6 flex items-center justify-center cursor-pointer"
                     title={isSelected ? '선택 해제' : '선택'}
                   >

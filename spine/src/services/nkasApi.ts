@@ -1,11 +1,12 @@
 import type { CharacterItem, BurstItem, MonsterItem, FavoriteItem, EventSceneItem, CharacterPose } from '../types';
-import { getKoreanName, getCharacterSubInfo, getCharacterColor } from '../data/translations';
+import { getKoreanName, getCharacterSubInfo, getCharacterColor, getCharacterVariantType, MARKDOWN_CHARACTERS } from '../data/translations';
+import { getCharacterManufacturer } from '../data/manufacturers';
 import characterPosesData from '../data/characterPoses.json';
 
 // 외부 NKAS Spine 에셋 CDN 호스트 주소 (서드파티 도메인이므로 유지)
 const SPINE_BASE = 'https://nkas-l2d.pages.dev';
 const MAIN_BASE = 'https://nkas.pages.dev';
-const CACHE_KEY = 'nikke_cached_nkas_data_v5';
+const CACHE_KEY = 'nikke_cached_nkas_data_v6';
 
 export interface FetchedData {
   characters: CharacterItem[];
@@ -120,37 +121,84 @@ async function fetchFreshNKASData(forceRefresh: boolean = false): Promise<Fetche
   const newIds = new Set<string>(Array.isArray(newRes) ? newRes : []);
   const posesMap = (characterPosesData || {}) as Record<string, CharacterPose[]>;
 
-  // Process Characters (Exclude dummy/placeholder assets)
-  const characters: CharacterItem[] = Object.entries(charsRes as Record<string, string>)
+  // Process Characters: Markdown canonical list first, then characters.json fallback for missing entries
+  const spineEntries = Object.entries(charsRes as Record<string, string>)
     .filter(([id, name]) => {
       const lowerId = id.toLowerCase();
       const lowerName = (name || '').toLowerCase();
       return !lowerId.includes('dummy') && !lowerName.includes('placeholder');
-    })
-    .map(([id, name]) => {
-      const isNew = newIds.has(id);
-      const krName = getKoreanName(name, id);
-      const subInfo = getCharacterSubInfo(id, name);
-      const displayName = krName || name;
-      const poses = posesMap[id] || (id.startsWith('c9') ? ['idle'] : ['idle', 'aim', 'cover']);
-      return {
-        id,
-        name,
-        displayName,
-        krName,
-        subInfo,
-        isNew,
-        poses: poses as CharacterPose[],
-        color: getCharacterColor(id, name) || colorsRes[name] || colorsRes[id],
-        thumbnails: {
-          icon: `${MAIN_BASE}/characters/si_${id}_s.png`,
-          iconFallback: `${MAIN_BASE}/characters_missing_si/si_${id}_s.png`,
-          medium: `${MAIN_BASE}/characters/mi_${id}_s.png`,
-          full: `${MAIN_BASE}/characters/${id}.png`,
-          hq: `${MAIN_BASE}/characters_hq/${id}.png`
-        }
-      };
     });
+
+  const spineByFull = new Map<string, { id: string; name: string }>();
+  const spineByBase = new Map<string, { id: string; name: string }[]>();
+  for (const [id, name] of spineEntries) {
+    const lowerId = id.toLowerCase();
+    const item = { id, name };
+    spineByFull.set(lowerId, item);
+    const baseId = lowerId.split('_')[0];
+    if (!spineByBase.has(baseId)) spineByBase.set(baseId, []);
+    spineByBase.get(baseId)!.push(item);
+  }
+
+  const buildThumbnails = (id: string) => ({
+    icon: `${MAIN_BASE}/characters/si_${id}_s.png`,
+    iconFallback: `${MAIN_BASE}/characters_missing_si/si_${id}_s.png`,
+    medium: `${MAIN_BASE}/characters/mi_${id}_s.png`,
+    full: `${MAIN_BASE}/characters/${id}.png`,
+    hq: `${MAIN_BASE}/characters_hq/${id}.png`
+  });
+
+  const characters: CharacterItem[] = [];
+  const coveredSpineIds = new Set<string>();
+
+  for (const mdEntry of MARKDOWN_CHARACTERS) {
+    const mdId = mdEntry.id.toLowerCase();
+    const resolved =
+      spineByFull.get(mdId) ||
+      spineByFull.get(`${mdId}_00`) ||
+      spineByBase.get(mdId)?.[0];
+    if (!resolved) continue;
+
+    coveredSpineIds.add(resolved.id.toLowerCase());
+    const poses = posesMap[resolved.id] || (resolved.id.startsWith('c9') ? ['idle'] : ['idle', 'aim', 'cover']);
+    characters.push({
+      id: resolved.id,
+      uid: `${resolved.id}__${mdEntry.displayName}`,
+      name: resolved.name,
+      displayName: mdEntry.displayName,
+      krName: mdEntry.displayName,
+      subInfo: mdEntry.subInfo,
+      manufacturer: mdEntry.manufacturer,
+      variantType: mdEntry.variantType,
+      color: mdEntry.color || colorsRes[resolved.name] || colorsRes[resolved.id],
+      isNew: newIds.has(resolved.id),
+      poses: poses as CharacterPose[],
+      thumbnails: buildThumbnails(resolved.id)
+    });
+  }
+
+  for (const [id, name] of spineEntries) {
+    if (coveredSpineIds.has(id.toLowerCase())) continue;
+    const isNew = newIds.has(id);
+    const krName = getKoreanName(name, id);
+    const subInfo = getCharacterSubInfo(id, name);
+    const displayName = krName || name;
+    const poses = posesMap[id] || (id.startsWith('c9') ? ['idle'] : ['idle', 'aim', 'cover']);
+    characters.push({
+      id,
+      uid: id,
+      name,
+      displayName,
+      krName,
+      subInfo,
+      manufacturer: getCharacterManufacturer(id, name),
+      variantType: getCharacterVariantType(id, name),
+      isNew,
+      poses: poses as CharacterPose[],
+      color: getCharacterColor(id, name) || colorsRes[name] || colorsRes[id],
+      thumbnails: buildThumbnails(id)
+    });
+  }
 
   // Process Bursts
   const bursts: BurstItem[] = Object.entries(burstsRes as Record<string, string>)

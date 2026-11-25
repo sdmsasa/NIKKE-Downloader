@@ -220,6 +220,7 @@ function run() {
 
   const idToManufacturer = {};
   const nameToManufacturer = {};
+  const markdownCharMap = new Map(); // `${lowerId}__${sanitizeName(displayName)}` -> entry + priority
 
   // Track primary character per ID (by source priority) and store colliding characters
   // under composite keys `${id}__${sanitizeName(name)}`, matching nikke-spine-character-list.
@@ -322,6 +323,30 @@ function run() {
         }
 
         upsertIdRecord(lowerId, charName, displayName, subInfo, hexColor, compKey, compFile, isNpcOrExtra);
+
+        // Record canonical Markdown character card entry (ordered & prioritized by source file)
+        const mdVariantType =
+          !isNpcOrExtra && /_\d+$/.test(lowerId) && !lowerId.endsWith('_00')
+            ? 'skin'
+            : cleanSkin
+            ? 'skin'
+            : cleanAlt
+            ? 'alt'
+            : 'base';
+        const mdKey = `${lowerId}__${sanitizeName(displayName)}`;
+        const mdPriority = getSourcePriority(compFile);
+        const existingMd = markdownCharMap.get(mdKey);
+        if (!existingMd || mdPriority > existingMd.priority) {
+          markdownCharMap.set(mdKey, {
+            id: lowerId,
+            displayName,
+            subInfo: subInfo || undefined,
+            color: hexColor || undefined,
+            manufacturer: compKey,
+            variantType: mdVariantType,
+            priority: mdPriority
+          });
+        }
 
         // Manufacturer mapping (by name)
         if (charName && charName !== '-') {
@@ -585,6 +610,8 @@ function run() {
     return nonOtherMfgs.length > 1 && idDistinctNames[id] && idDistinctNames[id].size > 1;
   });
 
+  const markdownCharacters = Array.from(markdownCharMap.values()).map(({ priority: _p, ...rest }) => rest);
+
   // Write translations.ts
   const idEntries = Object.entries(idToKorean)
     .map(([k, v]) => `  "${k}": "${v}"`)
@@ -644,6 +671,17 @@ export type CharacterVariantKind = 'base' | 'alt' | 'skin';
 export const ID_TO_VARIANT: Record<string, CharacterVariantKind> = {
 ${idVariantEntries}
 };
+
+export interface MarkdownCharacterEntry {
+  id: string;
+  displayName: string;
+  subInfo?: string;
+  color?: string;
+  manufacturer: string;
+  variantType: CharacterVariantKind;
+}
+
+export const MARKDOWN_CHARACTERS: MarkdownCharacterEntry[] = ${JSON.stringify(markdownCharacters, null, 2)};
 
 export function sanitizeName(str: string): string {
   if (!str) return '';

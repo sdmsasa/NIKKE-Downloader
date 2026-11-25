@@ -341,10 +341,16 @@ export function App() {
   }, [allAssetItems, downloadedIds, downloadHistory, currentNewBatchSignature]);
 
   // Items scoped by category & manufacturer (used for variant summary counts and downstream filtering)
+  const getItemKey = (item: AnyAssetItem) =>
+    item.type === 'character' && item.uid ? item.uid : item.id;
+
   const manufacturerScopedItems = useMemo(() => {
     let list = categoryItems;
     if (filter.manufacturer && filter.manufacturer !== 'all') {
       list = list.filter((item) => {
+        if (item.type === 'character' && item.manufacturer) {
+          return item.manufacturer === filter.manufacturer;
+        }
         const charId = (item as any).characterId || item.id;
         return getCharacterManufacturer(charId, item.name) === filter.manufacturer;
       });
@@ -358,7 +364,10 @@ export function App() {
     let skin = 0;
     for (const item of manufacturerScopedItems) {
       const charId = (item as any).characterId || item.id;
-      const vType = getCharacterVariantType(charId, item.name);
+      const vType =
+        item.type === 'character' && item.variantType
+          ? item.variantType
+          : getCharacterVariantType(charId, item.name);
       if (vType === 'base') base++;
       else if (vType === 'alt') alt++;
       else if (vType === 'skin') skin++;
@@ -379,7 +388,11 @@ export function App() {
     if (filter.variantTypes && filter.variantTypes.length > 0) {
       list = list.filter((item) => {
         const charId = (item as any).characterId || item.id;
-        return filter.variantTypes!.includes(getCharacterVariantType(charId, item.name));
+        const vType =
+          item.type === 'character' && item.variantType
+            ? item.variantType
+            : getCharacterVariantType(charId, item.name);
+        return filter.variantTypes!.includes(vType);
       });
     }
 
@@ -430,7 +443,7 @@ export function App() {
   const handleSelectAll = () => {
     setSelectedIds(prev => {
       const next = new Set(prev);
-      filteredItems.forEach(item => next.add(item.id));
+      filteredItems.forEach(item => next.add(getItemKey(item)));
       return next;
     });
   };
@@ -438,7 +451,7 @@ export function App() {
   const handleDeselectAll = () => {
     setSelectedIds(prev => {
       const next = new Set(prev);
-      filteredItems.forEach(item => next.delete(item.id));
+      filteredItems.forEach(item => next.delete(getItemKey(item)));
       return next;
     });
   };
@@ -451,7 +464,7 @@ export function App() {
       return;
     }
     const next = new Set<string>();
-    newItems.forEach(item => next.add(item.id));
+    newItems.forEach(item => next.add(getItemKey(item)));
     setSelectedIds(next);
     setActiveCategory('updates');
   };
@@ -460,7 +473,7 @@ export function App() {
     const next = new Set<string>();
     filteredItems.forEach(item => {
       if (!downloadedIds.has(item.id) || updatedIds.has(item.id)) {
-        next.add(item.id);
+        next.add(getItemKey(item));
       }
     });
     setSelectedIds(next);
@@ -470,8 +483,9 @@ export function App() {
     setSelectedIds(prev => {
       const next = new Set(prev);
       filteredItems.forEach(item => {
-        if (next.has(item.id)) next.delete(item.id);
-        else next.add(item.id);
+        const key = getItemKey(item);
+        if (next.has(key)) next.delete(key);
+        else next.add(key);
       });
       return next;
     });
@@ -495,7 +509,7 @@ export function App() {
 
   // Start Download Execution
   const handleStartDownload = async (targetItems?: AnyAssetItem[]) => {
-    let itemsToDownload = targetItems || allAssetItems.filter(item => selectedIds.has(item.id));
+    let itemsToDownload = targetItems || allAssetItems.filter(item => selectedIds.has(getItemKey(item)));
     
     // If no models are checked, offer smart full-list download confirmation or friendly guidance
     if (itemsToDownload.length === 0) {
@@ -505,7 +519,7 @@ export function App() {
         );
         if (confirmed) {
           const next = new Set<string>();
-          filteredItems.forEach(item => next.add(item.id));
+          filteredItems.forEach(item => next.add(getItemKey(item)));
           setSelectedIds(next);
           itemsToDownload = [...filteredItems];
         } else {
@@ -873,18 +887,21 @@ export function App() {
                   gridTemplateColumns: `repeat(auto-fill, minmax(${cardSize}px, 1fr))`
                 }}
               >
-                {filteredItems.map((item) => (
-                  <AssetCard
-                    key={item.id}
-                    item={item}
-                    isSelected={selectedIds.has(item.id)}
-                    isDownloaded={downloadedIds.has(item.id)}
-                    hasUpdate={updatedIds.has(item.id)}
-                    onToggleSelect={() => toggleSelect(item.id)}
-                    onDownloadSingle={() => handleStartDownload([item])}
-                    onOpenDetail={() => setDetailItem(item)}
-                  />
-                ))}
+                {filteredItems.map((item) => {
+                  const itemKey = getItemKey(item);
+                  return (
+                    <AssetCard
+                      key={itemKey}
+                      item={item}
+                      isSelected={selectedIds.has(itemKey)}
+                      isDownloaded={downloadedIds.has(item.id)}
+                      hasUpdate={updatedIds.has(item.id)}
+                      onToggleSelect={() => toggleSelect(itemKey)}
+                      onDownloadSingle={() => handleStartDownload([item])}
+                      onOpenDetail={() => setDetailItem(item)}
+                    />
+                  );
+                })}
               </div>
             ) : (
               <AssetListView

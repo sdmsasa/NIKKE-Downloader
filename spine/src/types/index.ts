@@ -6,10 +6,13 @@ export type CharacterVariantType = 'base' | 'alt' | 'skin';
 
 export interface CharacterItem {
   id: string; // e.g. "c010_00"
+  uid?: string; // Unique key when multiple Markdown characters share the same Spine ID
   name: string; // e.g. "Rapi"
   displayName?: string; // Formatted display name (e.g. "라푼젤: 퓨어 그레이스")
   krName?: string; // Translated / search friendly name
   subInfo?: string; // e.g. "필그림 · 갓데스"
+  manufacturer?: string;
+  variantType?: CharacterVariantType;
   aliases?: string[];
   color?: string;
   isNew?: boolean;

@@ -1203,6 +1203,8 @@ export const ID_TO_KOREAN: Record<string, string> = {
   "c923__로열남성": "로열 남성",
   "c923": "로열 남성",
   "c941__마오": "마오",
+  "c942_01__지휘관": "지휘관: 갓데스",
+  "c942_01": "지휘관: 갓데스",
   "c947__genericmalebystander": "남성 시민 기본",
   "c948__genericfemalebystander": "여성 시민 기본",
   "c951__genericboy": "남자 아이",
@@ -1222,7 +1224,6 @@ export const ID_TO_KOREAN: Record<string, string> = {
   "c974_01": "양산형 근접 전투 니케 B",
   "c9001__피나": "피나",
   "c9027_00": "도로시",
-  "c942_01": "엔더슨",
   "c474_00": "도로시",
   "c235_00": "노아",
   "c236_00": "파피용",
@@ -2431,6 +2432,8 @@ export const ID_TO_SUBINFO: Record<string, string> = {
   "c923__로열남성": "NPC",
   "c923": "NPC",
   "c941__마오": "NPC",
+  "c942_01__지휘관": "NPC",
+  "c942_01": "NPC",
   "c947__genericmalebystander": "NPC",
   "c948__genericfemalebystander": "NPC",
   "c951__genericboy": "NPC",
@@ -2449,8 +2452,7 @@ export const ID_TO_SUBINFO: Record<string, string> = {
   "c974_01__massproducedmeleeb": "NPC",
   "c974_01": "NPC",
   "c9001__피나": "NPC",
-  "c9027_00": "HERETIC · NPC",
-  "c942_01": "NPC · 갓데스"
+  "c9027_00": "HERETIC · NPC"
 };
 
 export const NAME_TO_KOREAN: Record<string, string> = {
@@ -8081,6 +8083,7 @@ export const ID_TO_VARIANT: Record<string, CharacterVariantKind> = {
   "c937": "base",
   "c939": "base",
   "c941": "base",
+  "c942_01": "base",
   "c945": "base",
   "c946": "base",
   "c947": "base",
@@ -8141,6 +8144,4719 @@ export const ID_TO_VARIANT: Record<string, CharacterVariantKind> = {
   "c9016": "base",
   "c9018": "base"
 };
+
+export interface MarkdownCharacterEntry {
+  id: string;
+  displayName: string;
+  subInfo?: string;
+  color?: string;
+  manufacturer: string;
+  variantType: CharacterVariantKind;
+}
+
+export const MARKDOWN_CHARACTERS: MarkdownCharacterEntry[] = [
+  {
+    "id": "c313",
+    "displayName": "프리바티: 언카인드 메이드",
+    "subInfo": "ELYSION · 메이드 포 유",
+    "color": "#5B5C62",
+    "manufacturer": "elysion",
+    "variantType": "alt"
+  },
+  {
+    "id": "c582",
+    "displayName": "레이블",
+    "subInfo": "ELYSION · 베스트 셀러",
+    "color": "#825BDA",
+    "manufacturer": "elysion",
+    "variantType": "base"
+  },
+  {
+    "id": "c582_01",
+    "displayName": "레이블: 오컬티스트",
+    "subInfo": "ELYSION · 베스트 셀러",
+    "color": "#8149D2",
+    "manufacturer": "elysion",
+    "variantType": "skin"
+  },
+  {
+    "id": "c581",
+    "displayName": "아르카나",
+    "subInfo": "ELYSION · 베스트 셀러",
+    "color": "#193BBC",
+    "manufacturer": "elysion",
+    "variantType": "base"
+  },
+  {
+    "id": "c583",
+    "displayName": "아르카나: 포츈 메이트",
+    "subInfo": "ELYSION · 베스트 셀러",
+    "color": "#A0A7F0",
+    "manufacturer": "elysion",
+    "variantType": "alt"
+  },
+  {
+    "id": "c580",
+    "displayName": "팬텀",
+    "subInfo": "ELYSION · 베스트 셀러",
+    "color": "#AB95D9",
+    "manufacturer": "elysion",
+    "variantType": "base"
+  },
+  {
+    "id": "c580_01",
+    "displayName": "팬텀: 세인트 시프",
+    "subInfo": "ELYSION · 베스트 셀러",
+    "color": "#C6BCF6",
+    "manufacturer": "elysion",
+    "variantType": "skin"
+  },
+  {
+    "id": "c020",
+    "displayName": "델타",
+    "subInfo": "ELYSION · 스카우팅",
+    "color": "#986A3A",
+    "manufacturer": "elysion",
+    "variantType": "base"
+  },
+  {
+    "id": "c023",
+    "displayName": "델타: 닌자 시프",
+    "subInfo": "ELYSION · 스카우팅",
+    "color": "#6F6C6B",
+    "manufacturer": "elysion",
+    "variantType": "alt"
+  },
+  {
+    "id": "c022",
+    "displayName": "시그널",
+    "subInfo": "ELYSION · 스카우팅",
+    "color": "#4D4E48",
+    "manufacturer": "elysion",
+    "variantType": "base"
+  },
+  {
+    "id": "c022_01",
+    "displayName": "시그널: 드라마틱 초코",
+    "subInfo": "ELYSION · 스카우팅",
+    "color": "#9CB2EC",
+    "manufacturer": "elysion",
+    "variantType": "skin"
+  },
+  {
+    "id": "c390",
+    "displayName": "츠바이",
+    "subInfo": "ELYSION · 스쿨 서클",
+    "color": "#F52F29",
+    "manufacturer": "elysion",
+    "variantType": "base"
+  },
+  {
+    "id": "c390_02",
+    "displayName": "츠바이: 스프링 스트롤",
+    "subInfo": "ELYSION · 스쿨 서클",
+    "color": "#CCC9DA",
+    "manufacturer": "elysion",
+    "variantType": "skin"
+  },
+  {
+    "id": "c390_01",
+    "displayName": "츠바이: 퍼스트 페스타",
+    "subInfo": "ELYSION · 스쿨 서클",
+    "color": "#B72218",
+    "manufacturer": "elysion",
+    "variantType": "skin"
+  },
+  {
+    "id": "c040",
+    "displayName": "D",
+    "subInfo": "ELYSION · 시지 패러리스",
+    "color": "#5A6179",
+    "manufacturer": "elysion",
+    "variantType": "base"
+  },
+  {
+    "id": "c043",
+    "displayName": "D: 킬러 와이프",
+    "subInfo": "ELYSION · 시지 패러리스",
+    "color": "#A6A09B",
+    "manufacturer": "elysion",
+    "variantType": "alt"
+  },
+  {
+    "id": "c043_01",
+    "displayName": "D: 시크릿 파티 클리너",
+    "subInfo": "ELYSION · 시지 패러리스",
+    "color": "#FDCA7D",
+    "manufacturer": "elysion",
+    "variantType": "skin"
+  },
+  {
+    "id": "c043_02",
+    "displayName": "D: 시크릿 폴리스",
+    "subInfo": "ELYSION · 시지 패러리스",
+    "color": "#3A3B63",
+    "manufacturer": "elysion",
+    "variantType": "skin"
+  },
+  {
+    "id": "c041",
+    "displayName": "K",
+    "subInfo": "ELYSION · 시지 패러리스",
+    "color": "#FFA904",
+    "manufacturer": "elysion",
+    "variantType": "base"
+  },
+  {
+    "id": "c041_01",
+    "displayName": "K: 언더 커버",
+    "subInfo": "ELYSION · 시지 패러리스",
+    "color": "#676C7F",
+    "manufacturer": "elysion",
+    "variantType": "skin"
+  },
+  {
+    "id": "c013",
+    "displayName": "마리안",
+    "subInfo": "ELYSION · 실버건 · NPC",
+    "color": "#5176AD",
+    "manufacturer": "elysion",
+    "variantType": "base"
+  },
+  {
+    "id": "c321",
+    "displayName": "마르차나",
+    "subInfo": "ELYSION · 아카데미아",
+    "color": "#CB3758",
+    "manufacturer": "elysion",
+    "variantType": "base"
+  },
+  {
+    "id": "c321_01",
+    "displayName": "마르차나: 스쿨 데이즈",
+    "subInfo": "ELYSION · 아카데미아",
+    "color": "#C59673",
+    "manufacturer": "elysion",
+    "variantType": "skin"
+  },
+  {
+    "id": "c322",
+    "displayName": "마르차나: 마린 스터디",
+    "subInfo": "ELYSION · 아카데미아",
+    "color": "#F1473E",
+    "manufacturer": "elysion",
+    "variantType": "alt"
+  },
+  {
+    "id": "c091",
+    "displayName": "베스티",
+    "subInfo": "ELYSION · 앱솔루트",
+    "color": "#D83710",
+    "manufacturer": "elysion",
+    "variantType": "base"
+  },
+  {
+    "id": "c091_01",
+    "displayName": "베스티: 아크 메이지",
+    "subInfo": "ELYSION · 앱솔루트",
+    "color": "#BD000D",
+    "manufacturer": "elysion",
+    "variantType": "skin"
+  },
+  {
+    "id": "c094",
+    "displayName": "베스티: 택티컬 업",
+    "subInfo": "ELYSION · 앱솔루트",
+    "color": "#E80505",
+    "manufacturer": "elysion",
+    "variantType": "alt"
+  },
+  {
+    "id": "c094_01",
+    "displayName": "베스티: 퓨어 비기너",
+    "subInfo": "ELYSION · 앱솔루트",
+    "color": "#E34548",
+    "manufacturer": "elysion",
+    "variantType": "skin"
+  },
+  {
+    "id": "c090",
+    "displayName": "엠마",
+    "subInfo": "ELYSION · 앱솔루트",
+    "color": "#C82200",
+    "manufacturer": "elysion",
+    "variantType": "base"
+  },
+  {
+    "id": "c090_01",
+    "displayName": "엠마: 달링 레드",
+    "subInfo": "ELYSION · 앱솔루트",
+    "color": "#DD062F",
+    "manufacturer": "elysion",
+    "variantType": "skin"
+  },
+  {
+    "id": "c090_02",
+    "displayName": "엠마: 오피스 테라피",
+    "subInfo": "ELYSION · 앱솔루트",
+    "color": "#D7D1CE",
+    "manufacturer": "elysion",
+    "variantType": "skin"
+  },
+  {
+    "id": "c093",
+    "displayName": "엠마: 택티컬 업",
+    "subInfo": "ELYSION · 앱솔루트",
+    "color": "#C31718",
+    "manufacturer": "elysion",
+    "variantType": "alt"
+  },
+  {
+    "id": "c093_01",
+    "displayName": "엠마: 시크릿 테라피",
+    "subInfo": "ELYSION · 앱솔루트",
+    "color": "#575254",
+    "manufacturer": "elysion",
+    "variantType": "skin"
+  },
+  {
+    "id": "c092",
+    "displayName": "은화",
+    "subInfo": "ELYSION · 앱솔루트",
+    "color": "#F82F19",
+    "manufacturer": "elysion",
+    "variantType": "base"
+  },
+  {
+    "id": "c095",
+    "displayName": "은화: 택티컬 업",
+    "subInfo": "ELYSION · 앱솔루트",
+    "color": "#9D1C22",
+    "manufacturer": "elysion",
+    "variantType": "alt"
+  },
+  {
+    "id": "c095_01",
+    "displayName": "은화: 데이 오프",
+    "subInfo": "ELYSION · 앱솔루트",
+    "color": "#CBCED1",
+    "manufacturer": "elysion",
+    "variantType": "skin"
+  },
+  {
+    "id": "c532",
+    "displayName": "소라",
+    "subInfo": "ELYSION · 오버 더 호라이즌",
+    "color": "#C0C0F6",
+    "manufacturer": "elysion",
+    "variantType": "base"
+  },
+  {
+    "id": "c532_01",
+    "displayName": "소라: 스프링 플라이트",
+    "subInfo": "ELYSION · 오버 더 호라이즌",
+    "color": "#FFA6CD",
+    "manufacturer": "elysion",
+    "variantType": "skin"
+  },
+  {
+    "id": "c530",
+    "displayName": "스카이",
+    "subInfo": "ELYSION · 오버 더 호라이즌",
+    "color": "#A6DAF7",
+    "manufacturer": "elysion",
+    "variantType": "base"
+  },
+  {
+    "id": "c531",
+    "displayName": "시엘로",
+    "subInfo": "ELYSION · 오버 더 호라이즌 · NPC",
+    "manufacturer": "elysion",
+    "variantType": "base"
+  },
+  {
+    "id": "c441",
+    "displayName": "아비스타",
+    "subInfo": "ELYSION · 오버시어",
+    "color": "#B21E29",
+    "manufacturer": "elysion",
+    "variantType": "base"
+  },
+  {
+    "id": "c440",
+    "displayName": "아이리",
+    "subInfo": "ELYSION · 오버시어 · NPC",
+    "manufacturer": "elysion",
+    "variantType": "base"
+  },
+  {
+    "id": "c113",
+    "displayName": "E.H.",
+    "subInfo": "ELYSION · 이그조틱",
+    "color": "#DB3758",
+    "manufacturer": "elysion",
+    "variantType": "base"
+  },
+  {
+    "id": "c113_01",
+    "displayName": "E.H.: 정크야드 뱅가드",
+    "subInfo": "ELYSION · 이그조틱",
+    "color": "#FF1D9F",
+    "manufacturer": "elysion",
+    "variantType": "skin"
+  },
+  {
+    "id": "c350",
+    "displayName": "마스트",
+    "subInfo": "ELYSION · 이지스",
+    "color": "#A82E4D",
+    "manufacturer": "elysion",
+    "variantType": "base"
+  },
+  {
+    "id": "c350_02",
+    "displayName": "마스트: 마스트 더 다이버",
+    "subInfo": "ELYSION · 이지스",
+    "color": "#313A54",
+    "manufacturer": "elysion",
+    "variantType": "skin"
+  },
+  {
+    "id": "c350_01",
+    "displayName": "마스트: 파이레츠 하트",
+    "subInfo": "ELYSION · 이지스",
+    "color": "#FB91B1",
+    "manufacturer": "elysion",
+    "variantType": "skin"
+  },
+  {
+    "id": "c350_old",
+    "displayName": "마스트: Old",
+    "subInfo": "ELYSION · NPC",
+    "manufacturer": "elysion",
+    "variantType": "skin"
+  },
+  {
+    "id": "c354",
+    "displayName": "마스트: 로망틱 메이드",
+    "subInfo": "ELYSION · 이지스",
+    "color": "#887275",
+    "manufacturer": "elysion",
+    "variantType": "alt"
+  },
+  {
+    "id": "c354_01",
+    "displayName": "마스트: 티 서비스",
+    "subInfo": "ELYSION · 이지스",
+    "color": "#E74536",
+    "manufacturer": "elysion",
+    "variantType": "skin"
+  },
+  {
+    "id": "c351",
+    "displayName": "앵커",
+    "subInfo": "ELYSION · 이지스",
+    "color": "#1E69FF",
+    "manufacturer": "elysion",
+    "variantType": "base"
+  },
+  {
+    "id": "c351_01",
+    "displayName": "앵커: 앵커 더 다이버",
+    "subInfo": "ELYSION · 이지스",
+    "color": "#23418F",
+    "manufacturer": "elysion",
+    "variantType": "skin"
+  },
+  {
+    "id": "c355",
+    "displayName": "앵커: 이노센트 메이드",
+    "subInfo": "ELYSION · 이지스",
+    "color": "#4B64FF",
+    "manufacturer": "elysion",
+    "variantType": "alt"
+  },
+  {
+    "id": "c352",
+    "displayName": "헬름",
+    "subInfo": "ELYSION · 이지스",
+    "color": "#6E85B1",
+    "manufacturer": "elysion",
+    "variantType": "base"
+  },
+  {
+    "id": "c352_01",
+    "displayName": "헬름: 샹들리에 라이트",
+    "subInfo": "ELYSION · 이지스",
+    "color": "#2369FF",
+    "manufacturer": "elysion",
+    "variantType": "skin"
+  },
+  {
+    "id": "c352_02",
+    "displayName": "헬름: 애프터 샤워",
+    "subInfo": "ELYSION · 이지스",
+    "color": "#3E91FF",
+    "manufacturer": "elysion",
+    "variantType": "skin"
+  },
+  {
+    "id": "c353",
+    "displayName": "헬름: 아쿠아마린",
+    "subInfo": "ELYSION · 이지스",
+    "color": "#9ACEF2",
+    "manufacturer": "elysion",
+    "variantType": "alt"
+  },
+  {
+    "id": "c180",
+    "displayName": "길로틴",
+    "subInfo": "ELYSION · 익스터너",
+    "color": "#BC0000",
+    "manufacturer": "elysion",
+    "variantType": "base"
+  },
+  {
+    "id": "c180_01",
+    "displayName": "길로틴: 다크 트레이서",
+    "subInfo": "ELYSION · 익스터너",
+    "color": "#8F0908",
+    "manufacturer": "elysion",
+    "variantType": "skin"
+  },
+  {
+    "id": "c182",
+    "displayName": "길로틴: 윈터 슬레이어",
+    "subInfo": "ELYSION · 익스터너",
+    "color": "#649AEF",
+    "manufacturer": "elysion",
+    "variantType": "alt"
+  },
+  {
+    "id": "c181",
+    "displayName": "메이든",
+    "subInfo": "ELYSION · 익스터너",
+    "color": "#CA1E3D",
+    "manufacturer": "elysion",
+    "variantType": "base"
+  },
+  {
+    "id": "c181_01",
+    "displayName": "메이든: 시크릿 너스",
+    "subInfo": "ELYSION · 익스터너",
+    "color": "#CA1E3D",
+    "manufacturer": "elysion",
+    "variantType": "skin"
+  },
+  {
+    "id": "c181_02",
+    "displayName": "메이든: 언더 더 썬",
+    "subInfo": "ELYSION · 익스터너",
+    "color": "#2F2E37",
+    "manufacturer": "elysion",
+    "variantType": "skin"
+  },
+  {
+    "id": "c183",
+    "displayName": "메이든: 아이스 로즈",
+    "subInfo": "ELYSION · 익스터너",
+    "color": "#649AEF",
+    "manufacturer": "elysion",
+    "variantType": "alt"
+  },
+  {
+    "id": "c072",
+    "displayName": "디젤",
+    "subInfo": "ELYSION · 인피니티 레일",
+    "color": "#479DFF",
+    "manufacturer": "elysion",
+    "variantType": "base"
+  },
+  {
+    "id": "c072_04",
+    "displayName": "디젤: 미드나잇 스트로베리",
+    "subInfo": "ELYSION · 인피니티 레일",
+    "color": "#1B1D60",
+    "manufacturer": "elysion",
+    "variantType": "skin"
+  },
+  {
+    "id": "c072_02",
+    "displayName": "디젤: 블랙 홀리데이",
+    "subInfo": "ELYSION · 인피니티 레일",
+    "color": "#554A48",
+    "manufacturer": "elysion",
+    "variantType": "skin"
+  },
+  {
+    "id": "c072_01",
+    "displayName": "디젤: 스트로베리 플라워",
+    "subInfo": "ELYSION · 인피니티 레일",
+    "color": "#E0C5BD",
+    "manufacturer": "elysion",
+    "variantType": "skin"
+  },
+  {
+    "id": "c075",
+    "displayName": "디젤: 윈터 스위츠",
+    "subInfo": "ELYSION · 인피니티 레일",
+    "color": "#668ADA",
+    "manufacturer": "elysion",
+    "variantType": "alt"
+  },
+  {
+    "id": "c070",
+    "displayName": "브리드",
+    "subInfo": "ELYSION · 인피니티 레일",
+    "color": "#007DF3",
+    "manufacturer": "elysion",
+    "variantType": "base"
+  },
+  {
+    "id": "c070_02",
+    "displayName": "브리드: 블랙 문",
+    "subInfo": "ELYSION · 인피니티 레일",
+    "color": "#C3B5BF",
+    "manufacturer": "elysion",
+    "variantType": "skin"
+  },
+  {
+    "id": "c070_01",
+    "displayName": "브리드: 클래식 워커",
+    "subInfo": "ELYSION · 인피니티 레일",
+    "color": "#545D65",
+    "manufacturer": "elysion",
+    "variantType": "skin"
+  },
+  {
+    "id": "c073",
+    "displayName": "브리드: 사일런트 트랙",
+    "subInfo": "ELYSION · 인피니티 레일",
+    "color": "#9597AA",
+    "manufacturer": "elysion",
+    "variantType": "alt"
+  },
+  {
+    "id": "c071",
+    "displayName": "솔린",
+    "subInfo": "ELYSION · 인피니티 레일",
+    "color": "#3A79A4",
+    "manufacturer": "elysion",
+    "variantType": "base"
+  },
+  {
+    "id": "c074",
+    "displayName": "솔린: 프로스트 티켓",
+    "subInfo": "ELYSION · 인피니티 레일",
+    "color": "#B3D4EE",
+    "manufacturer": "elysion",
+    "variantType": "alt"
+  },
+  {
+    "id": "c011",
+    "displayName": "네온",
+    "subInfo": "ELYSION · 카운터스",
+    "color": "#28AEFF",
+    "manufacturer": "elysion",
+    "variantType": "base"
+  },
+  {
+    "id": "c011_01",
+    "displayName": "네온: 블링 불렛",
+    "subInfo": "ELYSION · 카운터스",
+    "color": "#C4B2AB",
+    "manufacturer": "elysion",
+    "variantType": "skin"
+  },
+  {
+    "id": "c014",
+    "displayName": "네온: 블루 오션",
+    "subInfo": "ELYSION · 카운터스",
+    "color": "#D285BA",
+    "manufacturer": "elysion",
+    "variantType": "alt"
+  },
+  {
+    "id": "c010",
+    "displayName": "라피",
+    "subInfo": "ELYSION · 카운터스",
+    "color": "#C82200",
+    "manufacturer": "elysion",
+    "variantType": "base"
+  },
+  {
+    "id": "c986",
+    "displayName": "라피",
+    "subInfo": "ELYSION · 카운터스 · NPC",
+    "color": "#C82200",
+    "manufacturer": "elysion",
+    "variantType": "base"
+  },
+  {
+    "id": "c989",
+    "displayName": "라피",
+    "subInfo": "ELYSION · 카운터스 · NPC",
+    "manufacturer": "elysion",
+    "variantType": "base"
+  },
+  {
+    "id": "c010_03",
+    "displayName": "라피: 클래식 바캉스",
+    "subInfo": "ELYSION · 카운터스 · Skin",
+    "color": "#C82200",
+    "manufacturer": "elysion",
+    "variantType": "skin"
+  },
+  {
+    "id": "c010_02",
+    "displayName": "라피: 화이트 프로미스",
+    "subInfo": "ELYSION · 카운터스 · Skin",
+    "color": "#2A2121",
+    "manufacturer": "elysion",
+    "variantType": "skin"
+  },
+  {
+    "id": "c010_01",
+    "displayName": "라피: Old",
+    "subInfo": "ELYSION · 카운터스 · Skin",
+    "color": "#91A5D7",
+    "manufacturer": "elysion",
+    "variantType": "skin"
+  },
+  {
+    "id": "c016",
+    "displayName": "라피: 레드 후드",
+    "subInfo": "ELYSION · 카운터스",
+    "color": "#F81D23",
+    "manufacturer": "elysion",
+    "variantType": "alt"
+  },
+  {
+    "id": "c016_01",
+    "displayName": "라피: 레드 플레이버",
+    "subInfo": "ELYSION · 카운터스",
+    "color": "#C6E4E0",
+    "manufacturer": "elysion",
+    "variantType": "skin"
+  },
+  {
+    "id": "c016_03",
+    "displayName": "라피: 샤인 라이트",
+    "subInfo": "ELYSION · 카운터스",
+    "color": "#FF97AC",
+    "manufacturer": "elysion",
+    "variantType": "skin"
+  },
+  {
+    "id": "c016_02",
+    "displayName": "라피: 체리시드 레드",
+    "subInfo": "ELYSION · 카운터스",
+    "color": "#F4979C",
+    "manufacturer": "elysion",
+    "variantType": "skin"
+  },
+  {
+    "id": "c170",
+    "displayName": "프리바티",
+    "subInfo": "ELYSION · 트라이앵글",
+    "color": "#008BAB",
+    "manufacturer": "elysion",
+    "variantType": "base"
+  },
+  {
+    "id": "c170_01",
+    "displayName": "프리바티: 거버먼트 노멀",
+    "subInfo": "ELYSION · 트라이앵글",
+    "color": "#A2E4E8",
+    "manufacturer": "elysion",
+    "variantType": "skin"
+  },
+  {
+    "id": "c170_04",
+    "displayName": "프리바티: 샤프 레슨",
+    "subInfo": "ELYSION · 트라이앵글",
+    "color": "#1E2629",
+    "manufacturer": "elysion",
+    "variantType": "skin"
+  },
+  {
+    "id": "c170_02",
+    "displayName": "프리바티: 연회의 공주",
+    "subInfo": "ELYSION · 트라이앵글",
+    "color": "#21293C",
+    "manufacturer": "elysion",
+    "variantType": "skin"
+  },
+  {
+    "id": "c170_03",
+    "displayName": "프리바티: 푸른 인연",
+    "subInfo": "ELYSION · 트라이앵글",
+    "color": "#B3D2EC",
+    "manufacturer": "elysion",
+    "variantType": "skin"
+  },
+  {
+    "id": "c480",
+    "displayName": "리버린",
+    "subInfo": "ELYSION · 패스파인더 · NPC",
+    "manufacturer": "elysion",
+    "variantType": "base"
+  },
+  {
+    "id": "c481",
+    "displayName": "프레자일",
+    "subInfo": "ELYSION · 패스파인더 · NPC",
+    "manufacturer": "elysion",
+    "variantType": "base"
+  },
+  {
+    "id": "c491",
+    "displayName": "드릴리",
+    "subInfo": "ELYSION · 해머&드릴 · NPC",
+    "manufacturer": "elysion",
+    "variantType": "base"
+  },
+  {
+    "id": "c490",
+    "displayName": "해머링",
+    "subInfo": "ELYSION · 해머&드릴 · NPC",
+    "manufacturer": "elysion",
+    "variantType": "base"
+  },
+  {
+    "id": "c032",
+    "displayName": "미란다",
+    "subInfo": "ELYSION · A.C.P.U.",
+    "color": "#5C6072",
+    "manufacturer": "elysion",
+    "variantType": "base"
+  },
+  {
+    "id": "c032_01",
+    "displayName": "미란다: 씨프 오브 저스티스",
+    "subInfo": "ELYSION · A.C.P.U.",
+    "color": "#614BA7",
+    "manufacturer": "elysion",
+    "variantType": "skin"
+  },
+  {
+    "id": "c033",
+    "displayName": "키리",
+    "subInfo": "ELYSION · A.C.P.U.",
+    "color": "#F7A9C9",
+    "manufacturer": "elysion",
+    "variantType": "base"
+  },
+  {
+    "id": "c030",
+    "displayName": "폴리",
+    "subInfo": "ELYSION · A.C.P.U.",
+    "color": "#2F4873",
+    "manufacturer": "elysion",
+    "variantType": "base"
+  },
+  {
+    "id": "c030_01",
+    "displayName": "폴리: 스위트 홀릭",
+    "subInfo": "ELYSION · A.C.P.U.",
+    "color": "#D1D5E4",
+    "manufacturer": "elysion",
+    "variantType": "skin"
+  },
+  {
+    "id": "c030_02",
+    "displayName": "폴리: 치얼 업 폴리스",
+    "subInfo": "ELYSION · A.C.P.U.",
+    "color": "#2D74FF",
+    "manufacturer": "elysion",
+    "variantType": "skin"
+  },
+  {
+    "id": "c900",
+    "displayName": "잉그리드",
+    "subInfo": "ELYSION · ELYSION CEO · NPC",
+    "color": "#EA2C3D",
+    "manufacturer": "elysion",
+    "variantType": "base"
+  },
+  {
+    "id": "c300",
+    "displayName": "솔져 E.G.",
+    "subInfo": "ELYSION · 리플레이스",
+    "color": "#8A899B",
+    "manufacturer": "elysion",
+    "variantType": "base"
+  },
+  {
+    "id": "c301",
+    "displayName": "솔져 F.A.",
+    "subInfo": "ELYSION · 리플레이스",
+    "color": "#434335",
+    "manufacturer": "elysion",
+    "variantType": "base"
+  },
+  {
+    "id": "c306",
+    "displayName": "솔져 O.W.",
+    "subInfo": "ELYSION · 리플레이스",
+    "color": "#67686C",
+    "manufacturer": "elysion",
+    "variantType": "base"
+  },
+  {
+    "id": "c994",
+    "displayName": "라피: RR-15436",
+    "subInfo": "ELYSION · 리플레이스 · NPC",
+    "manufacturer": "elysion",
+    "variantType": "alt"
+  },
+  {
+    "id": "c994",
+    "displayName": "양산형 니케: 라피",
+    "subInfo": "ELYSION · 리플레이스 · NPC",
+    "manufacturer": "elysion",
+    "variantType": "skin"
+  },
+  {
+    "id": "c450",
+    "displayName": "나가",
+    "subInfo": "MISSILIS · 다즐링 펄",
+    "color": "#A1908E",
+    "manufacturer": "missilis",
+    "variantType": "base"
+  },
+  {
+    "id": "c450_02",
+    "displayName": "나가: 라스트 걸후드",
+    "subInfo": "MISSILIS · 다즐링 펄",
+    "color": "#321194",
+    "manufacturer": "missilis",
+    "variantType": "skin"
+  },
+  {
+    "id": "c450_03",
+    "displayName": "나가: 링 앙상블",
+    "subInfo": "MISSILIS · 다즐링 펄",
+    "color": "#E3CDBF",
+    "manufacturer": "missilis",
+    "variantType": "skin"
+  },
+  {
+    "id": "c450_01",
+    "displayName": "나가: 엘레강스 데이트",
+    "subInfo": "MISSILIS · 다즐링 펄",
+    "color": "#F6BCBF",
+    "manufacturer": "missilis",
+    "variantType": "skin"
+  },
+  {
+    "id": "c451",
+    "displayName": "티아",
+    "subInfo": "MISSILIS · 다즐링 펄",
+    "color": "#E4D5CD",
+    "manufacturer": "missilis",
+    "variantType": "base"
+  },
+  {
+    "id": "c451_01",
+    "displayName": "티아: 러블리 데이트",
+    "subInfo": "MISSILIS · 다즐링 펄",
+    "color": "#5D98C9",
+    "manufacturer": "missilis",
+    "variantType": "skin"
+  },
+  {
+    "id": "c451_02",
+    "displayName": "티아: 스윗 셰프",
+    "subInfo": "MISSILIS · 다즐링 펄",
+    "color": "#FF7E8A",
+    "manufacturer": "missilis",
+    "variantType": "skin"
+  },
+  {
+    "id": "c451_03",
+    "displayName": "티아: 씨 리지",
+    "subInfo": "MISSILIS · 다즐링 펄",
+    "color": "#E3E3EF",
+    "manufacturer": "missilis",
+    "variantType": "skin"
+  },
+  {
+    "id": "c241",
+    "displayName": "에피넬",
+    "subInfo": "MISSILIS · 라이프 토닉",
+    "color": "#4ED3CF",
+    "manufacturer": "missilis",
+    "variantType": "base"
+  },
+  {
+    "id": "c400",
+    "displayName": "길티",
+    "subInfo": "MISSILIS · 리얼 카인드니스",
+    "color": "#A0BE36",
+    "manufacturer": "missilis",
+    "variantType": "base"
+  },
+  {
+    "id": "c400_01",
+    "displayName": "길티: 디스빌리프 웨이브",
+    "subInfo": "MISSILIS · 리얼 카인드니스",
+    "color": "#BBE433",
+    "manufacturer": "missilis",
+    "variantType": "skin"
+  },
+  {
+    "id": "c404",
+    "displayName": "길티: 마이티 바니",
+    "subInfo": "MISSILIS · 리얼 카인드니스",
+    "color": "#6FE360",
+    "manufacturer": "missilis",
+    "variantType": "alt"
+  },
+  {
+    "id": "c401",
+    "displayName": "신",
+    "subInfo": "MISSILIS · 리얼 카인드니스",
+    "color": "#552BB4",
+    "manufacturer": "missilis",
+    "variantType": "base"
+  },
+  {
+    "id": "c401_01",
+    "displayName": "신: 백스트리트 드림",
+    "subInfo": "MISSILIS · 리얼 카인드니스",
+    "color": "#4E408E",
+    "manufacturer": "missilis",
+    "variantType": "skin"
+  },
+  {
+    "id": "c405",
+    "displayName": "신: 스위프트 바니",
+    "subInfo": "MISSILIS · 리얼 카인드니스",
+    "color": "#8F4BF5",
+    "manufacturer": "missilis",
+    "variantType": "alt"
+  },
+  {
+    "id": "c402",
+    "displayName": "퀀시",
+    "subInfo": "MISSILIS · 리얼 카인드니스",
+    "color": "#463643",
+    "manufacturer": "missilis",
+    "variantType": "base"
+  },
+  {
+    "id": "c403",
+    "displayName": "퀀시: 이스케이프 퀸",
+    "subInfo": "MISSILIS · 리얼 카인드니스",
+    "color": "#212429",
+    "manufacturer": "missilis",
+    "variantType": "alt"
+  },
+  {
+    "id": "c403_01",
+    "displayName": "퀀시: 마스커레이드 스완",
+    "subInfo": "MISSILIS · 리얼 카인드니스",
+    "color": "#BAB7CB",
+    "manufacturer": "missilis",
+    "variantType": "skin"
+  },
+  {
+    "id": "c121",
+    "displayName": "앤: 미라클 페어리",
+    "subInfo": "MISSILIS · 리콜&릴리즈",
+    "color": "#8BDBFF",
+    "manufacturer": "missilis",
+    "variantType": "alt"
+  },
+  {
+    "id": "c120",
+    "displayName": "N102",
+    "subInfo": "MISSILIS · 리콜&릴리즈",
+    "color": "#CFCADE",
+    "manufacturer": "missilis",
+    "variantType": "base"
+  },
+  {
+    "id": "c150",
+    "displayName": "율리아",
+    "subInfo": "MISSILIS · 마스터 핸드",
+    "color": "#667695",
+    "manufacturer": "missilis",
+    "variantType": "base"
+  },
+  {
+    "id": "c150_01",
+    "displayName": "율리아: 마일드 녹턴",
+    "subInfo": "MISSILIS · 마스터 핸드",
+    "color": "#D7DDE3",
+    "manufacturer": "missilis",
+    "variantType": "skin"
+  },
+  {
+    "id": "c150_02",
+    "displayName": "율리아: 서머 로망스",
+    "subInfo": "MISSILIS · 마스터 핸드",
+    "color": "#D9DBDE",
+    "manufacturer": "missilis",
+    "variantType": "skin"
+  },
+  {
+    "id": "c082",
+    "displayName": "리타",
+    "subInfo": "MISSILIS · 마이티 툴즈",
+    "color": "#FFB32A",
+    "manufacturer": "missilis",
+    "variantType": "base"
+  },
+  {
+    "id": "c082_02",
+    "displayName": "리타: 큐트 선플라워",
+    "subInfo": "MISSILIS · 마이티 툴즈",
+    "color": "#FFDF7D",
+    "manufacturer": "missilis",
+    "variantType": "skin"
+  },
+  {
+    "id": "c082_01",
+    "displayName": "리타: 피쉬 가드",
+    "subInfo": "MISSILIS · 마이티 툴즈",
+    "color": "#F7C041",
+    "manufacturer": "missilis",
+    "variantType": "skin"
+  },
+  {
+    "id": "c082_80",
+    "displayName": "리타: CN",
+    "subInfo": "MISSILIS · 마이티 툴즈",
+    "color": "#FFB32A",
+    "manufacturer": "missilis",
+    "variantType": "skin"
+  },
+  {
+    "id": "c080",
+    "displayName": "센티",
+    "subInfo": "MISSILIS · 마이티 툴즈",
+    "color": "#E56501",
+    "manufacturer": "missilis",
+    "variantType": "base"
+  },
+  {
+    "id": "c080_01",
+    "displayName": "센티: 마이티 홀리데이",
+    "subInfo": "MISSILIS · 마이티 툴즈",
+    "color": "#B6D4F0",
+    "manufacturer": "missilis",
+    "variantType": "skin"
+  },
+  {
+    "id": "c080_02",
+    "displayName": "센티: 오션 리페어",
+    "subInfo": "MISSILIS · 마이티 툴즈",
+    "color": "#3782F2",
+    "manufacturer": "missilis",
+    "variantType": "skin"
+  },
+  {
+    "id": "c101",
+    "displayName": "드레이크",
+    "subInfo": "MISSILIS · 메티스",
+    "color": "#CF2455",
+    "manufacturer": "missilis",
+    "variantType": "base"
+  },
+  {
+    "id": "c101_02",
+    "displayName": "드레이크: 메이드 포 빌런",
+    "subInfo": "MISSILIS · 메티스",
+    "color": "#EF2643",
+    "manufacturer": "missilis",
+    "variantType": "skin"
+  },
+  {
+    "id": "c101_01",
+    "displayName": "드레이크: 빌런 레이서",
+    "subInfo": "MISSILIS · 메티스",
+    "color": "#FA304B",
+    "manufacturer": "missilis",
+    "variantType": "skin"
+  },
+  {
+    "id": "c104",
+    "displayName": "드레이크: 그레이트 빌런",
+    "subInfo": "MISSILIS · 메티스",
+    "color": "#ED4652",
+    "manufacturer": "missilis",
+    "variantType": "alt"
+  },
+  {
+    "id": "c100",
+    "displayName": "라플라스",
+    "subInfo": "MISSILIS · 메티스",
+    "color": "#376EDB",
+    "manufacturer": "missilis",
+    "variantType": "base"
+  },
+  {
+    "id": "c103",
+    "displayName": "라플라스: 얼티밋 히어로",
+    "subInfo": "MISSILIS · 메티스",
+    "color": "#77A0FF",
+    "manufacturer": "missilis",
+    "variantType": "alt"
+  },
+  {
+    "id": "c103_01",
+    "displayName": "라플라스: 프로토타입 히어로",
+    "subInfo": "MISSILIS · 메티스",
+    "color": "#F3E0B7",
+    "manufacturer": "missilis",
+    "variantType": "skin"
+  },
+  {
+    "id": "c102",
+    "displayName": "맥스웰",
+    "subInfo": "MISSILIS · 메티스",
+    "color": "#FFAA00",
+    "manufacturer": "missilis",
+    "variantType": "base"
+  },
+  {
+    "id": "c102_01",
+    "displayName": "맥스웰: 메카닉 화이트",
+    "subInfo": "MISSILIS · 메티스",
+    "color": "#0CFFC3",
+    "manufacturer": "missilis",
+    "variantType": "skin"
+  },
+  {
+    "id": "c105",
+    "displayName": "맥스웰: 오디너리 미케닉",
+    "subInfo": "MISSILIS · 메티스",
+    "color": "#6DEAE9",
+    "manufacturer": "missilis",
+    "variantType": "alt"
+  },
+  {
+    "id": "c105_01",
+    "displayName": "맥스웰: 치프 리서처",
+    "subInfo": "MISSILIS · 메티스",
+    "color": "#3FD1EE",
+    "manufacturer": "missilis",
+    "variantType": "skin"
+  },
+  {
+    "id": "c620",
+    "displayName": "백학",
+    "subInfo": "MISSILIS · 베일드 오더",
+    "color": "#0050D7",
+    "manufacturer": "missilis",
+    "variantType": "base"
+  },
+  {
+    "id": "c412",
+    "displayName": "트리나",
+    "subInfo": "MISSILIS · 보타닉 가든",
+    "color": "#CFECF6",
+    "manufacturer": "missilis",
+    "variantType": "base"
+  },
+  {
+    "id": "c412_01",
+    "displayName": "트리나: 내추럴 화이트",
+    "subInfo": "MISSILIS · 보타닉 가든",
+    "color": "#CAE1E2",
+    "manufacturer": "missilis",
+    "variantType": "skin"
+  },
+  {
+    "id": "c411",
+    "displayName": "플로라",
+    "subInfo": "MISSILIS · 보타닉 가든",
+    "color": "#AB95D9",
+    "manufacturer": "missilis",
+    "variantType": "base"
+  },
+  {
+    "id": "c411_01",
+    "displayName": "플로라: 페어리 래빗",
+    "subInfo": "MISSILIS · 보타닉 가든",
+    "color": "#9A71D4",
+    "manufacturer": "missilis",
+    "variantType": "skin"
+  },
+  {
+    "id": "c131",
+    "displayName": "페퍼",
+    "subInfo": "MISSILIS · 세라핌",
+    "color": "#CC5E9C",
+    "manufacturer": "missilis",
+    "variantType": "base"
+  },
+  {
+    "id": "c131_01",
+    "displayName": "페퍼: 오션 비타민",
+    "subInfo": "MISSILIS · 세라핌",
+    "color": "#FA90B9",
+    "manufacturer": "missilis",
+    "variantType": "skin"
+  },
+  {
+    "id": "c391",
+    "displayName": "아인",
+    "subInfo": "MISSILIS · 스쿨 서클",
+    "color": "#4E5092",
+    "manufacturer": "missilis",
+    "variantType": "base"
+  },
+  {
+    "id": "c391_01",
+    "displayName": "아인: 핸드메이드 페스타",
+    "subInfo": "MISSILIS · 스쿨 서클",
+    "color": "#7166D0",
+    "manufacturer": "missilis",
+    "variantType": "skin"
+  },
+  {
+    "id": "c192",
+    "displayName": "토브",
+    "subInfo": "MISSILIS · 언리미티드",
+    "color": "#DE6C55",
+    "manufacturer": "missilis",
+    "variantType": "base"
+  },
+  {
+    "id": "c192_02",
+    "displayName": "토브: 썬블레이즈",
+    "subInfo": "MISSILIS · 언리미티드",
+    "color": "#FFBB3D",
+    "manufacturer": "missilis",
+    "variantType": "skin"
+  },
+  {
+    "id": "c192_01",
+    "displayName": "토브: 아이 러브 베이스볼",
+    "subInfo": "MISSILIS · 언리미티드",
+    "color": "#FDCD43",
+    "manufacturer": "missilis",
+    "variantType": "skin"
+  },
+  {
+    "id": "c161",
+    "displayName": "미하라",
+    "subInfo": "MISSILIS · 워드리스",
+    "color": "#6554C0",
+    "manufacturer": "missilis",
+    "variantType": "base"
+  },
+  {
+    "id": "c162",
+    "displayName": "미하라: 본딩 체인",
+    "subInfo": "MISSILIS · 워드리스",
+    "color": "#653799",
+    "manufacturer": "missilis",
+    "variantType": "alt"
+  },
+  {
+    "id": "c162_01",
+    "displayName": "미하라: 페인 이터",
+    "subInfo": "MISSILIS · 워드리스",
+    "color": "#AB162E",
+    "manufacturer": "missilis",
+    "variantType": "skin"
+  },
+  {
+    "id": "c160",
+    "displayName": "유니",
+    "subInfo": "MISSILIS · 워드리스",
+    "color": "#F5759F",
+    "manufacturer": "missilis",
+    "variantType": "base"
+  },
+  {
+    "id": "c985",
+    "displayName": "유니",
+    "subInfo": "MISSILIS · 워드리스 · NPC",
+    "manufacturer": "missilis",
+    "variantType": "base"
+  },
+  {
+    "id": "c160_01",
+    "displayName": "유니: 러블리 핑크",
+    "subInfo": "MISSILIS · 워드리스",
+    "color": "#FF3F73",
+    "manufacturer": "missilis",
+    "variantType": "skin"
+  },
+  {
+    "id": "c111",
+    "displayName": "자칼",
+    "subInfo": "MISSILIS · 이그조틱",
+    "color": "#3DE9E2",
+    "manufacturer": "missilis",
+    "variantType": "base"
+  },
+  {
+    "id": "c111_01",
+    "displayName": "자칼: 클래스 팽",
+    "subInfo": "MISSILIS · 이그조틱",
+    "color": "#EAA7B9",
+    "manufacturer": "missilis",
+    "variantType": "skin"
+  },
+  {
+    "id": "c110",
+    "displayName": "크로우",
+    "subInfo": "MISSILIS · 이그조틱",
+    "color": "#980600",
+    "manufacturer": "missilis",
+    "variantType": "base"
+  },
+  {
+    "id": "c590",
+    "displayName": "모리",
+    "subInfo": "MISSILIS · 인큐베이터",
+    "color": "#4483E8",
+    "manufacturer": "missilis",
+    "variantType": "base"
+  },
+  {
+    "id": "c500",
+    "displayName": "일레그",
+    "subInfo": "MISSILIS · 일렉트릭 쇼크",
+    "color": "#F6E140",
+    "manufacturer": "missilis",
+    "variantType": "base"
+  },
+  {
+    "id": "c502",
+    "displayName": "일레그: 붐 앤 쇼크",
+    "subInfo": "MISSILIS · 일렉트릭 쇼크",
+    "color": "#FFCB38",
+    "manufacturer": "missilis",
+    "variantType": "alt"
+  },
+  {
+    "id": "c501",
+    "displayName": "트로니",
+    "subInfo": "MISSILIS · 일렉트릭 쇼크",
+    "color": "#FFA640",
+    "manufacturer": "missilis",
+    "variantType": "base"
+  },
+  {
+    "id": "c501_01",
+    "displayName": "트로니: 스위트 스텝",
+    "subInfo": "MISSILIS · 일렉트릭 쇼크",
+    "color": "#CDE75D",
+    "manufacturer": "missilis",
+    "variantType": "skin"
+  },
+  {
+    "id": "c018",
+    "displayName": "네온: 비전 아이",
+    "subInfo": "MISSILIS · 카운터스",
+    "color": "#449FFF",
+    "manufacturer": "missilis",
+    "variantType": "alt"
+  },
+  {
+    "id": "c018_01",
+    "displayName": "네온: 디어 그레이스",
+    "subInfo": "MISSILIS · 카운터스",
+    "color": "#4E4D59",
+    "manufacturer": "missilis",
+    "variantType": "skin"
+  },
+  {
+    "id": "c172",
+    "displayName": "애드미",
+    "subInfo": "MISSILIS · 트라이앵글",
+    "color": "#39D4BA",
+    "manufacturer": "missilis",
+    "variantType": "base"
+  },
+  {
+    "id": "c977",
+    "displayName": "킬로",
+    "subInfo": "MISSILIS · 헤비그램 · NPC",
+    "manufacturer": "missilis",
+    "variantType": "base"
+  },
+  {
+    "id": "c361",
+    "displayName": "T.A.L.O.S.",
+    "subInfo": "MISSILIS · 헤비그램",
+    "color": "#D6B38E",
+    "manufacturer": "missilis",
+    "variantType": "base"
+  },
+  {
+    "id": "c901",
+    "displayName": "슈엔",
+    "subInfo": "MISSILIS · MISSILIS CEO · NPC",
+    "color": "#B380EA",
+    "manufacturer": "missilis",
+    "variantType": "base"
+  },
+  {
+    "id": "c9030",
+    "displayName": "엔메",
+    "subInfo": "MISSILIS · 2대 MISSILIS CEO · NPC",
+    "manufacturer": "missilis",
+    "variantType": "base"
+  },
+  {
+    "id": "c290",
+    "displayName": "마나",
+    "subInfo": "MISSILIS · M.M.R.",
+    "color": "#29ABA0",
+    "manufacturer": "missilis",
+    "variantType": "base"
+  },
+  {
+    "id": "c290_01",
+    "displayName": "마나: 드렁큰 래빗",
+    "subInfo": "MISSILIS · M.M.R.",
+    "color": "#69E4FF",
+    "manufacturer": "missilis",
+    "variantType": "skin"
+  },
+  {
+    "id": "c291",
+    "displayName": "에테르",
+    "subInfo": "MISSILIS · M.M.R.",
+    "color": "#935E94",
+    "manufacturer": "missilis",
+    "variantType": "base"
+  },
+  {
+    "id": "c973",
+    "displayName": "지엔",
+    "subInfo": "MISSILIS · M.M.R. · NPC",
+    "manufacturer": "missilis",
+    "variantType": "base"
+  },
+  {
+    "id": "c9032",
+    "displayName": "지엔",
+    "subInfo": "MISSILIS · M.M.R. · NPC",
+    "manufacturer": "missilis",
+    "variantType": "base"
+  },
+  {
+    "id": "c8006",
+    "displayName": "샤오메이",
+    "subInfo": "MISSILIS · 요재지이 · NPC",
+    "manufacturer": "missilis",
+    "variantType": "base"
+  },
+  {
+    "id": "c8004",
+    "displayName": "잉닝",
+    "subInfo": "MISSILIS · 요재지이 · NPC",
+    "manufacturer": "missilis",
+    "variantType": "base"
+  },
+  {
+    "id": "c8005",
+    "displayName": "화피",
+    "subInfo": "MISSILIS · 요재지이 · NPC",
+    "manufacturer": "missilis",
+    "variantType": "base"
+  },
+  {
+    "id": "c302",
+    "displayName": "프로덕트 08",
+    "subInfo": "MISSILIS · 리플레이스",
+    "color": "#C5D0DA",
+    "manufacturer": "missilis",
+    "variantType": "base"
+  },
+  {
+    "id": "c303",
+    "displayName": "프로덕트 12",
+    "subInfo": "MISSILIS · 리플레이스",
+    "color": "#30323D",
+    "manufacturer": "missilis",
+    "variantType": "base"
+  },
+  {
+    "id": "c307",
+    "displayName": "프로덕트 23",
+    "subInfo": "MISSILIS · 리플레이스",
+    "color": "#727578",
+    "manufacturer": "missilis",
+    "variantType": "base"
+  },
+  {
+    "id": "c271",
+    "displayName": "누아르",
+    "subInfo": "TETRA · 777",
+    "color": "#6C5850",
+    "manufacturer": "tetra",
+    "variantType": "base"
+  },
+  {
+    "id": "c271_02",
+    "displayName": "누아르: 베이스볼 치어리더",
+    "subInfo": "TETRA · 777",
+    "color": "#38332E",
+    "manufacturer": "tetra",
+    "variantType": "skin"
+  },
+  {
+    "id": "c271_01",
+    "displayName": "누아르: 흑묘",
+    "subInfo": "TETRA · 777",
+    "color": "#3E3733",
+    "manufacturer": "tetra",
+    "variantType": "skin"
+  },
+  {
+    "id": "c272",
+    "displayName": "루주",
+    "subInfo": "TETRA · 777",
+    "color": "#C00C2F",
+    "manufacturer": "tetra",
+    "variantType": "base"
+  },
+  {
+    "id": "c272_01",
+    "displayName": "루주: 언럭키 래빗",
+    "subInfo": "TETRA · 777",
+    "color": "#A20521",
+    "manufacturer": "tetra",
+    "variantType": "skin"
+  },
+  {
+    "id": "c270",
+    "displayName": "블랑",
+    "subInfo": "TETRA · 777",
+    "color": "#D7D0D2",
+    "manufacturer": "tetra",
+    "variantType": "base"
+  },
+  {
+    "id": "c270_02",
+    "displayName": "블랑: 77번 타자",
+    "subInfo": "TETRA · 777",
+    "color": "#38332E",
+    "manufacturer": "tetra",
+    "variantType": "skin"
+  },
+  {
+    "id": "c270_01",
+    "displayName": "블랑: 백묘",
+    "subInfo": "TETRA · 777",
+    "color": "#0E0E11",
+    "manufacturer": "tetra",
+    "variantType": "skin"
+  },
+  {
+    "id": "c270_03",
+    "displayName": "블랑: 포츈 익스프레스",
+    "subInfo": "TETRA · 777",
+    "color": "#CABFAE",
+    "manufacturer": "tetra",
+    "variantType": "skin"
+  },
+  {
+    "id": "c202",
+    "displayName": "도라",
+    "subInfo": "TETRA · 달란트",
+    "color": "#684498",
+    "manufacturer": "tetra",
+    "variantType": "base"
+  },
+  {
+    "id": "c202_01",
+    "displayName": "도라: 다크 로즈",
+    "subInfo": "TETRA · 달란트",
+    "color": "#322435",
+    "manufacturer": "tetra",
+    "variantType": "skin"
+  },
+  {
+    "id": "c200",
+    "displayName": "루피",
+    "subInfo": "TETRA · 달란트",
+    "color": "#FFC900",
+    "manufacturer": "tetra",
+    "variantType": "base"
+  },
+  {
+    "id": "c200_01",
+    "displayName": "루피: 럭셔리 래빗",
+    "subInfo": "TETRA · 달란트",
+    "color": "#212022",
+    "manufacturer": "tetra",
+    "variantType": "skin"
+  },
+  {
+    "id": "c203",
+    "displayName": "루피: 윈터 쇼퍼",
+    "subInfo": "TETRA · 달란트",
+    "color": "#86D8D2",
+    "manufacturer": "tetra",
+    "variantType": "alt"
+  },
+  {
+    "id": "c201",
+    "displayName": "얀",
+    "subInfo": "TETRA · 달란트",
+    "color": "#8E1923",
+    "manufacturer": "tetra",
+    "variantType": "base"
+  },
+  {
+    "id": "c201_01",
+    "displayName": "얀: 선라이즈 마켓",
+    "subInfo": "TETRA · 달란트",
+    "color": "#E24456",
+    "manufacturer": "tetra",
+    "variantType": "skin"
+  },
+  {
+    "id": "c240",
+    "displayName": "루마니",
+    "subInfo": "TETRA · 라이프 토닉",
+    "color": "#28ADFF",
+    "manufacturer": "tetra",
+    "variantType": "base"
+  },
+  {
+    "id": "c242",
+    "displayName": "폴크방",
+    "subInfo": "TETRA · 라이프 토닉",
+    "color": "#1D7AE7",
+    "manufacturer": "tetra",
+    "variantType": "base"
+  },
+  {
+    "id": "c242_01",
+    "displayName": "폴크방: 모이스트 래빗",
+    "subInfo": "TETRA · 라이프 토닉",
+    "color": "#305091",
+    "manufacturer": "tetra",
+    "variantType": "skin"
+  },
+  {
+    "id": "c550",
+    "displayName": "베이",
+    "subInfo": "TETRA · 리와인드",
+    "color": "#EE575B",
+    "manufacturer": "tetra",
+    "variantType": "base"
+  },
+  {
+    "id": "c550_01",
+    "displayName": "베이: 래디언트 래빗",
+    "subInfo": "TETRA · 리와인드",
+    "color": "#383736",
+    "manufacturer": "tetra",
+    "variantType": "skin"
+  },
+  {
+    "id": "c551",
+    "displayName": "클레이",
+    "subInfo": "TETRA · 리와인드",
+    "color": "#F92D3A",
+    "manufacturer": "tetra",
+    "variantType": "base"
+  },
+  {
+    "id": "c551_01",
+    "displayName": "클레이: 치얼 업 트레이닝",
+    "subInfo": "TETRA · 리와인드",
+    "color": "#FCA9B0",
+    "manufacturer": "tetra",
+    "variantType": "skin"
+  },
+  {
+    "id": "c061",
+    "displayName": "미카",
+    "subInfo": "TETRA · 리틀 캐논",
+    "color": "#4D4D48",
+    "manufacturer": "tetra",
+    "variantType": "base"
+  },
+  {
+    "id": "c062",
+    "displayName": "미카: 스노우 버디",
+    "subInfo": "TETRA · 리틀 캐논",
+    "color": "#566E64",
+    "manufacturer": "tetra",
+    "variantType": "alt"
+  },
+  {
+    "id": "c060",
+    "displayName": "벨로타",
+    "subInfo": "TETRA · 리틀 캐논",
+    "color": "#E85870",
+    "manufacturer": "tetra",
+    "variantType": "base"
+  },
+  {
+    "id": "c063",
+    "displayName": "벨로타: 펌킨 위치",
+    "subInfo": "TETRA · 리틀 캐논",
+    "color": "#FF8324",
+    "manufacturer": "tetra",
+    "variantType": "alt"
+  },
+  {
+    "id": "c316",
+    "displayName": "벨벳",
+    "subInfo": "TETRA · 메이드 포 유",
+    "color": "#FF3979",
+    "manufacturer": "tetra",
+    "variantType": "base"
+  },
+  {
+    "id": "c316_01",
+    "displayName": "벨벳: 센슈얼 래빗",
+    "subInfo": "TETRA · 메이드 포 유",
+    "color": "#F23469",
+    "manufacturer": "tetra",
+    "variantType": "skin"
+  },
+  {
+    "id": "c312",
+    "displayName": "소다",
+    "subInfo": "TETRA · 메이드 포 유",
+    "color": "#A0BE36",
+    "manufacturer": "tetra",
+    "variantType": "base"
+  },
+  {
+    "id": "c314",
+    "displayName": "소다: 트윙클링 바니",
+    "subInfo": "TETRA · 메이드 포 유",
+    "color": "#0A0707",
+    "manufacturer": "tetra",
+    "variantType": "alt"
+  },
+  {
+    "id": "c310",
+    "displayName": "에이드",
+    "subInfo": "TETRA · 메이드 포 유",
+    "color": "#AAC349",
+    "manufacturer": "tetra",
+    "variantType": "base"
+  },
+  {
+    "id": "c310_01",
+    "displayName": "에이드: 메이드 인 스프링",
+    "subInfo": "TETRA · 메이드 포 유",
+    "color": "#6B4B39",
+    "manufacturer": "tetra",
+    "variantType": "skin"
+  },
+  {
+    "id": "c315",
+    "displayName": "에이드: 에이전트 바니",
+    "subInfo": "TETRA · 메이드 포 유",
+    "color": "#48403D",
+    "manufacturer": "tetra",
+    "variantType": "alt"
+  },
+  {
+    "id": "c311",
+    "displayName": "코코아",
+    "subInfo": "TETRA · 메이드 포 유",
+    "color": "#E24E6B",
+    "manufacturer": "tetra",
+    "variantType": "base"
+  },
+  {
+    "id": "c9004",
+    "displayName": "벨벳",
+    "subInfo": "TETRA · 쉐이드 · NPC",
+    "manufacturer": "tetra",
+    "variantType": "base"
+  },
+  {
+    "id": "c130",
+    "displayName": "메어리",
+    "subInfo": "TETRA · 세라핌",
+    "color": "#5496C8",
+    "manufacturer": "tetra",
+    "variantType": "base"
+  },
+  {
+    "id": "c130_01",
+    "displayName": "메어리: 메디컬 래빗",
+    "subInfo": "TETRA · 세라핌",
+    "color": "#6DC2FF",
+    "manufacturer": "tetra",
+    "variantType": "skin"
+  },
+  {
+    "id": "c132",
+    "displayName": "메어리: 베이 갓데스",
+    "subInfo": "TETRA · 세라핌",
+    "color": "#B1CFFC",
+    "manufacturer": "tetra",
+    "variantType": "alt"
+  },
+  {
+    "id": "c392",
+    "displayName": "라이",
+    "subInfo": "TETRA · 스쿨 서클",
+    "color": "#B49AE4",
+    "manufacturer": "tetra",
+    "variantType": "base"
+  },
+  {
+    "id": "c280",
+    "displayName": "로산나",
+    "subInfo": "TETRA · 언더월드 퀸",
+    "color": "#D1CBDB",
+    "manufacturer": "tetra",
+    "variantType": "base"
+  },
+  {
+    "id": "c280_01",
+    "displayName": "로산나: 미스 데인저러스",
+    "subInfo": "TETRA · 언더월드 퀸",
+    "color": "#737D88",
+    "manufacturer": "tetra",
+    "variantType": "skin"
+  },
+  {
+    "id": "c283",
+    "displayName": "로산나: 시크 오션",
+    "subInfo": "TETRA · 언더월드 퀸",
+    "color": "#100D0E",
+    "manufacturer": "tetra",
+    "variantType": "alt"
+  },
+  {
+    "id": "c281",
+    "displayName": "목단",
+    "subInfo": "TETRA · 언더월드 퀸",
+    "color": "#A85F35",
+    "manufacturer": "tetra",
+    "variantType": "base"
+  },
+  {
+    "id": "c281_01",
+    "displayName": "목단: 오프 듀티 퀸",
+    "subInfo": "TETRA · 언더월드 퀸",
+    "color": "#D1E1FF",
+    "manufacturer": "tetra",
+    "variantType": "skin"
+  },
+  {
+    "id": "c281_02",
+    "displayName": "목단: 화중지왕",
+    "subInfo": "TETRA · 언더월드 퀸",
+    "color": "#ECD698",
+    "manufacturer": "tetra",
+    "variantType": "skin"
+  },
+  {
+    "id": "c282",
+    "displayName": "사쿠라",
+    "subInfo": "TETRA · 언더월드 퀸",
+    "color": "#8C0000",
+    "manufacturer": "tetra",
+    "variantType": "base"
+  },
+  {
+    "id": "c282_01",
+    "displayName": "사쿠라: 흑야암행",
+    "subInfo": "TETRA · 언더월드 퀸",
+    "color": "#910C07",
+    "manufacturer": "tetra",
+    "variantType": "skin"
+  },
+  {
+    "id": "c284",
+    "displayName": "사쿠라: 블룸 인 서머",
+    "subInfo": "TETRA · 언더월드 퀸",
+    "color": "#CF1610",
+    "manufacturer": "tetra",
+    "variantType": "alt"
+  },
+  {
+    "id": "c193",
+    "displayName": "네베",
+    "subInfo": "TETRA · 언리미티드",
+    "color": "#5D5B7B",
+    "manufacturer": "tetra",
+    "variantType": "base"
+  },
+  {
+    "id": "c190",
+    "displayName": "루드밀라",
+    "subInfo": "TETRA · 언리미티드",
+    "color": "#B094A2",
+    "manufacturer": "tetra",
+    "variantType": "base"
+  },
+  {
+    "id": "c194",
+    "displayName": "루드밀라: 윈터 오너",
+    "subInfo": "TETRA · 언리미티드",
+    "color": "#3D57D2",
+    "manufacturer": "tetra",
+    "variantType": "alt"
+  },
+  {
+    "id": "c191",
+    "displayName": "앨리스",
+    "subInfo": "TETRA · 언리미티드",
+    "color": "#C33363",
+    "manufacturer": "tetra",
+    "variantType": "base"
+  },
+  {
+    "id": "c191_02",
+    "displayName": "앨리스: 메르헨 드림",
+    "subInfo": "TETRA · 언리미티드",
+    "color": "#F996D8",
+    "manufacturer": "tetra",
+    "variantType": "skin"
+  },
+  {
+    "id": "c191_01",
+    "displayName": "앨리스: 스위트 홈",
+    "subInfo": "TETRA · 언리미티드",
+    "color": "#FF9BBD",
+    "manufacturer": "tetra",
+    "variantType": "skin"
+  },
+  {
+    "id": "c195",
+    "displayName": "앨리스: 원더랜드 바니",
+    "subInfo": "TETRA · 언리미티드",
+    "color": "#F47DA6",
+    "manufacturer": "tetra",
+    "variantType": "alt"
+  },
+  {
+    "id": "c112",
+    "displayName": "바이퍼",
+    "subInfo": "TETRA · 이그조틱",
+    "color": "#D94B92",
+    "manufacturer": "tetra",
+    "variantType": "base"
+  },
+  {
+    "id": "c112_02",
+    "displayName": "바이퍼: 샤인 오브 러브",
+    "subInfo": "TETRA · 이그조틱",
+    "color": "#C4ADE3",
+    "manufacturer": "tetra",
+    "variantType": "skin"
+  },
+  {
+    "id": "c112_01",
+    "displayName": "바이퍼: 톡신 래빗",
+    "subInfo": "TETRA · 이그조틱",
+    "color": "#FF6F98",
+    "manufacturer": "tetra",
+    "variantType": "skin"
+  },
+  {
+    "id": "c112_03",
+    "displayName": "바이퍼: 펑키 스트리트",
+    "subInfo": "TETRA · 이그조틱",
+    "color": "#FF5EDC",
+    "manufacturer": "tetra",
+    "variantType": "skin"
+  },
+  {
+    "id": "c571",
+    "displayName": "아크레인저 레드",
+    "subInfo": "TETRA · 여신전대 아크레인저 · NPC",
+    "manufacturer": "tetra",
+    "variantType": "base"
+  },
+  {
+    "id": "c570",
+    "displayName": "아크레인저 블랙",
+    "subInfo": "TETRA · 여신전대 아크레인저",
+    "color": "#78EFFF",
+    "manufacturer": "tetra",
+    "variantType": "base"
+  },
+  {
+    "id": "c570_99",
+    "displayName": "아크레인저 블랙",
+    "subInfo": "TETRA · 여신전대 아크레인저 · NPC",
+    "color": "#78EFFF",
+    "manufacturer": "tetra",
+    "variantType": "base"
+  },
+  {
+    "id": "c572",
+    "displayName": "아크레인저 블루",
+    "subInfo": "TETRA · 여신전대 아크레인저 · NPC",
+    "manufacturer": "tetra",
+    "variantType": "base"
+  },
+  {
+    "id": "c012",
+    "displayName": "아니스",
+    "subInfo": "TETRA · 카운터스",
+    "color": "#F5BA36",
+    "manufacturer": "tetra",
+    "variantType": "base"
+  },
+  {
+    "id": "c017",
+    "displayName": "아니스: 스타",
+    "subInfo": "TETRA · 카운터스",
+    "color": "#FFC939",
+    "manufacturer": "tetra",
+    "variantType": "alt"
+  },
+  {
+    "id": "c017_01",
+    "displayName": "아니스: 스타라이트",
+    "subInfo": "TETRA · 카운터스",
+    "color": "#CD9DED",
+    "manufacturer": "tetra",
+    "variantType": "skin"
+  },
+  {
+    "id": "c017_02",
+    "displayName": "아니스: T.T. STAR",
+    "subInfo": "TETRA · 카운터스",
+    "color": "#FFC75D",
+    "manufacturer": "tetra",
+    "variantType": "skin"
+  },
+  {
+    "id": "c015",
+    "displayName": "아니스: 스파클링 서머",
+    "subInfo": "TETRA · 카운터스",
+    "color": "#FEB557",
+    "manufacturer": "tetra",
+    "variantType": "alt"
+  },
+  {
+    "id": "c141",
+    "displayName": "밀크",
+    "subInfo": "TETRA · 카페 스위티",
+    "color": "#3C3C3C",
+    "manufacturer": "tetra",
+    "variantType": "base"
+  },
+  {
+    "id": "c141_01",
+    "displayName": "밀크: 익스트림 파이터",
+    "subInfo": "TETRA · 카페 스위티",
+    "color": "#EB475C",
+    "manufacturer": "tetra",
+    "variantType": "skin"
+  },
+  {
+    "id": "c143",
+    "displayName": "밀크: 블루밍 바니",
+    "subInfo": "TETRA · 카페 스위티",
+    "color": "#F599BC",
+    "manufacturer": "tetra",
+    "variantType": "alt"
+  },
+  {
+    "id": "c140",
+    "displayName": "슈가",
+    "subInfo": "TETRA · 카페 스위티",
+    "color": "#B90B00",
+    "manufacturer": "tetra",
+    "variantType": "base"
+  },
+  {
+    "id": "c140_02",
+    "displayName": "슈가: 와일드 백야드",
+    "subInfo": "TETRA · 카페 스위티",
+    "color": "#DAAD60",
+    "manufacturer": "tetra",
+    "variantType": "skin"
+  },
+  {
+    "id": "c140_01",
+    "displayName": "슈가: 콜 미 하드보일드",
+    "subInfo": "TETRA · 카페 스위티",
+    "color": "#B90B00",
+    "manufacturer": "tetra",
+    "variantType": "skin"
+  },
+  {
+    "id": "c140_03",
+    "displayName": "슈가: 킬러 래빗",
+    "subInfo": "TETRA · 카페 스위티",
+    "color": "#FF763B",
+    "manufacturer": "tetra",
+    "variantType": "skin"
+  },
+  {
+    "id": "c142",
+    "displayName": "프림",
+    "subInfo": "TETRA · 카페 스위티",
+    "color": "#C02C58",
+    "manufacturer": "tetra",
+    "variantType": "base"
+  },
+  {
+    "id": "c142_01",
+    "displayName": "프림: 씨 오브 슬로스",
+    "subInfo": "TETRA · 카페 스위티",
+    "color": "#5E9DF9",
+    "manufacturer": "tetra",
+    "variantType": "skin"
+  },
+  {
+    "id": "c520",
+    "displayName": "브래디",
+    "subInfo": "TETRA · 쿠킹오일",
+    "color": "#AF9995",
+    "manufacturer": "tetra",
+    "variantType": "base"
+  },
+  {
+    "id": "c520_01",
+    "displayName": "브래디: 프로스티 바이트",
+    "subInfo": "TETRA · 쿠킹오일",
+    "color": "#646787",
+    "manufacturer": "tetra",
+    "variantType": "skin"
+  },
+  {
+    "id": "c521",
+    "displayName": "크러스트",
+    "subInfo": "TETRA · 쿠킹오일",
+    "color": "#FEBED0",
+    "manufacturer": "tetra",
+    "variantType": "base"
+  },
+  {
+    "id": "c521_01",
+    "displayName": "크러스트: 트릿 셰프",
+    "subInfo": "TETRA · 쿠킹오일",
+    "color": "#FF902E",
+    "manufacturer": "tetra",
+    "variantType": "skin"
+  },
+  {
+    "id": "c171",
+    "displayName": "율하",
+    "subInfo": "TETRA · 트라이앵글",
+    "color": "#8E001D",
+    "manufacturer": "tetra",
+    "variantType": "base"
+  },
+  {
+    "id": "c212",
+    "displayName": "노벨",
+    "subInfo": "TETRA · 프로토콜",
+    "color": "#FAB119",
+    "manufacturer": "tetra",
+    "variantType": "base"
+  },
+  {
+    "id": "c212_02",
+    "displayName": "노벨: 디텍티브 너스",
+    "subInfo": "TETRA · 프로토콜",
+    "color": "#F4C1F6",
+    "manufacturer": "tetra",
+    "variantType": "skin"
+  },
+  {
+    "id": "c212_01",
+    "displayName": "노벨: 펭귄 홈즈",
+    "subInfo": "TETRA · 프로토콜",
+    "color": "#6F68E5",
+    "manufacturer": "tetra",
+    "variantType": "skin"
+  },
+  {
+    "id": "c210",
+    "displayName": "엑시아",
+    "subInfo": "TETRA · 프로토콜",
+    "color": "#17809C",
+    "manufacturer": "tetra",
+    "variantType": "base"
+  },
+  {
+    "id": "c210_02",
+    "displayName": "엑시아: 게이머즈",
+    "subInfo": "TETRA · 프로토콜",
+    "color": "#D1B2D1",
+    "manufacturer": "tetra",
+    "variantType": "skin"
+  },
+  {
+    "id": "c210_01",
+    "displayName": "엑시아: 메리 너드 데이",
+    "subInfo": "TETRA · 프로토콜",
+    "color": "#D5AE85",
+    "manufacturer": "tetra",
+    "variantType": "skin"
+  },
+  {
+    "id": "c210_03",
+    "displayName": "엑시아: 해커 래빗",
+    "subInfo": "TETRA · 프로토콜",
+    "color": "#1C82FF",
+    "manufacturer": "tetra",
+    "variantType": "skin"
+  },
+  {
+    "id": "c430",
+    "displayName": "노이즈",
+    "subInfo": "TETRA · 프리마돈나",
+    "color": "#9297BB",
+    "manufacturer": "tetra",
+    "variantType": "base"
+  },
+  {
+    "id": "c430_01",
+    "displayName": "노이즈: 체리블로섬 스테이지",
+    "subInfo": "TETRA · 프리마돈나",
+    "color": "#C4C3D9",
+    "manufacturer": "tetra",
+    "variantType": "skin"
+  },
+  {
+    "id": "c430_02",
+    "displayName": "노이즈: 클래식 디바",
+    "subInfo": "TETRA · 프리마돈나",
+    "color": "#2D2D2E",
+    "manufacturer": "tetra",
+    "variantType": "skin"
+  },
+  {
+    "id": "c431",
+    "displayName": "볼륨",
+    "subInfo": "TETRA · 프리마돈나",
+    "color": "#DF544A",
+    "manufacturer": "tetra",
+    "variantType": "base"
+  },
+  {
+    "id": "c431_01",
+    "displayName": "볼륨: 비트 더 건",
+    "subInfo": "TETRA · 프리마돈나",
+    "color": "#221D1F",
+    "manufacturer": "tetra",
+    "variantType": "skin"
+  },
+  {
+    "id": "c432",
+    "displayName": "아리아",
+    "subInfo": "TETRA · 프리마돈나",
+    "color": "#2E2D27",
+    "manufacturer": "tetra",
+    "variantType": "base"
+  },
+  {
+    "id": "c380",
+    "displayName": "네로",
+    "subInfo": "TETRA · 해피 주",
+    "color": "#FF58B1",
+    "manufacturer": "tetra",
+    "variantType": "base"
+  },
+  {
+    "id": "c382",
+    "displayName": "레오나",
+    "subInfo": "TETRA · 해피 주",
+    "color": "#FFB7CD",
+    "manufacturer": "tetra",
+    "variantType": "base"
+  },
+  {
+    "id": "c382_01",
+    "displayName": "레오나: 주 키퍼",
+    "subInfo": "TETRA · 해피 주",
+    "color": "#FE7EA3",
+    "manufacturer": "tetra",
+    "variantType": "skin"
+  },
+  {
+    "id": "c381",
+    "displayName": "비스킷",
+    "subInfo": "TETRA · 해피 주",
+    "color": "#BF9A8B",
+    "manufacturer": "tetra",
+    "variantType": "base"
+  },
+  {
+    "id": "c381_01",
+    "displayName": "비스킷: 스프링 퍼피",
+    "subInfo": "TETRA · 해피 주",
+    "color": "#FFDE71",
+    "manufacturer": "tetra",
+    "variantType": "skin"
+  },
+  {
+    "id": "c902",
+    "displayName": "머스탱",
+    "subInfo": "TETRA · TETRA CEO · NPC",
+    "color": "#F1C660",
+    "manufacturer": "tetra",
+    "variantType": "base"
+  },
+  {
+    "id": "c902_01",
+    "displayName": "머스탱",
+    "subInfo": "TETRA · TETRA CEO · NPC",
+    "color": "#F1C660",
+    "manufacturer": "tetra",
+    "variantType": "base"
+  },
+  {
+    "id": "c9022",
+    "displayName": "머스탱",
+    "subInfo": "TETRA · TETRA CEO · NPC",
+    "manufacturer": "tetra",
+    "variantType": "base"
+  },
+  {
+    "id": "c600",
+    "displayName": "민트",
+    "subInfo": "TETRA · T.T. STAR",
+    "color": "#5391E1",
+    "manufacturer": "tetra",
+    "variantType": "base"
+  },
+  {
+    "id": "c600_02",
+    "displayName": "민트",
+    "subInfo": "TETRA · NPC",
+    "manufacturer": "tetra",
+    "variantType": "base"
+  },
+  {
+    "id": "c600_01",
+    "displayName": "민트: 프레쉬 민트",
+    "subInfo": "TETRA · T.T. STAR",
+    "color": "#BFE9D7",
+    "manufacturer": "tetra",
+    "variantType": "skin"
+  },
+  {
+    "id": "c9021",
+    "displayName": "아니스",
+    "subInfo": "TETRA · NPC",
+    "manufacturer": "tetra",
+    "variantType": "base"
+  },
+  {
+    "id": "c9021_01",
+    "displayName": "아니스",
+    "subInfo": "TETRA · NPC",
+    "manufacturer": "tetra",
+    "variantType": "base"
+  },
+  {
+    "id": "c601",
+    "displayName": "프리카",
+    "subInfo": "TETRA · T.T. STAR",
+    "color": "#4E7155",
+    "manufacturer": "tetra",
+    "variantType": "base"
+  },
+  {
+    "id": "c601_02",
+    "displayName": "프리카",
+    "subInfo": "TETRA · NPC",
+    "manufacturer": "tetra",
+    "variantType": "base"
+  },
+  {
+    "id": "c601_01",
+    "displayName": "프리카: 쿨 파프리카",
+    "subInfo": "TETRA · T.T. STAR",
+    "color": "#9EC4C4",
+    "manufacturer": "tetra",
+    "variantType": "skin"
+  },
+  {
+    "id": "c308",
+    "displayName": "iDoll 썬",
+    "subInfo": "TETRA · 리플레이스",
+    "color": "#FFB128",
+    "manufacturer": "tetra",
+    "variantType": "base"
+  },
+  {
+    "id": "c305",
+    "displayName": "iDoll 오션",
+    "subInfo": "TETRA · 리플레이스",
+    "color": "#2F2E37",
+    "manufacturer": "tetra",
+    "variantType": "base"
+  },
+  {
+    "id": "c304",
+    "displayName": "iDoll 플라워",
+    "subInfo": "TETRA · 리플레이스",
+    "color": "#FFAD28",
+    "manufacturer": "tetra",
+    "variantType": "base"
+  },
+  {
+    "id": "c233",
+    "displayName": "도로시",
+    "subInfo": "PILGRIM · 인헤르트",
+    "color": "#CCBCCB",
+    "manufacturer": "pilgrim",
+    "variantType": "base"
+  },
+  {
+    "id": "c474",
+    "displayName": "도로시",
+    "subInfo": "PILGRIM · 갓데스 · NPC",
+    "manufacturer": "pilgrim",
+    "variantType": "base"
+  },
+  {
+    "id": "c233_01",
+    "displayName": "도로시: 노스텔지어",
+    "subInfo": "PILGRIM · 인헤르트",
+    "color": "#FF88A9",
+    "manufacturer": "pilgrim",
+    "variantType": "skin"
+  },
+  {
+    "id": "c233_02",
+    "displayName": "도로시: 루나 라이트",
+    "subInfo": "PILGRIM · 인헤르트",
+    "color": "#8CB4FF",
+    "manufacturer": "pilgrim",
+    "variantType": "skin"
+  },
+  {
+    "id": "c233_80",
+    "displayName": "도로시: CN",
+    "subInfo": "PILGRIM · 갓데스",
+    "color": "#CCBCCB",
+    "manufacturer": "pilgrim",
+    "variantType": "skin"
+  },
+  {
+    "id": "c473",
+    "displayName": "라푼젤: 생츄어리",
+    "subInfo": "PILGRIM · 갓데스",
+    "color": "#EED4AB",
+    "manufacturer": "pilgrim",
+    "variantType": "alt"
+  },
+  {
+    "id": "c226",
+    "displayName": "라푼젤: 퓨어 그레이스",
+    "subInfo": "PILGRIM · 갓데스",
+    "color": "#F3DFBC",
+    "manufacturer": "pilgrim",
+    "variantType": "alt"
+  },
+  {
+    "id": "c470",
+    "displayName": "레드 후드",
+    "subInfo": "PILGRIM · 갓데스",
+    "color": "#DA1716",
+    "manufacturer": "pilgrim",
+    "variantType": "base"
+  },
+  {
+    "id": "c470_01",
+    "displayName": "레드 후드: 넌센스 레드",
+    "subInfo": "PILGRIM · 갓데스",
+    "color": "#E11C1E",
+    "manufacturer": "pilgrim",
+    "variantType": "skin"
+  },
+  {
+    "id": "c470_02",
+    "displayName": "레드 후드: 레트로 데이즈",
+    "subInfo": "PILGRIM · 갓데스",
+    "color": "#9B917F",
+    "manufacturer": "pilgrim",
+    "variantType": "skin"
+  },
+  {
+    "id": "c943",
+    "displayName": "릴리바이스",
+    "subInfo": "PILGRIM · 갓데스 · NPC",
+    "manufacturer": "pilgrim",
+    "variantType": "base"
+  },
+  {
+    "id": "c224",
+    "displayName": "스노우 화이트: 이노센트 데이즈",
+    "subInfo": "PILGRIM · 갓데스",
+    "color": "#D6D5EE",
+    "manufacturer": "pilgrim",
+    "variantType": "alt"
+  },
+  {
+    "id": "c471",
+    "displayName": "스노우 화이트: 헤비암즈",
+    "subInfo": "PILGRIM · 갓데스",
+    "color": "#C9CEE1",
+    "manufacturer": "pilgrim",
+    "variantType": "alt"
+  },
+  {
+    "id": "c471_01",
+    "displayName": "스노우 화이트: 라크리모사",
+    "subInfo": "PILGRIM · 갓데스",
+    "color": "#DAD8E3",
+    "manufacturer": "pilgrim",
+    "variantType": "skin"
+  },
+  {
+    "id": "c942",
+    "displayName": "엔더슨",
+    "subInfo": "PILGRIM · 갓데스 · NPC",
+    "manufacturer": "pilgrim",
+    "variantType": "base"
+  },
+  {
+    "id": "c942",
+    "displayName": "지휘관",
+    "subInfo": "PILGRIM · 갓데스 · NPC",
+    "manufacturer": "pilgrim",
+    "variantType": "base"
+  },
+  {
+    "id": "c225",
+    "displayName": "홍련: 흑영",
+    "subInfo": "PILGRIM · 갓데스",
+    "color": "#BB0307",
+    "manufacturer": "pilgrim",
+    "variantType": "alt"
+  },
+  {
+    "id": "c225_01",
+    "displayName": "홍련: 연화",
+    "subInfo": "PILGRIM · 갓데스",
+    "color": "#C62126",
+    "manufacturer": "pilgrim",
+    "variantType": "skin"
+  },
+  {
+    "id": "c331",
+    "displayName": "차임",
+    "subInfo": "PILGRIM · 바이스리터",
+    "color": "#FCD001",
+    "manufacturer": "pilgrim",
+    "variantType": "base"
+  },
+  {
+    "id": "c330",
+    "displayName": "크라운",
+    "subInfo": "PILGRIM · 바이스리터",
+    "color": "#C5B18B",
+    "manufacturer": "pilgrim",
+    "variantType": "base"
+  },
+  {
+    "id": "c330_01",
+    "displayName": "크라운: 네이키드 킹",
+    "subInfo": "PILGRIM · 바이스리터",
+    "color": "#FFD13D",
+    "manufacturer": "pilgrim",
+    "variantType": "skin"
+  },
+  {
+    "id": "c330_02",
+    "displayName": "크라운: 영화",
+    "subInfo": "PILGRIM · 바이스리터",
+    "color": "#F5D288",
+    "manufacturer": "pilgrim",
+    "variantType": "skin"
+  },
+  {
+    "id": "c510",
+    "displayName": "그레이브",
+    "subInfo": "PILGRIM · 올드 테일즈 · NPC",
+    "manufacturer": "pilgrim",
+    "variantType": "base"
+  },
+  {
+    "id": "c514",
+    "displayName": "그레이브",
+    "subInfo": "PILGRIM · 올드 테일즈",
+    "color": "#E5341F",
+    "manufacturer": "pilgrim",
+    "variantType": "base"
+  },
+  {
+    "id": "c514_01",
+    "displayName": "그레이브: 뷰티풀 유",
+    "subInfo": "PILGRIM · 올드 테일즈",
+    "color": "#363B3C",
+    "manufacturer": "pilgrim",
+    "variantType": "skin"
+  },
+  {
+    "id": "c981",
+    "displayName": "그레텔",
+    "subInfo": "PILGRIM · 올드 테일즈 · NPC",
+    "manufacturer": "pilgrim",
+    "variantType": "base"
+  },
+  {
+    "id": "c982",
+    "displayName": "레드 슈즈",
+    "subInfo": "PILGRIM · 올드 테일즈 · NPC",
+    "manufacturer": "pilgrim",
+    "variantType": "base"
+  },
+  {
+    "id": "c513",
+    "displayName": "리틀 머메이드",
+    "subInfo": "PILGRIM · 올드 테일즈",
+    "color": "#977CE3",
+    "manufacturer": "pilgrim",
+    "variantType": "base"
+  },
+  {
+    "id": "c513_02",
+    "displayName": "리틀 머메이드: 뷰티풀 버블",
+    "subInfo": "PILGRIM · 올드 테일즈",
+    "color": "#CCCBDD",
+    "manufacturer": "pilgrim",
+    "variantType": "skin"
+  },
+  {
+    "id": "c513_03",
+    "displayName": "리틀 머메이드: 쉘 프린세스",
+    "subInfo": "PILGRIM · 올드 테일즈",
+    "color": "#CDDAF5",
+    "manufacturer": "pilgrim",
+    "variantType": "skin"
+  },
+  {
+    "id": "c513_01",
+    "displayName": "리틀 머메이드: 어비스 플라워",
+    "subInfo": "PILGRIM · 올드 테일즈",
+    "color": "#63DDF7",
+    "manufacturer": "pilgrim",
+    "variantType": "skin"
+  },
+  {
+    "id": "c511",
+    "displayName": "신데렐라",
+    "subInfo": "PILGRIM · 올드 테일즈",
+    "color": "#C7CDE0",
+    "manufacturer": "pilgrim",
+    "variantType": "base"
+  },
+  {
+    "id": "c511_03",
+    "displayName": "신데렐라: 글라스 커트시",
+    "subInfo": "PILGRIM · 올드 테일즈",
+    "color": "#DFDDD4",
+    "manufacturer": "pilgrim",
+    "variantType": "skin"
+  },
+  {
+    "id": "c511_02",
+    "displayName": "신데렐라: 뷰티풀 미",
+    "subInfo": "PILGRIM · 올드 테일즈",
+    "color": "#B3AEB7",
+    "manufacturer": "pilgrim",
+    "variantType": "skin"
+  },
+  {
+    "id": "c511_01",
+    "displayName": "신데렐라: 유리 공주",
+    "subInfo": "PILGRIM · 올드 테일즈",
+    "color": "#DCDDE9",
+    "manufacturer": "pilgrim",
+    "variantType": "skin"
+  },
+  {
+    "id": "c515",
+    "displayName": "신데렐라: 크리스탈 웨이브",
+    "subInfo": "PILGRIM · 올드 테일즈",
+    "color": "#E1E2EE",
+    "manufacturer": "pilgrim",
+    "variantType": "alt"
+  },
+  {
+    "id": "c979",
+    "displayName": "에이브",
+    "subInfo": "PILGRIM · 올드 테일즈 · NPC",
+    "manufacturer": "pilgrim",
+    "variantType": "base"
+  },
+  {
+    "id": "c980",
+    "displayName": "헨젤",
+    "subInfo": "PILGRIM · 올드 테일즈 · NPC",
+    "manufacturer": "pilgrim",
+    "variantType": "base"
+  },
+  {
+    "id": "c232",
+    "displayName": "노아",
+    "subInfo": "PILGRIM · 인헤르트",
+    "color": "#DD7090",
+    "manufacturer": "pilgrim",
+    "variantType": "base"
+  },
+  {
+    "id": "c235",
+    "displayName": "노아",
+    "subInfo": "PILGRIM · 인헤르트 · NPC",
+    "manufacturer": "pilgrim",
+    "variantType": "base"
+  },
+  {
+    "id": "c234",
+    "displayName": "도로시: 세렌디피티",
+    "subInfo": "PILGRIM · 인헤르트",
+    "color": "#F1BCD9",
+    "manufacturer": "pilgrim",
+    "variantType": "alt"
+  },
+  {
+    "id": "c231",
+    "displayName": "이사벨",
+    "subInfo": "PILGRIM · 인헤르트",
+    "color": "#4D4471",
+    "manufacturer": "pilgrim",
+    "variantType": "base"
+  },
+  {
+    "id": "c231_01",
+    "displayName": "이사벨: 허니문 파티",
+    "subInfo": "PILGRIM · 인헤르트",
+    "color": "#48D7FB",
+    "manufacturer": "pilgrim",
+    "variantType": "skin"
+  },
+  {
+    "id": "c236",
+    "displayName": "파피용",
+    "subInfo": "PILGRIM · NPC",
+    "manufacturer": "pilgrim",
+    "variantType": "base"
+  },
+  {
+    "id": "c230",
+    "displayName": "하란",
+    "subInfo": "PILGRIM · 인헤르트",
+    "color": "#7C349C",
+    "manufacturer": "pilgrim",
+    "variantType": "base"
+  },
+  {
+    "id": "c230_01",
+    "displayName": "하란: 연회의 마녀",
+    "subInfo": "PILGRIM · 인헤르트",
+    "color": "#D24DE0",
+    "manufacturer": "pilgrim",
+    "variantType": "skin"
+  },
+  {
+    "id": "c223",
+    "displayName": "나유타",
+    "subInfo": "PILGRIM · 파이오니아",
+    "color": "#C8CEE0",
+    "manufacturer": "pilgrim",
+    "variantType": "base"
+  },
+  {
+    "id": "c223_01",
+    "displayName": "나유타: 무위",
+    "subInfo": "PILGRIM · 파이오니아",
+    "color": "#322C3E",
+    "manufacturer": "pilgrim",
+    "variantType": "skin"
+  },
+  {
+    "id": "c223_02",
+    "displayName": "나유타: 삼독",
+    "subInfo": "PILGRIM · 파이오니아",
+    "color": "#323135",
+    "manufacturer": "pilgrim",
+    "variantType": "skin"
+  },
+  {
+    "id": "c221",
+    "displayName": "라푼젤",
+    "subInfo": "PILGRIM · 파이오니아",
+    "color": "#54AEB7",
+    "manufacturer": "pilgrim",
+    "variantType": "base"
+  },
+  {
+    "id": "c220",
+    "displayName": "스노우 화이트",
+    "subInfo": "PILGRIM · 파이오니아",
+    "color": "#676598",
+    "manufacturer": "pilgrim",
+    "variantType": "base"
+  },
+  {
+    "id": "c220_01",
+    "displayName": "스노우 화이트: 화이트 나이트",
+    "subInfo": "PILGRIM · 파이오니아",
+    "color": "#8787AA",
+    "manufacturer": "pilgrim",
+    "variantType": "skin"
+  },
+  {
+    "id": "c222",
+    "displayName": "홍련",
+    "subInfo": "PILGRIM · 파이오니아",
+    "color": "#785BB3",
+    "manufacturer": "pilgrim",
+    "variantType": "base"
+  },
+  {
+    "id": "c222_01",
+    "displayName": "홍련: 레이서즈 하이",
+    "subInfo": "PILGRIM · 파이오니아",
+    "color": "#5C1929",
+    "manufacturer": "pilgrim",
+    "variantType": "skin"
+  },
+  {
+    "id": "c472",
+    "displayName": "홍련: 신살",
+    "subInfo": "PILGRIM · 갓데스",
+    "color": "#ED3B44",
+    "manufacturer": "pilgrim",
+    "variantType": "alt"
+  },
+  {
+    "id": "c261",
+    "displayName": "니힐리스타",
+    "subInfo": "PILGRIM · 헬레틱",
+    "color": "#FF4E60",
+    "manufacturer": "pilgrim",
+    "variantType": "base"
+  },
+  {
+    "id": "c9009",
+    "displayName": "니힐리스타",
+    "subInfo": "PILGRIM · 헬레틱 · NPC",
+    "manufacturer": "pilgrim",
+    "variantType": "base"
+  },
+  {
+    "id": "c262",
+    "displayName": "리버렐리오",
+    "subInfo": "PILGRIM · 헬레틱",
+    "color": "#95739C",
+    "manufacturer": "pilgrim",
+    "variantType": "base"
+  },
+  {
+    "id": "c262_01",
+    "displayName": "리버렐리오: 드리밍 레이크",
+    "subInfo": "PILGRIM · 헬레틱",
+    "color": "#504858",
+    "manufacturer": "pilgrim",
+    "variantType": "skin"
+  },
+  {
+    "id": "c260",
+    "displayName": "모더니아",
+    "subInfo": "PILGRIM · 헬레틱",
+    "color": "#334B52",
+    "manufacturer": "pilgrim",
+    "variantType": "base"
+  },
+  {
+    "id": "c260_02",
+    "displayName": "모더니아: 세컨드 어펙션",
+    "subInfo": "PILGRIM · 헬레틱",
+    "color": "#EC32A8",
+    "manufacturer": "pilgrim",
+    "variantType": "skin"
+  },
+  {
+    "id": "c260_01",
+    "displayName": "모더니아: 퍼스트 어펙션",
+    "subInfo": "PILGRIM · 헬레틱",
+    "color": "#D5CEC4",
+    "manufacturer": "pilgrim",
+    "variantType": "skin"
+  },
+  {
+    "id": "c260_80",
+    "displayName": "모더니아: CN",
+    "subInfo": "PILGRIM · 헬레틱",
+    "color": "#334B52",
+    "manufacturer": "pilgrim",
+    "variantType": "skin"
+  },
+  {
+    "id": "c019",
+    "displayName": "마리안: 퀸",
+    "subInfo": "PILGRIM · 카운터스",
+    "color": "#342443",
+    "manufacturer": "pilgrim",
+    "variantType": "alt"
+  },
+  {
+    "id": "c019_01",
+    "displayName": "마리안: 라스트 어펙션",
+    "subInfo": "PILGRIM · 카운터스",
+    "color": "#7AB1FF",
+    "manufacturer": "pilgrim",
+    "variantType": "skin"
+  },
+  {
+    "id": "c9027",
+    "displayName": "도로시",
+    "subInfo": "HERETIC · NPC",
+    "manufacturer": "heretic",
+    "variantType": "base"
+  },
+  {
+    "id": "c982",
+    "displayName": "미러",
+    "subInfo": "HERETIC · NPC",
+    "manufacturer": "heretic",
+    "variantType": "base"
+  },
+  {
+    "id": "c9042",
+    "displayName": "베르누이아",
+    "subInfo": "HERETIC · NPC",
+    "manufacturer": "heretic",
+    "variantType": "base"
+  },
+  {
+    "id": "c944",
+    "displayName": "아나키오르",
+    "subInfo": "HERETIC · NPC",
+    "manufacturer": "heretic",
+    "variantType": "base"
+  },
+  {
+    "id": "c9017",
+    "displayName": "앨트루이아",
+    "subInfo": "HERETIC · NPC",
+    "manufacturer": "heretic",
+    "variantType": "base"
+  },
+  {
+    "id": "c9025",
+    "displayName": "에고비스타",
+    "subInfo": "HERETIC · NPC",
+    "manufacturer": "heretic",
+    "variantType": "base"
+  },
+  {
+    "id": "c263",
+    "displayName": "인디빌리아",
+    "subInfo": "HERETIC · NPC",
+    "color": "#C59A5A",
+    "manufacturer": "heretic",
+    "variantType": "base"
+  },
+  {
+    "id": "c971",
+    "displayName": "장화",
+    "subInfo": "HERETIC · NPC",
+    "manufacturer": "heretic",
+    "variantType": "base"
+  },
+  {
+    "id": "c971_01",
+    "displayName": "장화",
+    "subInfo": "HERETIC · NPC",
+    "manufacturer": "heretic",
+    "variantType": "base"
+  },
+  {
+    "id": "bbg002",
+    "displayName": "토커티브",
+    "subInfo": "HERETIC · NPC",
+    "color": "#665E48",
+    "manufacturer": "heretic",
+    "variantType": "base"
+  },
+  {
+    "id": "c996",
+    "displayName": "레비",
+    "subInfo": "HERETIC · NPC",
+    "manufacturer": "heretic",
+    "variantType": "base"
+  },
+  {
+    "id": "c562",
+    "displayName": "레비아탄",
+    "subInfo": "HERETIC · 포비스트 · NPC",
+    "manufacturer": "heretic",
+    "variantType": "base"
+  },
+  {
+    "id": "c563",
+    "displayName": "바하무트",
+    "subInfo": "HERETIC · 포비스트 · NPC",
+    "manufacturer": "heretic",
+    "variantType": "base"
+  },
+  {
+    "id": "c560",
+    "displayName": "베히모스",
+    "subInfo": "HERETIC · 포비스트 · NPC",
+    "manufacturer": "heretic",
+    "variantType": "base"
+  },
+  {
+    "id": "c992",
+    "displayName": "뷰티",
+    "subInfo": "HERETIC · 포비스트 · NPC",
+    "manufacturer": "heretic",
+    "variantType": "base"
+  },
+  {
+    "id": "c992",
+    "displayName": "온리 원",
+    "subInfo": "HERETIC · 포비스트 · NPC",
+    "manufacturer": "heretic",
+    "variantType": "base"
+  },
+  {
+    "id": "c997",
+    "displayName": "온리 원",
+    "subInfo": "HERETIC · NPC",
+    "manufacturer": "heretic",
+    "variantType": "base"
+  },
+  {
+    "id": "c561",
+    "displayName": "지즈",
+    "subInfo": "HERETIC · 포비스트 · NPC",
+    "manufacturer": "heretic",
+    "variantType": "base"
+  },
+  {
+    "id": "c852",
+    "displayName": "릴리",
+    "subInfo": "ABNORMAL · 5차 강하 부대",
+    "color": "#FEAB29",
+    "manufacturer": "abnormal",
+    "variantType": "base"
+  },
+  {
+    "id": "c850",
+    "displayName": "이브",
+    "subInfo": "ABNORMAL · 7차 강하 부대",
+    "color": "#289569",
+    "manufacturer": "abnormal",
+    "variantType": "base"
+  },
+  {
+    "id": "c850_02",
+    "displayName": "이브: 뉴로링크 슈트",
+    "subInfo": "ABNORMAL · 7차 강하 부대",
+    "color": "#DC030C",
+    "manufacturer": "abnormal",
+    "variantType": "skin"
+  },
+  {
+    "id": "c850_03",
+    "displayName": "이브: 스킨 슈트",
+    "subInfo": "ABNORMAL · 7차 강하 부대",
+    "color": "#F5DAC9",
+    "manufacturer": "abnormal",
+    "variantType": "skin"
+  },
+  {
+    "id": "c850_01",
+    "displayName": "이브: 키홀 드레스",
+    "subInfo": "ABNORMAL · 7차 강하 부대",
+    "color": "#C5B6B0",
+    "manufacturer": "abnormal",
+    "variantType": "skin"
+  },
+  {
+    "id": "c851",
+    "displayName": "레이븐",
+    "subInfo": "ABNORMAL · 2차 강하 부대",
+    "color": "#899FCF",
+    "manufacturer": "abnormal",
+    "variantType": "base"
+  },
+  {
+    "id": "c851_02",
+    "displayName": "레이븐: 미드서머 앨리스",
+    "subInfo": "ABNORMAL · 2차 강하 부대",
+    "color": "#D5D3DE",
+    "manufacturer": "abnormal",
+    "variantType": "skin"
+  },
+  {
+    "id": "c851_01",
+    "displayName": "레이븐: 플래닛 다이브 슈트(6th) V2",
+    "subInfo": "ABNORMAL · 2차 강하 부대",
+    "color": "#30A7C1",
+    "manufacturer": "abnormal",
+    "variantType": "skin"
+  },
+  {
+    "id": "c812",
+    "displayName": "파스칼",
+    "subInfo": "ABNORMAL · 기계생명체",
+    "color": "#7E6B60",
+    "manufacturer": "abnormal",
+    "variantType": "base"
+  },
+  {
+    "id": "c803",
+    "displayName": "덴지",
+    "subInfo": "ABNORMAL · 데블 헌터 · NPC",
+    "manufacturer": "abnormal",
+    "variantType": "base"
+  },
+  {
+    "id": "c803_01",
+    "displayName": "덴지: 체인소 맨",
+    "subInfo": "ABNORMAL · 데블 헌터 · NPC",
+    "manufacturer": "abnormal",
+    "variantType": "skin"
+  },
+  {
+    "id": "c800",
+    "displayName": "마키마",
+    "subInfo": "ABNORMAL · 데블 헌터",
+    "color": "#E28360",
+    "manufacturer": "abnormal",
+    "variantType": "base"
+  },
+  {
+    "id": "c800_01",
+    "displayName": "마키마: 코트 오프",
+    "subInfo": "ABNORMAL · 데블 헌터",
+    "color": "#E28360",
+    "manufacturer": "abnormal",
+    "variantType": "skin"
+  },
+  {
+    "id": "c801",
+    "displayName": "파워",
+    "subInfo": "ABNORMAL · 데블 헌터",
+    "color": "#CA2220",
+    "manufacturer": "abnormal",
+    "variantType": "base"
+  },
+  {
+    "id": "c804",
+    "displayName": "하야카와 아키",
+    "subInfo": "ABNORMAL · 데블 헌터 · NPC",
+    "manufacturer": "abnormal",
+    "variantType": "base"
+  },
+  {
+    "id": "c802",
+    "displayName": "히메노",
+    "subInfo": "ABNORMAL · 데블 헌터",
+    "color": "#709895",
+    "manufacturer": "abnormal",
+    "variantType": "base"
+  },
+  {
+    "id": "c822",
+    "displayName": "람",
+    "subInfo": "ABNORMAL · 에밀리아 진영",
+    "color": "#F77B9D",
+    "manufacturer": "abnormal",
+    "variantType": "base"
+  },
+  {
+    "id": "c820",
+    "displayName": "렘",
+    "subInfo": "ABNORMAL · 에밀리아 진영",
+    "color": "#71B8FB",
+    "manufacturer": "abnormal",
+    "variantType": "base"
+  },
+  {
+    "id": "c820_02",
+    "displayName": "렘: 퓨어 블라썸",
+    "subInfo": "ABNORMAL · 에밀리아 진영",
+    "color": "#FFD4DC",
+    "manufacturer": "abnormal",
+    "variantType": "skin"
+  },
+  {
+    "id": "c820_01",
+    "displayName": "렘: 핸디 메이드",
+    "subInfo": "ABNORMAL · 에밀리아 진영",
+    "color": "#71B8FB",
+    "manufacturer": "abnormal",
+    "variantType": "skin"
+  },
+  {
+    "id": "c821",
+    "displayName": "에밀리아",
+    "subInfo": "ABNORMAL · 에밀리아 진영",
+    "color": "#D594FF",
+    "manufacturer": "abnormal",
+    "variantType": "base"
+  },
+  {
+    "id": "c821_02",
+    "displayName": "에밀리아: 스프링 브리즈",
+    "subInfo": "ABNORMAL · 에밀리아 진영",
+    "color": "#EFCD7F",
+    "manufacturer": "abnormal",
+    "variantType": "skin"
+  },
+  {
+    "id": "c821_01",
+    "displayName": "에밀리아: 클럼지 메이드",
+    "subInfo": "ABNORMAL · 에밀리아 진영",
+    "color": "#D1C7EA",
+    "manufacturer": "abnormal",
+    "variantType": "skin"
+  },
+  {
+    "id": "c810",
+    "displayName": "2B",
+    "subInfo": "ABNORMAL · 요르하",
+    "color": "#C4C3BC",
+    "manufacturer": "abnormal",
+    "variantType": "base"
+  },
+  {
+    "id": "c810_03",
+    "displayName": "2B: 요르하 비공식 수변 활동 장비 1",
+    "subInfo": "ABNORMAL · 요르하",
+    "color": "#404144",
+    "manufacturer": "abnormal",
+    "variantType": "skin"
+  },
+  {
+    "id": "c810_02",
+    "displayName": "2B: 요르하 제복1",
+    "subInfo": "ABNORMAL · 요르하",
+    "color": "#C4C3BC",
+    "manufacturer": "abnormal",
+    "variantType": "skin"
+  },
+  {
+    "id": "c810_01",
+    "displayName": "2B: 중파상태",
+    "subInfo": "ABNORMAL · 요르하",
+    "color": "#C4C3BC",
+    "manufacturer": "abnormal",
+    "variantType": "skin"
+  },
+  {
+    "id": "c813",
+    "displayName": "9S",
+    "subInfo": "ABNORMAL · 요르하 · NPC",
+    "manufacturer": "abnormal",
+    "variantType": "base"
+  },
+  {
+    "id": "c811",
+    "displayName": "A2",
+    "subInfo": "ABNORMAL · 요르하",
+    "color": "#BEC2C5",
+    "manufacturer": "abnormal",
+    "variantType": "base"
+  },
+  {
+    "id": "c811_03",
+    "displayName": "A2: 요르하 비공식 수변 활동 장비 프로토타입",
+    "subInfo": "ABNORMAL · 요르하",
+    "color": "#E3E2E1",
+    "manufacturer": "abnormal",
+    "variantType": "skin"
+  },
+  {
+    "id": "c811_02",
+    "displayName": "A2: 요르하 제복 프로토 타입",
+    "subInfo": "ABNORMAL · 요르하",
+    "color": "#BEC2C5",
+    "manufacturer": "abnormal",
+    "variantType": "skin"
+  },
+  {
+    "id": "c811_01",
+    "displayName": "A2: 중파상태",
+    "subInfo": "ABNORMAL · 요르하",
+    "color": "#BEC2C5",
+    "manufacturer": "abnormal",
+    "variantType": "skin"
+  },
+  {
+    "id": "c860",
+    "displayName": "치사토",
+    "subInfo": "ABNORMAL · 찻집 리코리코",
+    "color": "#C13B3D",
+    "manufacturer": "abnormal",
+    "variantType": "base"
+  },
+  {
+    "id": "c860_02",
+    "displayName": "치사토: 레드 스파크 기타",
+    "subInfo": "ABNORMAL · 찻집 리코리코",
+    "color": "#E74F74",
+    "manufacturer": "abnormal",
+    "variantType": "skin"
+  },
+  {
+    "id": "c860_01",
+    "displayName": "치사토: DA 트레이닝 웨어(퍼스트)",
+    "subInfo": "ABNORMAL · 찻집 리코리코",
+    "color": "#C03F36",
+    "manufacturer": "abnormal",
+    "variantType": "skin"
+  },
+  {
+    "id": "c862",
+    "displayName": "쿠루미",
+    "subInfo": "ABNORMAL · 찻집 리코리코",
+    "color": "#FFD840",
+    "manufacturer": "abnormal",
+    "variantType": "base"
+  },
+  {
+    "id": "c861",
+    "displayName": "타키나",
+    "subInfo": "ABNORMAL · 찻집 리코리코",
+    "color": "#667398",
+    "manufacturer": "abnormal",
+    "variantType": "base"
+  },
+  {
+    "id": "c861_02",
+    "displayName": "타키나: 블루 펄스 베이스",
+    "subInfo": "ABNORMAL · 찻집 리코리코",
+    "color": "#1B3E9C",
+    "manufacturer": "abnormal",
+    "variantType": "skin"
+  },
+  {
+    "id": "c861_01",
+    "displayName": "타키나: DA 트레이닝 웨어(세컨드)",
+    "subInfo": "ABNORMAL · 찻집 리코리코",
+    "color": "#3866C8",
+    "manufacturer": "abnormal",
+    "variantType": "skin"
+  },
+  {
+    "id": "c840",
+    "displayName": "에이다",
+    "subInfo": "ABNORMAL · B.S.T.",
+    "color": "#BB3937",
+    "manufacturer": "abnormal",
+    "variantType": "base"
+  },
+  {
+    "id": "c840_02",
+    "displayName": "에이다: DRESS",
+    "subInfo": "ABNORMAL · B.S.T.",
+    "color": "#CA3D38",
+    "manufacturer": "abnormal",
+    "variantType": "skin"
+  },
+  {
+    "id": "c840_01",
+    "displayName": "에이다: SEPARATE WAYS",
+    "subInfo": "ABNORMAL · B.S.T.",
+    "color": "#AE2C32",
+    "manufacturer": "abnormal",
+    "variantType": "skin"
+  },
+  {
+    "id": "c841",
+    "displayName": "질",
+    "subInfo": "ABNORMAL · B.S.T.",
+    "color": "#687D9B",
+    "manufacturer": "abnormal",
+    "variantType": "base"
+  },
+  {
+    "id": "c841_02",
+    "displayName": "질: BATTLE SUIT",
+    "subInfo": "ABNORMAL · B.S.T.",
+    "color": "#AA9E85",
+    "manufacturer": "abnormal",
+    "variantType": "skin"
+  },
+  {
+    "id": "c841_01",
+    "displayName": "질: CLASSIC",
+    "subInfo": "ABNORMAL · B.S.T.",
+    "color": "#6187C0",
+    "manufacturer": "abnormal",
+    "variantType": "skin"
+  },
+  {
+    "id": "c842",
+    "displayName": "클레어",
+    "subInfo": "ABNORMAL · B.S.T.",
+    "color": "#95333A",
+    "manufacturer": "abnormal",
+    "variantType": "base"
+  },
+  {
+    "id": "c831",
+    "displayName": "레이",
+    "subInfo": "ABNORMAL · NERV",
+    "color": "#79B6D9",
+    "manufacturer": "abnormal",
+    "variantType": "base"
+  },
+  {
+    "id": "c831_01",
+    "displayName": "레이: 레이의 교복",
+    "subInfo": "ABNORMAL · NERV",
+    "color": "#74BAD4",
+    "manufacturer": "abnormal",
+    "variantType": "skin"
+  },
+  {
+    "id": "c831_02",
+    "displayName": "레이: 피스풀 바캉스",
+    "subInfo": "ABNORMAL · NERV",
+    "color": "#A0D8F8",
+    "manufacturer": "abnormal",
+    "variantType": "skin"
+  },
+  {
+    "id": "c834",
+    "displayName": "레이 (가칭)",
+    "subInfo": "ABNORMAL · NERV",
+    "color": "#B6D7F8",
+    "manufacturer": "abnormal",
+    "variantType": "base"
+  },
+  {
+    "id": "c834_02",
+    "displayName": "레이 (가칭): 소울 커넥트",
+    "subInfo": "ABNORMAL · NERV",
+    "color": "#3C3E8C",
+    "manufacturer": "abnormal",
+    "variantType": "skin"
+  },
+  {
+    "id": "c834_01",
+    "displayName": "레이 (가칭): 제 3마을의 닮은꼴 씨",
+    "subInfo": "ABNORMAL · NERV",
+    "color": "#CEC3AC",
+    "manufacturer": "abnormal",
+    "variantType": "skin"
+  },
+  {
+    "id": "c832",
+    "displayName": "마리",
+    "subInfo": "ABNORMAL · NERV",
+    "color": "#E995AA",
+    "manufacturer": "abnormal",
+    "variantType": "base"
+  },
+  {
+    "id": "c832_02",
+    "displayName": "마리: 레저리 트래블",
+    "subInfo": "ABNORMAL · NERV",
+    "color": "#585F87",
+    "manufacturer": "abnormal",
+    "variantType": "skin"
+  },
+  {
+    "id": "c832_01",
+    "displayName": "마리: 마리의 교복",
+    "subInfo": "ABNORMAL · NERV",
+    "color": "#7E2B32",
+    "manufacturer": "abnormal",
+    "variantType": "skin"
+  },
+  {
+    "id": "c832_04",
+    "displayName": "마리: 미스테리 뮤즈",
+    "subInfo": "ABNORMAL · NERV",
+    "color": "#FFB1A7",
+    "manufacturer": "abnormal",
+    "variantType": "skin"
+  },
+  {
+    "id": "c832_03",
+    "displayName": "마리: 최종 결전: 마리",
+    "subInfo": "ABNORMAL · NERV",
+    "color": "#DACDD3",
+    "manufacturer": "abnormal",
+    "variantType": "skin"
+  },
+  {
+    "id": "c833",
+    "displayName": "미사토",
+    "subInfo": "ABNORMAL · NERV",
+    "color": "#7F50C7",
+    "manufacturer": "abnormal",
+    "variantType": "base"
+  },
+  {
+    "id": "c830",
+    "displayName": "아스카",
+    "subInfo": "ABNORMAL · NERV",
+    "color": "#DA2128",
+    "manufacturer": "abnormal",
+    "variantType": "base"
+  },
+  {
+    "id": "c830_02",
+    "displayName": "아스카: 시니컬 스트리트",
+    "subInfo": "ABNORMAL · NERV",
+    "color": "#DC393A",
+    "manufacturer": "abnormal",
+    "variantType": "skin"
+  },
+  {
+    "id": "c830_01",
+    "displayName": "아스카: 아스카의 교복",
+    "subInfo": "ABNORMAL · NERV",
+    "color": "#FAAF4F",
+    "manufacturer": "abnormal",
+    "variantType": "skin"
+  },
+  {
+    "id": "c830_03",
+    "displayName": "아스카: 테스트용 플러그 슈트",
+    "subInfo": "ABNORMAL · NERV",
+    "color": "#CA2916",
+    "manufacturer": "abnormal",
+    "variantType": "skin"
+  },
+  {
+    "id": "c836",
+    "displayName": "사쿠라",
+    "subInfo": "ABNORMAL · WILLE",
+    "color": "#B18365",
+    "manufacturer": "abnormal",
+    "variantType": "base"
+  },
+  {
+    "id": "c835",
+    "displayName": "아스카",
+    "subInfo": "ABNORMAL · WILLE",
+    "color": "#EC412E",
+    "manufacturer": "abnormal",
+    "variantType": "base"
+  },
+  {
+    "id": "c835_02",
+    "displayName": "아스카: 오션 라멘트",
+    "subInfo": "ABNORMAL · WILLE",
+    "color": "#EA2608",
+    "manufacturer": "abnormal",
+    "variantType": "skin"
+  },
+  {
+    "id": "c835_01",
+    "displayName": "아스카: 최종 결전: 아스카",
+    "subInfo": "ABNORMAL · WILLE",
+    "color": "#D3C8C7",
+    "manufacturer": "abnormal",
+    "variantType": "skin"
+  },
+  {
+    "id": "c871",
+    "displayName": "유키코",
+    "subInfo": "ABNORMAL · 자칭 특별수사대",
+    "color": "#E01E1A",
+    "manufacturer": "abnormal",
+    "variantType": "base"
+  },
+  {
+    "id": "c871_01",
+    "displayName": "유키코: 아마기 여관의 기모노",
+    "subInfo": "ABNORMAL · 자칭 특별수사대",
+    "color": "#E01E1A",
+    "manufacturer": "abnormal",
+    "variantType": "skin"
+  },
+  {
+    "id": "c871_02",
+    "displayName": "유키코: 윈터 레이디 룸웨어 (Ver. NIKKE Collabo)",
+    "subInfo": "ABNORMAL · 자칭 특별수사대",
+    "color": "#E01E1A",
+    "manufacturer": "abnormal",
+    "variantType": "skin"
+  },
+  {
+    "id": "c872",
+    "displayName": "아이기스",
+    "subInfo": "ABNORMAL · 특별과외활동부",
+    "color": "#FBF355",
+    "manufacturer": "abnormal",
+    "variantType": "base"
+  },
+  {
+    "id": "c870",
+    "displayName": "퀸(마코토)",
+    "subInfo": "ABNORMAL · 마음의 괴도단",
+    "color": "#2C3A97",
+    "manufacturer": "abnormal",
+    "variantType": "base"
+  },
+  {
+    "id": "c870_01",
+    "displayName": "퀸(마코토): 슈진고교 학생회장",
+    "subInfo": "ABNORMAL · 마음의 괴도단",
+    "color": "#2C3A97",
+    "manufacturer": "abnormal",
+    "variantType": "skin"
+  },
+  {
+    "id": "c870_02",
+    "displayName": "퀸(마코토): 퀸즈 파자마 (Ver. NIKKE Collabo)",
+    "subInfo": "ABNORMAL · 마음의 괴도단",
+    "color": "#2C3A97",
+    "manufacturer": "abnormal",
+    "variantType": "skin"
+  },
+  {
+    "id": "c993",
+    "displayName": "메카 시프티",
+    "subInfo": "NPC",
+    "color": "#4B64FF",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c610",
+    "displayName": "메카미 시프티",
+    "subInfo": "NPC",
+    "color": "#9AD0FF",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c907",
+    "displayName": "시프티",
+    "subInfo": "NPC",
+    "color": "#6EE7FF",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c907_01",
+    "displayName": "시프티: Old",
+    "subInfo": "NPC",
+    "color": "#6EE7FF",
+    "manufacturer": "other",
+    "variantType": "skin"
+  },
+  {
+    "id": "c904",
+    "displayName": "에닉",
+    "subInfo": "NPC · AI",
+    "color": "#70E8F6",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c371",
+    "displayName": "엔드리스",
+    "subInfo": "NPC · AI",
+    "color": "#7F7DA0",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c961",
+    "displayName": "오스왈드",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c961_01",
+    "displayName": "오스왈드",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c370",
+    "displayName": "이터니티",
+    "subInfo": "NPC · AI",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c928",
+    "displayName": "잉크",
+    "subInfo": "NPC · AI",
+    "color": "#BBE274",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c939",
+    "displayName": "도반",
+    "subInfo": "NPC · 부사령관",
+    "color": "#706D6B",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c914",
+    "displayName": "버닝엄",
+    "subInfo": "NPC · 부사령관",
+    "color": "#C3B8B1",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c903",
+    "displayName": "엔더슨",
+    "subInfo": "NPC · 부사령관",
+    "color": "#93847A",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c903_01",
+    "displayName": "엔더슨",
+    "subInfo": "NPC · 부사령관",
+    "color": "#93847A",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c9016",
+    "displayName": "여사제",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c9018",
+    "displayName": "프린세스",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c991",
+    "displayName": "D.E.E.P.",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c9016",
+    "displayName": "V.T.C. 고위 간부",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c9016",
+    "displayName": "V.T.C. 여사제",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c929",
+    "displayName": "세실",
+    "subInfo": "NPC",
+    "color": "#A66EF6",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c925",
+    "displayName": "요한",
+    "subInfo": "NPC · 인헤르트",
+    "color": "#CFCEDC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c908",
+    "displayName": "파피용",
+    "subInfo": "NPC",
+    "color": "#F33388",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c482",
+    "displayName": "로지",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c9019",
+    "displayName": "스톨 3세",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c940",
+    "displayName": "엘리시온 하퍼",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c940",
+    "displayName": "E.H.",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c940",
+    "displayName": "E.H.: 엘리시온 하퍼",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "alt"
+  },
+  {
+    "id": "c9008",
+    "displayName": "나유타",
+    "subInfo": "NPC · 파이오니아",
+    "color": "#C8CEE0",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c9002",
+    "displayName": "노라",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c9041",
+    "displayName": "닥터 마리아",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c966",
+    "displayName": "라푼젤: 퓨어 그레이스",
+    "subInfo": "NPC · 갓데스",
+    "color": "#F3DFBC",
+    "manufacturer": "other",
+    "variantType": "alt"
+  },
+  {
+    "id": "c9029",
+    "displayName": "라플라스",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c915",
+    "displayName": "랩칠리언",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c931",
+    "displayName": "롬",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c905",
+    "displayName": "리안",
+    "subInfo": "NPC",
+    "color": "#BE1D47",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c9041",
+    "displayName": "마리아 박사",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c013",
+    "displayName": "마리아-102",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c013",
+    "displayName": "마리아-105",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c013",
+    "displayName": "마리아-113",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c013",
+    "displayName": "마리아-2",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c013",
+    "displayName": "마리아-202",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c013",
+    "displayName": "마리아-234",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c013",
+    "displayName": "마리아-235",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c013",
+    "displayName": "마리아-24",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c013",
+    "displayName": "마리아-3",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c013",
+    "displayName": "마리아-311",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c013",
+    "displayName": "마리아-320",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c013",
+    "displayName": "마리아-330",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c013",
+    "displayName": "마리아-331",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c013",
+    "displayName": "마리아-4",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c013",
+    "displayName": "마리아-446",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c013",
+    "displayName": "마리아-447",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c013",
+    "displayName": "마리아-448",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c013",
+    "displayName": "마리아-449",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c013",
+    "displayName": "마리아-5",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c013",
+    "displayName": "마리아-55",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c013",
+    "displayName": "마리아-n",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c9003",
+    "displayName": "미세스 미스",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c9045",
+    "displayName": "세피",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c9029",
+    "displayName": "소녀: 라플라스",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "skin"
+  },
+  {
+    "id": "c9031",
+    "displayName": "슈엔",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c9013",
+    "displayName": "스노우 화이트: 헤비암즈",
+    "subInfo": "NPC · 갓데스",
+    "color": "#C9CEE1",
+    "manufacturer": "other",
+    "variantType": "alt"
+  },
+  {
+    "id": "c853",
+    "displayName": "아담",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c9031",
+    "displayName": "어린 슈엔",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c9029",
+    "displayName": "왜소한 소녀",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c9024",
+    "displayName": "요요",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c922",
+    "displayName": "진",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c931_01",
+    "displayName": "콤",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c947",
+    "displayName": "트리키 보이",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c960",
+    "displayName": "프리시아",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c9020_01",
+    "displayName": "프리시아: 성인",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "skin"
+  },
+  {
+    "id": "c9020",
+    "displayName": "프리시아: 프리티",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "skin"
+  },
+  {
+    "id": "c941",
+    "displayName": "피나",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c9001",
+    "displayName": "마오",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c227",
+    "displayName": "피노키오",
+    "subInfo": "NPC · 파이오니아",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c9023",
+    "displayName": "한슨",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c998",
+    "displayName": "헤르민",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c965",
+    "displayName": "홍련: 흑영",
+    "subInfo": "NPC · 갓데스",
+    "color": "#BB0307",
+    "manufacturer": "other",
+    "variantType": "alt"
+  },
+  {
+    "id": "c990",
+    "displayName": "라피",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c992",
+    "displayName": "라피",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c996",
+    "displayName": "검은 물을 덮은 소녀",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c9014",
+    "displayName": "검은 헬레틱",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c921",
+    "displayName": "겐조",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c9038",
+    "displayName": "곰",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c9038",
+    "displayName": "곰⋯?",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c910",
+    "displayName": "관리자 스윗 조니",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c9000_05",
+    "displayName": "꼼꼼이",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c983",
+    "displayName": "나디아",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c9006",
+    "displayName": "데이파라",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c9000_03",
+    "displayName": "뚝딱이",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c924",
+    "displayName": "라이온",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c9011",
+    "displayName": "레인",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c924",
+    "displayName": "로열 여성",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c946",
+    "displayName": "루루",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c970",
+    "displayName": "루미",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c9028",
+    "displayName": "루크",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c948",
+    "displayName": "리스",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c936",
+    "displayName": "맥스",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c9039",
+    "displayName": "모나",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c9040",
+    "displayName": "모르가나",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c930",
+    "displayName": "베아트리체",
+    "subInfo": "NPC",
+    "color": "#FBAEA6",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c933",
+    "displayName": "볼트",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c932",
+    "displayName": "볼트 주니어",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c937",
+    "displayName": "부부",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c913",
+    "displayName": "소녀",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c960",
+    "displayName": "소녀: 프리시아",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "alt"
+  },
+  {
+    "id": "c926",
+    "displayName": "숀",
+    "subInfo": "NPC",
+    "color": "#927F71",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c910",
+    "displayName": "스윗 조니",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c910_01",
+    "displayName": "스윗 조니 Ver.2.14",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c916",
+    "displayName": "신입 지휘관",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c9000_01",
+    "displayName": "싹싹이",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c912",
+    "displayName": "아나운서",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c934",
+    "displayName": "안젤리나",
+    "subInfo": "NPC",
+    "color": "#CFD8E5",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c9005_01",
+    "displayName": "알파 프레데터",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c9000",
+    "displayName": "알프레드",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c9026",
+    "displayName": "에이미",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c255",
+    "displayName": "엘리시온 미케닉",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c928",
+    "displayName": "여신",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c9000_07",
+    "displayName": "유령",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c9010",
+    "displayName": "제인",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c935",
+    "displayName": "조셉",
+    "subInfo": "NPC",
+    "color": "#92867C",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c9015",
+    "displayName": "중앙 정부 소대장",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c9000_02",
+    "displayName": "지글이",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c927",
+    "displayName": "채드",
+    "subInfo": "NPC",
+    "color": "#918172",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c988",
+    "displayName": "촌장",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c945",
+    "displayName": "케이티",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c920",
+    "displayName": "콘실리에리",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c931",
+    "displayName": "콜렉터",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c952",
+    "displayName": "클로이",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c975",
+    "displayName": "티미",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c9000_06",
+    "displayName": "팔팔이",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c9034",
+    "displayName": "펭군 1호",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c9035",
+    "displayName": "펭군 2호",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c9036",
+    "displayName": "펭군 3호",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c9037",
+    "displayName": "펭군 4호",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c9005",
+    "displayName": "프레데터",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c9028",
+    "displayName": "호프",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c964",
+    "displayName": "Product 12: 6000-D",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c962",
+    "displayName": "Product 12: B-0006",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c963",
+    "displayName": "Product 12: C-1002",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c984",
+    "displayName": "Sound Only",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c976",
+    "displayName": "T.Rony",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c984_01",
+    "displayName": "X",
+    "subInfo": "NPC",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c947",
+    "displayName": "남성 시민 기본",
+    "subInfo": "EXTRA · 기타",
+    "manufacturer": "other",
+    "variantType": "base"
+  },
+  {
+    "id": "c948",
+    "displayName": "여성 시민 기본",
+    "subInfo": "EXTRA · 기타",
+    "manufacturer": "other",
+    "variantType": "base"
+  }
+];
 
 export function sanitizeName(str: string): string {
   if (!str) return '';
