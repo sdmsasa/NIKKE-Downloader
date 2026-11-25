@@ -88,49 +88,55 @@ export const FilterBar: React.FC<FilterBarProps> = ({
           </div>
 
           {/* Thin Character Variant Summary & Multi-Select Text Bar */}
-          {variantCounts && (
-            <div className="flex items-center gap-3 px-1 pt-0.5 text-[11px] overflow-x-auto no-scrollbar">
-              <button
-                type="button"
-                onClick={() => setFilter(prev => ({ ...prev, variantTypes: [] }))}
-                className={`inline-flex items-baseline gap-1 transition-colors cursor-pointer whitespace-nowrap pb-0.5 border-b ${
-                  allVariantsSelected
-                    ? 'text-white font-bold border-white'
-                    : 'text-neutral-400 hover:text-neutral-200 border-transparent'
-                }`}
-                title="전체 유형 보기"
-              >
-                <span>총합:</span>
-                <span className="font-mono">{variantCounts.total.toLocaleString()}</span>
-              </button>
+          {variantCounts && (() => {
+            const activeCorpLabel =
+              filter.manufacturer === 'all'
+                ? '총합'
+                : MANUFACTURERS.find(m => m.id === filter.manufacturer)?.label || '총합';
+            return (
+              <div className="flex items-center gap-3 px-1 pt-0.5 text-[11px] overflow-x-auto no-scrollbar">
+                <button
+                  type="button"
+                  onClick={() => setFilter(prev => ({ ...prev, variantTypes: [] }))}
+                  className={`inline-flex items-baseline gap-1 transition-colors cursor-pointer whitespace-nowrap pb-0.5 border-b ${
+                    allVariantsSelected
+                      ? 'text-white font-bold border-white'
+                      : 'text-neutral-400 hover:text-neutral-200 border-transparent'
+                  }`}
+                  title={`${activeCorpLabel} 전체 유형 보기`}
+                >
+                  <span>{activeCorpLabel}:</span>
+                  <span className="font-mono">{variantCounts.total.toLocaleString()}</span>
+                </button>
 
-              {([
-                { key: 'base', label: '베이스', count: variantCounts.base },
-                { key: 'alt', label: '이격', count: variantCounts.alt },
-                { key: 'skin', label: '스킨', count: variantCounts.skin }
-              ] as const).map(({ key, label, count }) => {
-                const isSelected = selectedVariants.includes(key);
-                return (
-                  <React.Fragment key={key}>
-                    <span className="text-neutral-700 select-none">|</span>
-                    <button
-                      type="button"
-                      onClick={() => toggleVariantType(key)}
-                      className={`inline-flex items-baseline gap-1 transition-colors cursor-pointer whitespace-nowrap pb-0.5 border-b ${
-                        isSelected
-                          ? 'text-orange-400 font-bold border-orange-400'
-                          : 'text-neutral-400 hover:text-neutral-200 border-transparent'
-                      }`}
-                      title={`${label} 필터 (다중 선택 가능)`}
-                    >
-                      <span>{label}:</span>
-                      <span className="font-mono">{count.toLocaleString()}</span>
-                    </button>
-                  </React.Fragment>
-                );
-              })}
-            </div>
-          )}
+                {([
+                  { key: 'base', label: '베이스', count: variantCounts.base },
+                  { key: 'alt', label: '이격', count: variantCounts.alt },
+                  { key: 'skin', label: '스킨', count: variantCounts.skin }
+                ] as const).map(({ key, label, count }) => {
+                  const isSelected = selectedVariants.includes(key);
+                  return (
+                    <React.Fragment key={key}>
+                      <span className="text-neutral-700 select-none">|</span>
+                      <button
+                        type="button"
+                        onClick={() => toggleVariantType(key)}
+                        className={`inline-flex items-baseline gap-1 transition-colors cursor-pointer whitespace-nowrap pb-0.5 border-b ${
+                          isSelected
+                            ? 'text-orange-400 font-bold border-orange-400'
+                            : 'text-neutral-400 hover:text-neutral-200 border-transparent'
+                        }`}
+                        title={`${label} 필터 (다중 선택 가능)`}
+                      >
+                        <span>{label}:</span>
+                        <span className="font-mono">{count.toLocaleString()}</span>
+                      </button>
+                    </React.Fragment>
+                  );
+                })}
+              </div>
+            );
+          })()}
         </div>
       )}
 
