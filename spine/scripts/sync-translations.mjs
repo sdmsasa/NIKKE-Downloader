@@ -637,8 +637,8 @@ export function getCharacterVariantType(id?: string, name?: string): CharacterVa
     if (name && name.includes(' - ')) {
       return 'skin';
     }
-    if (ID_TO_VARIANT[baseId] === 'alt') {
-      return 'alt';
+    if (ID_TO_VARIANT[baseId]) {
+      return ID_TO_VARIANT[baseId];
     }
   }
 
