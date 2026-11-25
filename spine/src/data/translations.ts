@@ -162,10 +162,6 @@ export const ID_TO_KOREAN: Record<string, string> = {
   "c986": "라피",
   "c989__라피": "라피",
   "c989": "라피",
-  "c990__라피": "라피",
-  "c990": "라피",
-  "c992__라피": "라피",
-  "c992": "라피",
   "c010_03__라피": "라피: 클래식 바캉스",
   "c010_03": "라피: 클래식 바캉스",
   "c010_02__라피": "라피: 클래식 바캉스",
@@ -180,8 +176,6 @@ export const ID_TO_KOREAN: Record<string, string> = {
   "c016_03": "라피: 샤인 라이트",
   "c016_02__라피": "라피: 체리시드 레드",
   "c016_02": "라피: 체리시드 레드",
-  "c994__라피": "라피: RR-15436",
-  "c994": "라피: RR-15436",
   "c170__프리바티": "프리바티",
   "c170": "프리바티",
   "c170_01__프리바티": "프리바티: 거버먼트 노멀",
@@ -220,6 +214,9 @@ export const ID_TO_KOREAN: Record<string, string> = {
   "c301": "솔져 F.A.",
   "c306__솔져ow": "솔져 O.W.",
   "c306": "솔져 O.W.",
+  "c994__라피": "라피: RR-15436",
+  "c994": "라피: RR-15436",
+  "c994__양산형니케": "양산형 니케: 라피",
   "c450__나가": "나가",
   "c450": "나가",
   "c450_02__나가": "나가: 라스트 걸후드",
@@ -777,6 +774,7 @@ export const ID_TO_KOREAN: Record<string, string> = {
   "c560__베히모스": "베히모스",
   "c560": "베히모스",
   "c992__뷰티": "뷰티",
+  "c992": "뷰티",
   "c992__온리원": "온리 원",
   "c997__온리원": "온리 원",
   "c997": "온리 원",
@@ -1026,7 +1024,6 @@ export const ID_TO_KOREAN: Record<string, string> = {
   "c9013": "스노우 화이트",
   "c853__아담": "아담",
   "c853": "아담",
-  "c994__양산형니케": "양산형 니케: 라피",
   "c9031__어린슈엔": "어린 슈엔",
   "c9029__왜소한소녀": "왜소한 소녀",
   "c9024__요요": "요요",
@@ -1055,6 +1052,9 @@ export const ID_TO_KOREAN: Record<string, string> = {
   "c998": "헤르민",
   "c965__홍련": "홍련: 흑영",
   "c965": "홍련",
+  "c990__라피": "라피",
+  "c990": "라피",
+  "c992__라피": "라피",
   "c996__검은물을덮은소녀": "검은 물을 덮은 소녀",
   "c9014__검은헬레틱": "검은 헬레틱",
   "c9014": "검은 헬레틱",
@@ -1392,10 +1392,6 @@ export const ID_TO_SUBINFO: Record<string, string> = {
   "c986": "ELYSION · 카운터스 · NPC",
   "c989__라피": "ELYSION · 카운터스 · NPC",
   "c989": "ELYSION · 카운터스 · NPC",
-  "c990__라피": "ELYSION · NPC",
-  "c990": "ELYSION · NPC",
-  "c992__라피": "ELYSION · NPC",
-  "c992": "ELYSION · NPC",
   "c010_03__라피": "Skin",
   "c010_03": "ELYSION · 카운터스 · Skin",
   "c010_02__라피": "Skin",
@@ -1410,8 +1406,6 @@ export const ID_TO_SUBINFO: Record<string, string> = {
   "c016_03": "ELYSION · 카운터스",
   "c016_02__라피": "Skin",
   "c016_02": "ELYSION · 카운터스",
-  "c994__라피": "ELYSION · 리플레이스 · NPC",
-  "c994": "ELYSION · 리플레이스 · NPC",
   "c170__프리바티": "ELYSION · 트라이앵글",
   "c170": "ELYSION · 트라이앵글",
   "c170_01__프리바티": "Skin",
@@ -1450,6 +1444,9 @@ export const ID_TO_SUBINFO: Record<string, string> = {
   "c301": "ELYSION · 리플레이스",
   "c306__솔져ow": "ELYSION · 리플레이스",
   "c306": "ELYSION · 리플레이스",
+  "c994__라피": "ELYSION · 리플레이스 · NPC",
+  "c994": "ELYSION · 리플레이스 · NPC",
+  "c994__양산형니케": "ELYSION · 리플레이스 · NPC",
   "c450__나가": "MISSILIS · 다즐링 펄",
   "c450": "MISSILIS · 다즐링 펄",
   "c450_02__나가": "Skin",
@@ -2007,6 +2004,7 @@ export const ID_TO_SUBINFO: Record<string, string> = {
   "c560__베히모스": "HERETIC · 포비스트 · NPC",
   "c560": "HERETIC · 포비스트 · NPC",
   "c992__뷰티": "HERETIC · 포비스트 · NPC",
+  "c992": "HERETIC · 포비스트 · NPC",
   "c992__온리원": "HERETIC · 포비스트 · NPC",
   "c997__온리원": "HERETIC · NPC",
   "c997": "HERETIC · NPC",
@@ -2256,7 +2254,6 @@ export const ID_TO_SUBINFO: Record<string, string> = {
   "c9013": "NPC · 갓데스",
   "c853__아담": "NPC",
   "c853": "NPC",
-  "c994__양산형니케": "NPC · 리플레이스",
   "c9031__어린슈엔": "NPC",
   "c9029__왜소한소녀": "NPC",
   "c9024__요요": "NPC",
@@ -2285,6 +2282,9 @@ export const ID_TO_SUBINFO: Record<string, string> = {
   "c998": "NPC",
   "c965__홍련": "NPC · 갓데스",
   "c965": "NPC · 갓데스",
+  "c990__라피": "NPC",
+  "c990": "NPC",
+  "c992__라피": "NPC",
   "c996__검은물을덮은소녀": "NPC",
   "c9014__검은헬레틱": "NPC",
   "c9014": "NPC",
@@ -8158,12 +8158,14 @@ function isNameCompatible(inputName: string, recordName: string): boolean {
     return true;
   }
 
-  // Check translated Korean name of inputName (including prefix before ':' / '-' / '(')
+  // Check translated Korean name of inputName (including prefix and parenthetical tokens)
   const lower = inputName.toLowerCase().trim();
+  const parenTokens = Array.from(lower.matchAll(/\(([^)]+)\)/g)).map((m) => m[1].trim());
   const prefixes = [
     lower,
     lower.split(/[:-]/)[0].trim(),
-    lower.split(/[:\-(]/)[0].trim()
+    lower.split(/[:\-(]/)[0].trim(),
+    ...parenTokens
   ].filter(Boolean);
 
   for (const key of prefixes) {
@@ -8179,7 +8181,7 @@ function isNameCompatible(inputName: string, recordName: string): boolean {
   return false;
 }
 
-const SHARED_CONFLICT_IDS = new Set(["c013","c992","c994","c942","c982","c996","c940","c9029","c9031"]);
+const SHARED_CONFLICT_IDS = new Set(["c982"]);
 
 /**
  * Resolve the exact key in ID_TO_* (either composite `${id}__${sanitizeName(name)}` or plain `id`),
@@ -8193,10 +8195,12 @@ export function resolveCharacterIdKey(id?: string, name?: string): string | unde
   if (name) {
     const candidateNames = [sanitizeName(name)];
     const lower = name.toLowerCase().trim();
+    const parenTokens = Array.from(lower.matchAll(/\(([^)]+)\)/g)).map((m) => m[1].trim());
     const prefixes = [
       lower,
       lower.split(/[:-]/)[0].trim(),
-      lower.split(/[:\-(]/)[0].trim()
+      lower.split(/[:\-(]/)[0].trim(),
+      ...parenTokens
     ].filter(Boolean);
     for (const key of prefixes) {
       const kr = NAME_TO_KOREAN[key];

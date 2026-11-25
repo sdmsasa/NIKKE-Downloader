@@ -580,9 +580,10 @@ function run() {
     }
   }
 
-  const sharedConflictIds = Object.keys(idManufacturersSet).filter(
-    (id) => idManufacturersSet[id].size > 1 && idDistinctNames[id] && idDistinctNames[id].size > 1
-  );
+  const sharedConflictIds = Object.keys(idManufacturersSet).filter((id) => {
+    const nonOtherMfgs = Array.from(idManufacturersSet[id]).filter((m) => m !== 'other');
+    return nonOtherMfgs.length > 1 && idDistinctNames[id] && idDistinctNames[id].size > 1;
+  });
 
   // Write translations.ts
   const idEntries = Object.entries(idToKorean)
@@ -660,12 +661,14 @@ function isNameCompatible(inputName: string, recordName: string): boolean {
     return true;
   }
 
-  // Check translated Korean name of inputName (including prefix before ':' / '-' / '(')
+  // Check translated Korean name of inputName (including prefix and parenthetical tokens)
   const lower = inputName.toLowerCase().trim();
+  const parenTokens = Array.from(lower.matchAll(/\\(([^)]+)\\)/g)).map((m) => m[1].trim());
   const prefixes = [
     lower,
     lower.split(/[:-]/)[0].trim(),
-    lower.split(/[:\\-(]/)[0].trim()
+    lower.split(/[:\\-(]/)[0].trim(),
+    ...parenTokens
   ].filter(Boolean);
 
   for (const key of prefixes) {
@@ -695,10 +698,12 @@ export function resolveCharacterIdKey(id?: string, name?: string): string | unde
   if (name) {
     const candidateNames = [sanitizeName(name)];
     const lower = name.toLowerCase().trim();
+    const parenTokens = Array.from(lower.matchAll(/\\(([^)]+)\\)/g)).map((m) => m[1].trim());
     const prefixes = [
       lower,
       lower.split(/[:-]/)[0].trim(),
-      lower.split(/[:\\-(]/)[0].trim()
+      lower.split(/[:\\-(]/)[0].trim(),
+      ...parenTokens
     ].filter(Boolean);
     for (const key of prefixes) {
       const kr = NAME_TO_KOREAN[key];
