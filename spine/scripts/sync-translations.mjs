@@ -924,16 +924,16 @@ export function getCharacterManufacturer(id: string, name?: string): Manufacture
     if (ID_TO_MANUFACTURER[baseId]) return ID_TO_MANUFACTURER[baseId];
   }
 
-  // 2. Check Collab pattern c8xx
-  if (/^c8\\d{2}/.test(cleanId)) return 'abnormal';
-
-  // 3. Check exact or prefix name
+  // 2. Check exact or prefix name
   if (name) {
     const lowerName = name.toLowerCase().trim();
     if (NAME_TO_MANUFACTURER[lowerName]) return NAME_TO_MANUFACTURER[lowerName];
     const prefix = lowerName.split(/[:-]/)[0].trim();
     if (NAME_TO_MANUFACTURER[prefix]) return NAME_TO_MANUFACTURER[prefix];
   }
+
+  // 3. Fallback: Collab pattern c8xx (only when not explicitly mapped by ID or Name)
+  if (/^c8\\d{2}/.test(cleanId)) return 'abnormal';
 
   return 'other';
 }
