@@ -3,6 +3,7 @@ import type { AnyAssetItem, CharacterPose } from '../types';
 import { X, Download, Copy, Check, ExternalLink, Image as ImageIcon, Sparkles, Loader2, RefreshCw, Link2 } from 'lucide-react';
 import { AssetUrls, getCharacterPoseFileName } from '../services/nkasApi';
 import iconUnknown from '../assets/corp/icn_corp_unknown.png';
+import { CharacterColorBar } from './CharacterColorBar';
 
 interface AssetDetailModalProps {
   item: AnyAssetItem | null;
@@ -265,9 +266,10 @@ export const AssetDetailModal: React.FC<AssetDetailModalProps> = ({
               <div className="flex items-center gap-2">
                 <div className="flex items-center gap-1.5">
                   <h2
-                    className="text-base font-bold text-white select-text"
+                    className="text-base font-bold text-white select-text flex items-center"
                   >
-                    {item.displayName || item.krName || item.name}
+                    <CharacterColorBar item={item} />
+                    <span>{item.displayName || item.krName || item.name}</span>
                   </h2>
                   <button
                     type="button"

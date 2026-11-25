@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import type { AnyAssetItem } from '../types';
 import { Check, Download, ExternalLink, Sparkles, CheckCircle2, RefreshCw, Copy } from 'lucide-react';
 import iconUnknown from '../assets/corp/icn_corp_unknown.png';
+import { CharacterColorBar } from './CharacterColorBar';
 
 interface AssetListViewProps {
   items: AnyAssetItem[];
@@ -145,7 +146,10 @@ export const AssetListView: React.FC<AssetListViewProps> = ({
                       className="font-bold text-sm text-neutral-100 hover:text-orange-400 transition-colors flex items-center gap-2 cursor-pointer select-text"
                       title={item.displayName || item.krName || item.name}
                     >
-                      <span>{item.displayName || item.krName || item.name}</span>
+                      <span className="inline-flex items-center">
+                        <CharacterColorBar item={item} />
+                        <span>{item.displayName || item.krName || item.name}</span>
+                      </span>
                       {hasUpdate ? (
                         <span className="flex items-center gap-0.5 px-1.5 py-0.5 text-[9px] font-bold bg-sky-500 text-neutral-950 rounded shadow-sm">
                           <RefreshCw className="w-2.5 h-2.5" />

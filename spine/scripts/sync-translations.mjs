@@ -108,6 +108,15 @@ export function formatCharacterDisplayName(char, fallbackName = '') {
   return cleanName;
 }
 
+function normalizeHexColor(raw) {
+  if (!raw || typeof raw !== 'string') return '';
+  const clean = raw.replace(/[\\#]/g, '').trim().toUpperCase();
+  if (/^[0-9A-F]{6}$/.test(clean) || /^[0-9A-F]{3}$/.test(clean)) {
+    return `#${clean}`;
+  }
+  return '';
+}
+
 function formatSubInfo(info) {
   const processInfo = (str, isSquad = false) => {
     if (!str || str === '-') return [];
@@ -182,8 +191,10 @@ function shouldUpdateSubInfo(currentSubInfo, newSubInfo, isNpcRow) {
 function run() {
   const idToKorean = {};
   const idToSubInfo = {};
+  const idToColor = {};
   const nameToKorean = {};
   const nameToSubInfo = {};
+  const nameToColor = {};
 
   const idToManufacturer = {};
   const nameToManufacturer = {};
@@ -222,6 +233,20 @@ function run() {
         const subInfo = formatSubInfo({ company, company2, squad, squad2, org, role: roleOrOther });
         if (subInfo) {
           idToSubInfo[id] = subInfo;
+        }
+
+        const hexColor = normalizeHexColor(_color);
+        if (hexColor) {
+          idToColor[id.toLowerCase()] = hexColor;
+          const isNpcOrExtra =
+            compKey === 'other' ||
+            (roleOrOther && ['NPC', '기타', '엑스트라'].includes(roleOrOther.trim()));
+          if (charName && charName !== '-' && !cleanAlt && !cleanSkin && !isNpcOrExtra) {
+            const lowerName = charName.toLowerCase();
+            if (!nameToColor[lowerName]) {
+              nameToColor[lowerName] = hexColor;
+            }
+          }
         }
 
         // Manufacturer mapping
@@ -270,22 +295,31 @@ function run() {
         continue;
       }
 
-      if (cols.length >= 7) {
+      if (cols.length >= 6) {
         const getCol = (key) => (colMap && colMap[key] !== undefined && colMap[key] < cols.length ? cols[colMap[key]] : '');
+        const isSixCol = cols.length === 6;
         const id = colMap ? getCol('id') : cols[0];
-        const slug = colMap ? getCol('slug') : cols[1];
-        const charName = colMap ? getCol('charName') : cols[2];
-        const _skinName = colMap ? getCol('skinName') : cols[3];
-        const _altName = colMap ? getCol('altName') : cols[4];
-        const role = colMap ? getCol('role') : cols[5];
-        const krDisplayName = colMap ? getCol('krDisplayName') : (cols.length >= 8 ? cols[7] : cols[6]);
-        const krSearchKey = colMap ? getCol('krSearchKey') : (cols.length >= 8 ? cols[6] : slug);
+        const slug = colMap ? getCol('slug') : (isSixCol ? '' : cols[1]);
+        const charName = colMap ? getCol('charName') : (isSixCol ? cols[1] : cols[2]);
+        const altName = colMap ? getCol('altName') : (isSixCol ? cols[2] : cols[4]);
+        const skinName = colMap ? getCol('skinName') : (isSixCol ? cols[3] : cols[3]);
+        const role = colMap ? getCol('role') : (isSixCol ? cols[4] : cols[5]);
+        const krDisplayName = colMap ? getCol('krDisplayName') : (isSixCol ? cols[5] : (cols.length >= 8 ? cols[7] : cols[6]));
+        const krSearchKey = colMap ? getCol('krSearchKey') : (isSixCol ? '' : (cols.length >= 8 ? cols[6] : slug));
 
         if (!id || id === '-') continue;
 
         const isBase = role === 'Base';
         const isNpcRow = currentManufacturer === 'other' || role === 'NPC';
-        const finalDisplayName = krDisplayName && krDisplayName !== '-' ? krDisplayName : formatCharacterDisplayName(null, krSearchKey || charName);
+        const cleanAlt = altName && altName !== '-' ? altName : '';
+        const cleanSkin = skinName && skinName !== '-' ? skinName : '';
+        const finalDisplayName =
+          krDisplayName && krDisplayName !== '-'
+            ? krDisplayName
+            : formatCharacterDisplayName(
+                { name: charName, alternate: cleanAlt, variant: cleanSkin },
+                krSearchKey || charName
+              );
         
         idToKorean[id] = finalDisplayName;
 
@@ -362,7 +396,15 @@ function run() {
         section = 'name_subinfo';
         continue;
       }
-      if (line.includes('export function getKoreanName') || line.includes('export function getCharacterSubInfo')) {
+      if (line.includes('export const ID_TO_COLOR')) {
+        section = 'id_color';
+        continue;
+      }
+      if (line.includes('export const NAME_TO_COLOR')) {
+        section = 'name_color';
+        continue;
+      }
+      if (line.includes('export function getKoreanName') || line.includes('export function getCharacterSubInfo') || line.includes('export function getCharacterColor')) {
         section = '';
         continue;
       }
@@ -386,6 +428,16 @@ function run() {
         while ((match = kvRegex.exec(line)) !== null) {
           const [_, key, val] = match;
           if (!nameToSubInfo[key.toLowerCase()]) nameToSubInfo[key.toLowerCase()] = val;
+        }
+      } else if (section === 'id_color') {
+        while ((match = kvRegex.exec(line)) !== null) {
+          const [_, key, val] = match;
+          if (!idToColor[key.toLowerCase()]) idToColor[key.toLowerCase()] = val;
+        }
+      } else if (section === 'name_color') {
+        while ((match = kvRegex.exec(line)) !== null) {
+          const [_, key, val] = match;
+          if (!nameToColor[key.toLowerCase()]) nameToColor[key.toLowerCase()] = val;
         }
       }
     }
@@ -452,6 +504,14 @@ function run() {
     .map(([k, v]) => `  "${k}": "${v}"`)
     .join(',\n');
 
+  const idColorEntries = Object.entries(idToColor)
+    .map(([k, v]) => `  "${k}": "${v}"`)
+    .join(',\n');
+
+  const nameColorEntries = Object.entries(nameToColor)
+    .map(([k, v]) => `  "${k}": "${v}"`)
+    .join(',\n');
+
   const translationsOutput = `// Auto-generated Korean name & metadata mappings from Obsidian NIKKE Settings
 export const ID_TO_KOREAN: Record<string, string> = {
 ${idEntries}
@@ -467,6 +527,14 @@ ${nameEntries}
 
 export const NAME_TO_SUBINFO: Record<string, string> = {
 ${nameSubInfoEntries}
+};
+
+export const ID_TO_COLOR: Record<string, string> = {
+${idColorEntries}
+};
+
+export const NAME_TO_COLOR: Record<string, string> = {
+${nameColorEntries}
 };
 
 export function getKoreanName(name: string, id?: string): string | undefined {
@@ -504,10 +572,28 @@ export function getCharacterSubInfo(id?: string, name?: string): string | undefi
 
   return undefined;
 }
+
+export function getCharacterColor(id?: string, name?: string): string | undefined {
+  if (id) {
+    const cleanId = id.toLowerCase().trim();
+    const baseId = cleanId.split('_')[0];
+    if (ID_TO_COLOR[cleanId]) return ID_TO_COLOR[cleanId];
+    if (ID_TO_COLOR[baseId]) return ID_TO_COLOR[baseId];
+  }
+
+  if (name) {
+    const lower = name.toLowerCase().trim();
+    if (NAME_TO_COLOR[lower]) return NAME_TO_COLOR[lower];
+    const prefix = lower.split(/[:-]/)[0].trim();
+    if (NAME_TO_COLOR[prefix]) return NAME_TO_COLOR[prefix];
+  }
+
+  return undefined;
+}
 `;
 
   fs.writeFileSync(targetTranslationsFile, translationsOutput, 'utf8');
-  console.log(`Successfully generated translations.ts with ${Object.keys(idToKorean).length} IDs, ${Object.keys(idToSubInfo).length} subInfo entries, and ${Object.keys(nameToKorean).length} name keys.`);
+  console.log(`Successfully generated translations.ts with ${Object.keys(idToKorean).length} IDs, ${Object.keys(idToSubInfo).length} subInfo entries, ${Object.keys(idToColor).length} color entries, and ${Object.keys(nameToKorean).length} name keys.`);
 
   // Write manufacturers.ts
   const idMfgEntries = Object.entries(idToManufacturer)

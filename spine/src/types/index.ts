@@ -27,6 +27,7 @@ export interface BurstItem {
   displayName?: string;
   krName?: string;
   subInfo?: string;
+  color?: string;
   characterId: string;
   isNew?: boolean;
   thumbnail: string;
@@ -38,6 +39,7 @@ export interface MonsterItem {
   displayName?: string;
   krName?: string;
   subInfo?: string;
+  color?: string;
   isNew?: boolean;
   thumbnail?: string;
 }
@@ -48,6 +50,7 @@ export interface FavoriteItem {
   displayName?: string;
   krName?: string;
   subInfo?: string;
+  color?: string;
   characterId?: string;
   isNew?: boolean;
   icon?: string;
@@ -62,6 +65,7 @@ export interface EventSceneItem {
   displayName?: string;
   krName?: string;
   subInfo?: string;
+  color?: string;
   isNew?: boolean;
   sceneSi?: string;
   sceneMi?: string;

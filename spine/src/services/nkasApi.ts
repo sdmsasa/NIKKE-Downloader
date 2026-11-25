@@ -1,5 +1,5 @@
 import type { CharacterItem, BurstItem, MonsterItem, FavoriteItem, EventSceneItem, CharacterPose } from '../types';
-import { getKoreanName, getCharacterSubInfo } from '../data/translations';
+import { getKoreanName, getCharacterSubInfo, getCharacterColor } from '../data/translations';
 import characterPosesData from '../data/characterPoses.json';
 
 // 외부 NKAS Spine 에셋 CDN 호스트 주소 (서드파티 도메인이므로 유지)
@@ -136,7 +136,7 @@ async function fetchFreshNKASData(forceRefresh: boolean = false): Promise<Fetche
         subInfo,
         isNew,
         poses: poses as CharacterPose[],
-        color: colorsRes[name] || colorsRes[id],
+        color: getCharacterColor(id, name) || colorsRes[name] || colorsRes[id],
         thumbnails: {
           icon: `${MAIN_BASE}/characters/si_${id}_s.png`,
           iconFallback: `${MAIN_BASE}/characters_missing_si/si_${id}_s.png`,
@@ -164,6 +164,7 @@ async function fetchFreshNKASData(forceRefresh: boolean = false): Promise<Fetche
         krName: displayName,
         subInfo,
         characterId: baseCharId,
+        color: getCharacterColor(baseCharId, name) || colorsRes[name] || colorsRes[baseCharId],
         isNew,
         thumbnail: `${MAIN_BASE}/characters/si_${baseCharId}_s.png`
       };
@@ -201,6 +202,7 @@ async function fetchFreshNKASData(forceRefresh: boolean = false): Promise<Fetche
         krName: displayName,
         subInfo,
         characterId: charId,
+        color: charId ? (getCharacterColor(charId) || colorsRes[charId]) : undefined,
         isNew: newIds.has(id),
         icon: charId ? `${MAIN_BASE}/favorite_items/si_favoriteitem_${charId}.png` : undefined,
         wallpaper: charId ? `${MAIN_BASE}/favorite_items/mi_favoriteitem_wallpaper_${charId}.png` : undefined,

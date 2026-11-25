@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import type { AnyAssetItem } from '../types';
 import { Check, Download, ExternalLink, Sparkles, CheckCircle2, RefreshCw, Copy } from 'lucide-react';
 import iconUnknown from '../assets/corp/icn_corp_unknown.png';
+import { CharacterColorBar } from './CharacterColorBar';
 
 interface AssetCardProps {
   item: AnyAssetItem;
@@ -212,16 +213,19 @@ export const AssetCard: React.FC<AssetCardProps> = ({
         <div>
           {/* Main Title (Korean display name first) */}
           <div className="flex items-center justify-between gap-1 min-w-0">
-            <h3
-              onClick={(e) => {
-                if (isDragOrSelection(e)) return;
-                onOpenDetail();
-              }}
-              className="text-[13.5px] sm:text-sm font-extrabold text-neutral-100 hover:text-orange-400 transition-colors truncate cursor-pointer tracking-tight select-text flex-1"
-              title={displayName}
-            >
-              {displayName}
-            </h3>
+            <div className="flex items-center min-w-0 flex-1">
+              <CharacterColorBar item={item} />
+              <h3
+                onClick={(e) => {
+                  if (isDragOrSelection(e)) return;
+                  onOpenDetail();
+                }}
+                className="text-[13.5px] sm:text-sm font-extrabold text-neutral-100 hover:text-orange-400 transition-colors truncate cursor-pointer tracking-tight select-text min-w-0"
+                title={displayName}
+              >
+                {displayName}
+              </h3>
+            </div>
             <button
               type="button"
               onClick={(e) => {

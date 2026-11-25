@@ -2,6 +2,7 @@ import React, { useState, useMemo, useEffect } from 'react';
 import type { AnyAssetItem } from '../types';
 import { X, Sparkles, Download, CheckCircle2, History, ExternalLink, Copy, Check, Search } from 'lucide-react';
 import iconUnknown from '../assets/corp/icn_corp_unknown.png';
+import { CharacterColorBar } from './CharacterColorBar';
 
 interface UpdateSummaryModalProps {
   isOpen: boolean;
@@ -287,8 +288,9 @@ export const UpdateSummaryModal: React.FC<UpdateSummaryModalProps> = ({
                         {/* Title & Info */}
                         <div className="min-w-0 flex-1">
                           <div className="flex items-center gap-1.5 flex-wrap">
-                            <span className="font-bold text-sm text-white group-hover:text-cyan-300 transition-colors truncate">
-                              {displayName}
+                            <span className="font-bold text-sm text-white group-hover:text-cyan-300 transition-colors inline-flex items-center min-w-0">
+                              <CharacterColorBar item={item} />
+                              <span className="truncate">{displayName}</span>
                             </span>
                             <button
                               type="button"
